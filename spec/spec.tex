@@ -1,0 +1,52 @@
+\section{Cas d'utilisation}
+	\begin{itemize}
+		\item Lancer une partie avec 7 joueurs. Il faut obligatoirement 7 joueurs pour lancer une partie ;
+		\item Les joueurs peuvent choisir leurs pseudos et rejoindre une partie en attente de joueurs ;
+		\item Les joueurs peuvent jouer au jeu.
+	\end{itemize}
+
+\section{La carte}
+	\begin{itemize}
+		\item La carte est une carte simplifiée de l'Europe comportant des cases de type \enquote{Eau} et des cases de type Terre ;
+		\item Certaines cases terrestres possèdent des points d'intérêts ;
+		\item Chaque case porte un nom de trois lettres. Ces identifiants seront utilisés pour les phases de jeu. 
+	\end{itemize}
+
+\section{Les unités disponibles}
+	\begin{itemize}
+		\item Les unités maritimes peuvent se déplacer sur les cases d'eau et les sur les cases terrestres adjacentes à de l'eau ;
+		\item Les unités terrestres restent sur les cases de terre.
+	\end{itemize}
+
+\section{Les ordres disponibles}
+	\begin{itemize}
+		\item \textbf{Tenir} : défendre la zone actuelle (ordre par défaut pour toutes les unités en l'absence de choix)
+		\item \textbf{Attaquer} : attaquer une région adjacente choisie, non contrôlée par le joueur
+		\item \textbf{Soutien défensif} : apporter de l'aide à une unité adjacente, qui a choisit l'ordre \enquote{Tenir}.
+		\item \textbf{Soutien offensif} : apporter de l'aide à une unité qui a choisit l'ordre \enquote{Attaquer}. L'ennemi attaqué doit être adjacent.
+	\end{itemize}
+
+\section{Les phases disponibles}
+	\begin{itemize}
+		\item Phase de négociation : les joueurs peuvent s'envoyer des messages à destination d'un ou de plusieurs destinataires. Chaque joueur peut indiquer qu'il a fini sa phase de négociation. Si la phase de négociation n'est pas terminée au bout d'un temps défini, celle-ci se termine automatiquement. Les messages sont délivrés aux destinataires dès qu'ils sont envoyés.
+		\item Phase de combat : chaque joueur choisit les ordres qu'il donne à chacune de ses unités présentes sur la carte. Les ordres donnés sont résolus simultanément à la fin de la phase de combat.
+		\begin{itemize}
+			\item S'il y a moins ou autant d'assaillants (unités attaquantes et unités soutenantes) que de défendants (unités tenant la position et unités soutenant en défense) les unités restent sur leurs cases ;
+			\item S'il y a plus d'assaillants que de défendants, l'unité attaquante se déplace sur la case attaquée et l'unité en défense bat en retraite sur une des cases libres adjacentes. Si aucune case adjacente est libre, l'unité est alors détruite. Si une seule case est libre mais qu'il y a au moins deux unités devant battre en retraite, les unités sont alors détruites.
+			\item Les unités soutenantes (en attaque ou en défense) ne sont comptabilisées que si elles ne sont pas elles-mêmes attaquées. Si une unité soutenante est attaquée elle tient obligatoirement sa position.
+		\end{itemize}
+	\end{itemize}
+
+\section{Les types de tours}
+	Chaque tour est composé d'une alternance de deux phases.
+	\begin{itemize}
+		\item \textbf{Tour d’automne} : à la fin de ce tour, on calcule le nombre de points d'intérêts possédé par chaque joueur. Tous les point d'intérêt non occupés (sans unité sur cette case) ne changent pas de propriétaires. Ceux avec une unité sur cette case sont possédés par l'équipe ayant une unité sur cette case.
+		\item \textbf{Tour de printemps} : au début de ce tour, tous les joueurs se retrouvent avec autant d'unités que de points d'intérêts contrôlés. S'il est nécessaire de supprimer des unités, les unités à supprimer sont choisies aléatoirement. S'il est nécessaire de créer des unités, celles-ci sont crées sur un des points d'intérêts contrôlés.
+	\end{itemize}
+
+\section{Déroulement du jeu}
+	Les joueurs ont connaissance de la carte, de la liste des joueurs dans la partie ainsi que du nombre d'unités de chaque joueurs.
+	\begin{itemize}
+		\item Le jeu se déroule sur 7 années. Le jeu commence par un tour de printemps et se finit par un tour d'automne ;
+		\item Le joueur gagnant est celui-ci qui contrôle le plus de points d'intérêts à la phase du jeu. Si un joueur possède tous les points d'intérêts, la partie prend fin. Si un joueur n'a plus d'unités, il est éliminé.
+	\end{itemize}
