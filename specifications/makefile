@@ -1,8 +1,9 @@
-all: rapport 
+all: rapport
 
-rapport: 
+rapport:
+	pdflatex rapport.tex
 	pdflatex rapport.tex
 	rm -rf *.aux *.log *.out
 
-clean: 
+clean:
 	rm -rf *.pdf
