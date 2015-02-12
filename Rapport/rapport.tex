@@ -1,0 +1,73 @@
+\documentclass[12pt,titlepage,a4paper]{report}
+
+% Texte
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage[babel=true]{csquotes}
+
+% Numéroter les chapitres a partir de chaque début de partie
+\makeatletter\@addtoreset{chapter}{part}\makeatother
+
+% Mise en page
+\usepackage{url}
+\usepackage[top=2.1cm,bottom=2cm,left=2cm,right=3cm]{geometry}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0},
+}
+\usepackage{multirow}
+
+% TOC
+% \usepackage[french]{minitoc}
+% \setcounter{tocdepth}{3}
+% \setcounter{minitocdepth}{3}
+% \setlength{\mtcindent}{0pt}
+
+% Images
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+% Pour inclure des pages PDF
+\usepackage[final]{pdfpages}	
+
+% Algorithmique
+% \usepackage{algorithmeUTF8}
+% \usepackage{minted}
+
+% Couverture
+\usepackage{templateINSA}
+\initINSA
+
+\title{Document de Spécifications}
+\author{Manon \bsc{Ansart}\\ Antoine \bsc{Augusti}\\ Étienne \bsc{Batise}\\ Jean-Claude \bsc{Bernard}\\ Thibaud \bsc{Dauce}\\ Nathan \bsc{Malo}}
+
+\renewcommand\soustitre{}
+\renewcommand\infoBig{Projet d'Informatique Répartie}
+\renewcommand\infoSmall{ASI4 2015}
+
+
+% % Pour inclure du code 
+% \newcommand{\inputApp}[1]{\inputminted[tabsize=4,linenos]{c}{../#1.pgc}}
+% \newcommand{\inputCrea}[1]{\inputminted[tabsize=4,linenos]{sql}{../#1.sql}}
+% \newcommand{\inputSupp}[1]{\inputminted[tabsize=4,linenos]{sql}{../#1.sql}}
+
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
+
+\begin{document}
+
+
+\titleINSA{5}{images/cover.jpg}{-20}{20}{300}{}{}
+
+% \dominitoc
+% \tableofcontents
+
+\chapter{Spécifications}
+\input{textes/spec}
+
+\end{document}
