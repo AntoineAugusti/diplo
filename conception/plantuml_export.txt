@@ -1,0 +1,16 @@
+@startuml
+
+package "exceptions" <<Folder>> {
+  DiploException <|-- OrdreException
+  OrdreException <|-- AttaqueImpossibleException
+  OrdreException <|-- SoutienImpossibleException
+  SoutienImpossibleException <|-- SoutienCaseNonAdjacenteException
+  SoutienImpossibleException <|-- SoutienCaseNonPraticableException
+  
+  AttaqueImpossibleException <|-- AttaqueCaseNonAdjacenteException
+  AttaqueImpossibleException <|-- AttaqueCaseNonPraticableException
+  AttaqueImpossibleException <|-- AttaquePersonnelleException
+}
+
+
+@enduml
