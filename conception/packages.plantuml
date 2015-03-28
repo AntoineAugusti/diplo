@@ -1,0 +1,71 @@
+@startuml
+
+' Utilisez http://www.planttext.com/planttext pour compiler
+
+skinparam shadowing false
+
+
+package "exceptions" <<Folder>> {
+  DiploException <|-- OrdreException
+  OrdreException <|-- AttaqueImpossibleException
+  OrdreException <|-- SoutienImpossibleException
+  SoutienImpossibleException <|-- SoutienCaseNonAdjacenteException
+  SoutienImpossibleException <|-- SoutienCaseNonPraticableException
+  
+  AttaqueImpossibleException <|-- AttaqueCaseNonAdjacenteException
+  AttaqueImpossibleException <|-- AttaqueCaseNonPraticableException
+  AttaqueImpossibleException <|-- AttaquePersonnelleException
+}
+
+package "armees" <<Folder>> {
+  Armee <|-- ArmeeMaritime
+  Armee <|-- ArmeeTerrestre
+}
+
+package "cartes" <<Folder>> {
+  interface CaseInterface
+  abstract CaseAbstraite
+  Carte "1" *- "0..n" CaseInterface
+  CaseInterface <.. CaseAbstraite : use
+  CaseAbstraite <|-- CaseMaritime
+  CaseAbstraite <|-- CaseTerrestre
+  CaseTerrestre <|-- CaseCotiere
+  CaseInterface <.. PointDinteret
+}
+
+package "ordres" <<Folder>> {
+  abstract OrdreCible
+  abstract Ordre
+
+  Ordre <|-- OrdreCible
+  Ordre <|-- Tenir
+
+  OrdreCible <|-- SoutienOffensif
+  OrdreCible <|-- SoutienDefensif
+  OrdreCible <|-- Attaquer
+}
+
+package "tours" <<Folder>> {
+  abstract Tour
+  abstract Phase
+
+  Tour <|-- TourPrimptemps
+  Tour <|-- TourAutomne
+  Tour "1" *- "2" Phase
+
+  Phase <|-- PhaseNegociation
+  Phase <|-- PhaseCombat
+}
+
+package "joueurs" <<Folder>> {
+  class Joueur
+}
+
+Joueur "1" *--o "n" Armee
+Partie "1" *-- "0..n" Tour
+Partie "1" o-- "0..n" Joueur
+Partie "1" o-- "1" Carte
+
+
+
+@enduml
