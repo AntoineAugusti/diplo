@@ -1,0 +1,16 @@
+@startuml
+
+Joueur --> (Rejoindre une partie)
+Joueur --> (Discuter avec un joueur)
+Joueur --> (Donner un ordre)
+
+'Extend
+(Donner un ordre) <.. (Attaquer)
+(Donner un ordre) <.. (Soutien offensif)
+(Donner un ordre) <.. (Soutien défensif)
+(Donner un ordre) <.. (Tenir)
+
+' Include
+(Discuter avec un joueur) <.. (Envoyer un message)
+
+@enduml
