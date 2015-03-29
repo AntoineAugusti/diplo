@@ -43,6 +43,11 @@ package "ordres" <<Folder>> {
   OrdreCible <|-- SoutienOffensif
   OrdreCible <|-- SoutienDefensif
   OrdreCible <|-- Attaquer
+
+  SoutienOffensif "1" *- "1" SoutienOffensifExecuteur
+  SoutienDefensif "1" *- "1" SoutienDefensifExecuteur
+  Attaquer "1" *- "1" AttaquerExecuteur
+  Tenir "1" *- "1" TenirExecuteur
 }
 
 package "tours" <<Folder>> {
