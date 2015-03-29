@@ -6,69 +6,231 @@ skinparam shadowing false
 
 
 package "exceptions" <<Folder>> {
-  DiploException <|-- OrdreException
-  OrdreException <|-- AttaqueImpossibleException
-  OrdreException <|-- SoutienImpossibleException
-  SoutienImpossibleException <|-- SoutienCaseNonAdjacenteException
-  SoutienImpossibleException <|-- SoutienCaseNonPraticableException
-  
-  AttaqueImpossibleException <|-- AttaqueCaseNonAdjacenteException
-  AttaqueImpossibleException <|-- AttaqueCaseNonPraticableException
-  AttaqueImpossibleException <|-- AttaquePersonnelleException
+	DiploException <|-- OrdreException
+	OrdreException <|-- AttaqueImpossibleException
+	OrdreException <|-- SoutienImpossibleException
+	SoutienImpossibleException <|-- SoutienCaseNonAdjacenteException
+	SoutienImpossibleException <|-- SoutienCaseNonPraticableException
+	
+	AttaqueImpossibleException <|-- AttaqueCaseNonAdjacenteException
+	AttaqueImpossibleException <|-- AttaqueCaseNonPraticableException
+	AttaqueImpossibleException <|-- AttaquePersonnelleException
 }
 
 package "armees" <<Folder>> {
-  Armee <|-- ArmeeMaritime
-  Armee <|-- ArmeeTerrestre
+
+	abstract Armee {
+		- proprietaire: Joueur
+		- case: CaseInterface
+		- ordre: Ordre
+		+ setProprietaire(Joueur j): void
+		+ getProprietaire(): Joueur
+		+ setCase(CaseInterface case): void
+		+ getCase(): CaseInterface
+		+ setOrdre(Ordre o): void
+		+ getOrdre(): Ordre
+	}
+
+
+	Armee <|-- ArmeeMaritime
+	Armee <|-- ArmeeTerrestre
 }
 
 package "cartes" <<Folder>> {
-  interface CaseInterface
-  abstract CaseAbstraite
-  Carte "1" *- "0..n" CaseInterface
-  CaseInterface <.. CaseAbstraite : use
-  CaseAbstraite <|-- CaseMaritime
-  CaseAbstraite <|-- CaseTerrestre
-  CaseTerrestre <|-- CaseCotiere
-  CaseInterface <.. PointDinteret
+
+	class Carte {
+		- cases: List<CaseInterface>
+		+ getNbPointsDInteretsParJoueur(Joueur j): Integer
+		+ getPointsDInteretsParJoueur(Joueur j): List<PointDInteret>
+		+ getNbCasesParJoueur(Joueur j): Integer
+		+ getCasesParJoueur(Joueur j): List<CaseInterface>
+		+ getNbPointsDInterets(): Integer
+		+ getNbCases(): Integer
+		+ getCases(): List<CaseInterface>
+	}
+
+	interface CaseInterface {
+		+ getNom(): String
+		+ getVoisins(): List<CaseInterface>
+		+ getArmee(): Armee
+		+ setArmee(Armee armee): void
+		+ getProprietaire(): Joueur
+		+ setProprietaire(Joueur joueur): void
+		+ estLibre(): Boolean
+		+ estMaritime(): Boolean
+		+ estCotiere: Boolean
+		+ estTerrestre(): Boolean
+	}
+	
+	abstract CaseAbstraite {
+		- nom: String
+		- armee: Armee
+		- voisins: List<CaseInterface>
+		- proprietaire: Joueur
+		+ getNom(): String
+		+ getVoisins(): List<CaseInterface>
+		+ getArmee(): Armee
+		+ setArmee(Armee armee): void
+		+ getProprietaire(): Joueur
+		+ setProprietaire(Joueur joueur): void
+		+ estLibre(): Boolean
+		+ estMaritime(): Boolean
+		+ estCotiere: Boolean
+		+ estTerrestre(): Boolean
+	}
+
+	class PointDInteret {
+		- case: CaseTerrestre
+		+ getNom(): String
+		+ getVoisins(): List<Case>
+		+ getArmee(): Armee
+		+ setArmee(Armee armee): void
+		+ getProprietaire(): Joueur
+		+ setProprietaire(Joueur joueur): void
+		+ estLibre(): Boolean
+		+ estMaritime(): Boolean
+		+ estCotiere: Boolean
+		+ estTerrestre(): Boolean
+	}
+
+	Carte "1" *- "0..n" CaseInterface
+	CaseInterface <.. CaseAbstraite : use
+	CaseAbstraite <|-- CaseMaritime
+	CaseAbstraite <|-- CaseTerrestre
+	CaseTerrestre <|-- CaseCotiere
+	CaseInterface <.. PointDInteret
 }
 
 package "ordres" <<Folder>> {
-  abstract OrdreCible
-  abstract Ordre
 
-  Ordre <|-- OrdreCible
-  Ordre <|-- Tenir
+	abstract Ordre {
+		- joueur: Joueur
+		- armee: Armee
+		+ setJoueur(Joueur j): Joueur
+		+ getJoueur(): Joueur
+		+ setArmee(Armee a): Armee
+		+ getArmee(): Armee
+	}
 
-  OrdreCible <|-- SoutienOffensif
-  OrdreCible <|-- SoutienDefensif
-  OrdreCible <|-- Attaquer
+	abstract OrdreCible {
+		- caseCible: CaseInterface
+		+ getCase(): CaseInterface
+		+ setCase(CaseInterface c): void
+		+ estAttaque(): Boolean
+		+ estSoutienOffensif(): Boolean
+		+ estSoutienDefensif(): Boolean
+	}
 
-  SoutienOffensif "1" *- "1" SoutienOffensifExecuteur
-  SoutienDefensif "1" *- "1" SoutienDefensifExecuteur
-  Attaquer "1" *- "1" AttaquerExecuteur
-  Tenir "1" *- "1" TenirExecuteur
+	Ordre <|-- OrdreCible
+	Ordre <|-- Tenir
+
+	OrdreCible <|-- SoutienOffensif
+	OrdreCible <|-- SoutienDefensif
+	OrdreCible <|-- Attaquer
+
+	class OrdreExecuteur {
+		- ordre: Ordre
+		+ getOrdre(): Ordre
+		+ setOrdre(Ordre o): void
+	}
+
+	OrdreExecuteur <|-- SoutienOffensifExecuteur
+	OrdreExecuteur <|-- SoutienDefensifExecuteur
+	OrdreExecuteur <|-- AttaquerExecuteur
+	OrdreExecuteur <|-- TenirExecuteur
+
+	SoutienOffensif "1" *- "1" SoutienOffensifExecuteur
+	SoutienDefensif "1" *- "1" SoutienDefensifExecuteur
+	Attaquer "1" *- "1" AttaquerExecuteur
+	Tenir "1" *- "1" TenirExecuteur
 }
 
 package "tours" <<Folder>> {
-  abstract Tour
-  abstract Phase
 
-  Tour <|-- TourPrimptemps
-  Tour <|-- TourAutomne
-  Tour "1" *- "2" Phase
+	abstract Tour {
+		- type: String
+		- phaseCourante: Phase 
+		+ estAutomne(): Boolean
+		+ estPrintemps(): Boolean
+		+ phaseEstNegociation(): Boolean
+		+ phaseEstCombat(): Boolean
+		+ setPhase(Phase p): void
+	}
 
-  Phase <|-- PhaseNegociation
-  Phase <|-- PhaseCombat
+	abstract Phase {
+		- type: String
+		+ estNegociation(): Boolean
+		+ estCombat(): Boolean
+	}
+
+	Tour <|-- TourPrimptemps
+	Tour <|-- TourAutomne
+	Tour "1" *- "2" Phase
+
+	Phase <|-- PhaseNegociation
+	Phase <|-- PhaseCombat
 }
 
 package "joueurs" <<Folder>> {
-  class Joueur
+	class Joueur
+}
+
+package "messages" <<Folder>> {
+	class Message {
+		- texte: String
+		+ getTexte() : String
+		+ setTexte(String t) : void
+	}
+
+	class Conversation {
+		- joueurs: List<Joueur>
+		- messages: List<Message>
+		+ getJoueurs() : List<Joueur>
+		+ addJoueur(Joueur j) : void
+		+ getMessages() : List<Message>
+		+ addMessage(Message m) : void
+	}
+
+	Conversation "1" *- "0..n" Message
+}
+
+class Partie {
+	- carte: Carte
+	- joueurs: List<Joueur>
+	- nbTours: Integer
+	- tourCourant: Tour
+	+ ajouterJoueur(Joueur j): void
+	+ supprimerJoueur(Joueur j): void
+	+ getJoueurs(): List<Joueur>
+	+ getNbPointsDInteretsParJoueur(Joueur j): Integer
+	+ getPointsDInteretsParJoueur(Joueur j): List<PointDInteret>
+	+ tourEstAutomne(): Boolean
+	+ tourEstPrintemps(): Boolean
+	+ phaseEstNegociation(): Boolean
+	+ phaseEstCombat(): Boolean
+}
+
+class Joueur {
+	- armees: List<Armee>
+	- nom: String
+	- partie: Partie
+	+ ajouterArmee(Armee a): void
+	+ supprimerArmee(Armee a): void
+	+ getArmees(): List<Armee>
+	+ donnerOrdre(Armee a, Ordre o): void
+	+ getNom(): String
+	+ getPointsDInterets(): List<PointDInteret>
+	+ getNbPointsDInterets(): Integer
+	+ getCasesControlees(): List<CaseInterface>
+	+ rejoindrePartie(Partie p): void
+	+ quitterPartie(): void
 }
 
 Joueur "1" *--o "n" Armee
 Partie "1" *-- "0..n" Tour
 Partie "1" o-- "0..n" Joueur
+Conversation "1" o-- "2..n" Joueur
+
 Partie "1" o-- "1" Carte
 
 
