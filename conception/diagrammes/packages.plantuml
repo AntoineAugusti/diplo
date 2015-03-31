@@ -194,6 +194,19 @@ package "messages" <<Folder>> {
 	Conversation "1" *- "0..n" Message
 }
 
+class Moteur {
+    - partie : Partie
+    - nbJoueursMin : Integer
+    - fileDAttente : List<Joueur>
+    - cartes : Carte
+    --
+    + lancerPartie(partie Partie, carte Carte, joueurs List<Joueur>): void
+    + ajouterJoueur(Joueur j): void
+    + supprimerJoueur(Joueur j): void 
+    + setCarte(carte Carte): void
+    + creerPartie(nbJoueursMin Integer, carte Carte, joueurs List<Joueur>)
+}
+
 class Partie {
 	- carte: Carte
 	- joueurs: List<Joueur>
@@ -233,6 +246,9 @@ Conversation "1" o-- "2..n" Joueur
 
 Partie "1" o-- "1" Carte
 
+Moteur *-- "1" Partie
+Moteur o-- "1" Carte
+Moteur o-- "n" Joueurs
 
 
 @enduml
