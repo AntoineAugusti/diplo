@@ -1,4 +1,4 @@
-<?php namespace App\Commands;
+<?php namespace Diplo\Commands;
 
 abstract class Command {
 

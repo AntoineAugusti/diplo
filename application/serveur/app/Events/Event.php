@@ -1,4 +1,4 @@
-<?php namespace App\Events;
+<?php namespace Diplo\Events;
 
 abstract class Event {
 
