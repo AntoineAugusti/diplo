@@ -15,6 +15,9 @@ class CreateArmeesTable extends Migration {
 		Schema::create('armees', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->enum('type', ['TERRESTRE', 'MARITIME']);
+			$table->integer('id_joueur')->unsigned();
+			$table->integer('id_case')->unsigned();
 			$table->timestamps();
 		});
 	}
