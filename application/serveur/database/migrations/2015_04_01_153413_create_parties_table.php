@@ -15,6 +15,8 @@ class CreatePartiesTable extends Migration {
 		Schema::create('parties', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('nbTour');
+			$table->integer('tourCourant')->unsigned();
 			$table->timestamps();
 		});
 	}
