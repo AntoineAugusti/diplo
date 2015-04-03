@@ -11,7 +11,7 @@ Variable | Type | Description
 
 ## Réponses
 ### Succès
-Renvoie une réponse avec un code HTTP **200**.
+Renvoie une réponse avec un code HTTP **201**.
 
 #### Exemple de réponse
 ```json
