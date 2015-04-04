@@ -1,6 +1,4 @@
-<?php
-
-namespace Projets\diplo\application\serveur\app\Cartes;
+<?php namespace Diplo\Cartes;
 
 /**
  * Classe qui gère la carte du jeu d'une partie

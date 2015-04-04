@@ -1,6 +1,5 @@
-<?php
+<?php namespace Diplo\Cartes;
 
-namespace Projets\diplo\application\serveur\app\Cartes;
 
 /**
  * Class CaseAbstraite
