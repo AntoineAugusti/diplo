@@ -1,14 +1,20 @@
 <?php namespace Diplo\Joueurs;
 
+use Diplo\Armees\Armee;
+use Diplo\Cartes\CaseInterface;
+use Diplo\Core\Partie;
+use Diplo\Ordres\Ordre;
+
 /**
  * Class Joueur
+ * @package Diplo\Joueurs
  */
 class Joueur
 {
     /**
      * Liste des armées que le joueur possède
      *
-     * @var List<Armee>
+     * @var Armee[]
      */
     private $armees;
 
@@ -27,33 +33,35 @@ class Joueur
     private $partie;
 
     /**
+     * @param Armee $armee
      * @return void
      */
-    public function ajouterArmee(Armee a)
-    {
+    public function ajouterArmee(Armee $armee) {
+
     }
 
     /**
+     * @param Armee $armee
      * @return void
      */
-    public function supprimerArmee(Armee a)
-    {
+    public function supprimerArmee(Armee $armee) {
+
     }
 
     /**
-     * @return List<Armee>
+     * @return Armee[]
      */
-    public function getArmee()
-    {
-        return $armees;
+    public function getArmees() {
+
     }
 
     /**
+     * @param Armee $armee
+     * @param Ordre $ordre
      * @return void
      */
-    public function donnerOrdre(Armee a, Ordre o)
-    {
-        // TODO
+    public function donnerOrdre(Armee $armee, Ordre $ordre) {
+
     }
 
     /**
@@ -64,12 +72,11 @@ class Joueur
         return $nom;
     }
 
-
     /**
-     * @return List<PointDInterets>
+     * @return CaseInterface[]
      */
-    public function getPointsDInterets()
-    {
+    public function getPointsDInterets() {
+
     }
 
     /**
@@ -81,19 +88,18 @@ class Joueur
     }
 
     /**
-     * @return List<CaseInterface>
+     * @return CaseInterface[]
      */
-    public function getCasesControlees()
-    {
-        // TODO
-        return null;
+    public function getCasesControlees() {
+
     }
 
     /**
+     * @param Partie $partie
      * @return void
      */
-    public function rejoindrePartie(Partie p)
-    {
+    public function rejoindrePartie(Partie $partie) {
+
     }
 
     /**

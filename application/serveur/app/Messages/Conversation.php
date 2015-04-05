@@ -1,30 +1,72 @@
 <?php namespace Diplo\Messages;
 
 use Diplo\Joueurs\Joueur;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Conservation {
-	
-	private $joueurs = [];
-	
-	private $messages = [];
+/**
+ * Class Conversation
+ * @package Diplo\Messages
+ */
+class Conversation extends Model {
 
-	public function getJoueurs()
+    /**
+     * @var Joueur[]
+     */
+    private $joueurs = [];
+
+    /**
+     * @var Message[]
+     */
+    private $messages = [];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function joueurs()
+    {
+        return $this->belongsToMany(Joueur::class);
+    }
+
+    /**
+     * @return Joueur[]
+     */
+    public function getJoueurs()
 	{
 		return $this->joueurs;
 	}
 
-	public function addJoueur(Joueur $j)
+    /**
+     * @param Joueur $joueur
+     * @return void
+     */
+    public function addJoueur(Joueur $joueur)
 	{
 		$this->joueurs[] = $j;
 	}
 
-	public function getMessages()
+    /**
+     * @return HasMany
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getMessages()
 	{
 		return $this->messages;
 	}
 
-
-	public function addMessage(Message $m)
+    /**
+     * @param Message $message
+     * @return void
+     */
+    public function addMessage(Message $message)
 	{
 		$this->messages[] = $m;
 	}
