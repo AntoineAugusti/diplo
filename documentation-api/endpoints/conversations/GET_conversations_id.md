@@ -33,6 +33,7 @@ Renvoie une réponse avec un code HTTP **200**.
 #### Description de la réponse
 Variable | Type | Description
 ------------- | ------------- | -------------
+`id`  | Entier positif | Identifiant de la conversation
 `joueurs`  | Tableau d'entiers positifs | Identifiants des joueurs présent dans la conversation
 messages.`joueur`  | Entier positif | Identifiant du joueur à l'origine du message
 messages.`texte`  | Chaîne de caractère | Texte du message
