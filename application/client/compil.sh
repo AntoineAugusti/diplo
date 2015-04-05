@@ -1,15 +1,15 @@
 echo '----- Compilation du Jeu -----'
 echo 'Compilation du Network';
-javac -sourcepath src -d classes src/fr/insarouen/asi/diplo/Network/*.java
+javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/Network/*.java
 echo 'Compilation du Display';
-javac -sourcepath src -d classes src/fr/insarouen/asi/diplo/Display/*.java
+javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/Display/*.java
 echo 'Compilation des Exceptions';
-javac -sourcepath src -d classes src/fr/insarouen/asi/diplo/Exception/Network/*.java
-javac -sourcepath src -d classes src/fr/insarouen/asi/diplo/Exception/Orders/*.java
+javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/Exception/Network/*.java
+javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/Exception/Orders/*.java
 echo 'Compilation du Game';
-javac -sourcepath src -d classes src/fr/insarouen/asi/diplo/Game/*.java
+javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/Game/*.java
 echo 'Compilation du main';
-javac -sourcepath src -d classes src/fr/insarouen/asi/diplo/*.java
+javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/*.java
 # echo 'Compilation des vivants';
 # javac -sourcepath src -d classes src/fr/insarouen/asi/prog/asiaventure/elements/vivants/*.java
 
