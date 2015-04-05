@@ -1,6 +1,4 @@
-<?php
-
-namespace Projets\diplo\application\serveur\app\Joueurs;
+<?php namespace Diplo\Joueurs;
 
 /**
  * Class Joueur

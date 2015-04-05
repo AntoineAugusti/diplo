@@ -6,7 +6,9 @@ use Diplo\Ordres\Ordre;
 abstract class Armee {
 	
 	private $proprietaire;
+
 	private $case;
+
 	private $ordre;
 
 	public function setProprietaire(Joueur $j)
@@ -29,12 +31,12 @@ abstract class Armee {
 		return $this->case;
 	}
 
-	public function setCase(Ordre $o)
+    public function setOrdre(Ordre $o)
 	{
 		$this->ordre = $o;
 	}
 
-	public function getCase()
+    public function getOrdre()
 	{
 		return $this->ordre;
 	}

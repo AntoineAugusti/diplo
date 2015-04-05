@@ -1,10 +1,10 @@
 <?php namespace Diplo\Tours;
 
 /**
- * Class Tours
+ * Class Tour
  * @author John Doe
  */
-abstract class Tours
+abstract class Tour
 {
     /**
      * undocumented class variable
@@ -62,7 +62,7 @@ abstract class Tours
      */
     public function setPhase(Phase $p)
     {
-        $phaseCourante = $p;
+        this.$phaseCourante = $p;
     }
 
 }

@@ -1,4 +1,4 @@
-<?php namespace diplo\Cartes;
+<?php namespace Diplo\Cartes;
 
 /**
  * Class CaseTerrestre
