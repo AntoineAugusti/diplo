@@ -35,6 +35,4 @@ javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/
 # echo 'Compilation de la fin des TU';
 # javac -sourcepath ./testsrc -cp classes:/usr/share/java/junit-4.11.jar:/usr/share/java/hamcrest-core-1.3.jar:/usr/share/java/hamcrest-library-1.3.jar -d ./classestest ./testsrc/fr/insarouen/asi/prog/asiaventure/testsasiaventure.java
 # javac -sourcepath ./testsrc -cp classes:/usr/share/java/junit-4.11.jar:/usr/share/java/hamcrest-core-1.3.jar:/usr/share/java/hamcrest-library-1.3.jar -d ./classestest ./testsrc/fr/insarouen/asi/prog/asiaventure/AllTests.java
-
-
 echo 'Fin de la compilation';
