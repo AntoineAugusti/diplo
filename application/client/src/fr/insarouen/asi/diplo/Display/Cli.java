@@ -11,11 +11,13 @@ import java.util.List;
 import java.lang.Exception;
 import java.util.Iterator;
 import java.util.Set;
+import java.io.Console;
+
 
 
 public class Cli {
 	private String ordre;
-
+	public static final char ESC = 27;
 
 	// constructeur
 	/**
@@ -57,7 +59,7 @@ public
 		}
 	}
 
-	public void commandEnvoyerMessage(String message, String... pseudos) {
+	public void commandEnvoyerMessage(String message, String pseudos) {
 		try {
 		    //appeler méthode envoyer messages qui va aller chercher l'id associé au pseudo
 
@@ -91,6 +93,18 @@ public
 		} catch (Exception e) {
 		    return;
 		}
+	}
+
+	public void commandClear() {
+		Console c = System.console();
+			if (c == null) {
+			    System.err.println("no console");
+			    System.exit(1);
+			}
+			c.writer().print(ESC + "[2J");
+			c.flush();
+			c.writer().print(ESC + "[1;1H");
+			c.flush();
 	}
 
 	public void commandQuitter() {
@@ -171,7 +185,7 @@ public
 				method = this.getClass().getMethod("command"+commande.substring(0,1).toUpperCase()+commande.substring(1));
 			}
 			if (parametres.length == 2 ){
-				method = this.getClass().getMethod("command"+commande.substring(0,1).toUpperCase()+commande.substring(1), Integer.class);
+				method = this.getClass().getMethod("command"+commande.substring(0,1).toUpperCase()+commande.substring(1), int.class);
 			}
 			if (parametres.length >= 3){
 					method = this.getClass().getMethod("command"+commande.substring(0,1).toUpperCase()+commande.substring(1),String.class, String.class, String.class);
@@ -219,7 +233,7 @@ public
 		String s="";
 
 		while(true) {
-			System.out.print(">> ");
+			System.out.print("diplo >> ");
 			Scanner sc = new Scanner(System.in);
 			s=sc.nextLine();  
 			this.setOrdre(s);
