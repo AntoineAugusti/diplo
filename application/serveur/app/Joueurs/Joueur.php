@@ -36,7 +36,10 @@ class Joueur
      * @param Armee $armee
      * @return void
      */
-    public function ajouterArmee(Armee $armee) {
+    public function ajouterArmee(Armee $armee) 
+    {
+
+        array_push($this->cases, $armee);
 
     }
 
@@ -44,15 +47,19 @@ class Joueur
      * @param Armee $armee
      * @return void
      */
-    public function supprimerArmee(Armee $armee) {
+    public function supprimerArmee(Armee $armee) 
+    {
+
 
     }
 
     /**
      * @return Armee[]
      */
-    public function getArmees() {
+    public function getArmees() 
+    {
 
+        return $this->armee;
     }
 
     /**
@@ -60,7 +67,11 @@ class Joueur
      * @param Ordre $ordre
      * @return void
      */
-    public function donnerOrdre(Armee $armee, Ordre $ordre) {
+    public function donnerOrdre(Armee $armee, Ordre $ordre)
+    {
+
+        $armee->setOrdre($ordre);
+        $ordre->setArmee($armee);
 
     }
 
@@ -73,13 +84,19 @@ class Joueur
     }
 
     /**
+     * Non implementée
+     *
      * @return CaseInterface[]
      */
-    public function getPointsDInterets() {
+    public function getPointsDInterets() 
+    {
 
+        return null;
     }
 
     /**
+     * Non implementée
+     *
      * @return integer
      */
     public function getNbPoinsDInterets()
@@ -90,16 +107,29 @@ class Joueur
     /**
      * @return CaseInterface[]
      */
-    public function getCasesControlees() {
+    public function getCasesControlees()
+    {
 
+        $cases = array();
+
+        foreach ($this->armees as $armee)
+        {
+
+            array_push($cases, $armee->getCase());
+
+        }
+
+        return $cases;
     }
 
     /**
      * @param Partie $partie
      * @return void
      */
-    public function rejoindrePartie(Partie $partie) {
+    public function rejoindrePartie(Partie $partie)
+    {
 
+        $this.partie = $partie;
     }
 
     /**
@@ -107,6 +137,7 @@ class Joueur
      */
     public function quitterPartie()
     {
+
     }
 
 }

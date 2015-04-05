@@ -57,7 +57,7 @@ class Carte
         foreach ($this->cases as $case)
         {
 
-            if ($case.proprietaire == $j) 
+            if ($case->proprietaire == $j) 
             {
                 $counter++;
             }
