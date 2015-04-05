@@ -2,6 +2,8 @@
 
 use Diplo\Joueurs\Joueur;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Conversation
@@ -18,6 +20,14 @@ class Conversation extends Model {
      * @var Message[]
      */
     private $messages = [];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function joueurs()
+    {
+        return $this->belongsToMany(Joueur::class);
+    }
 
     /**
      * @return Joueur[]
@@ -37,13 +47,20 @@ class Conversation extends Model {
 	}
 
     /**
+     * @return HasMany
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    /**
      * @return Message[]
      */
     public function getMessages()
 	{
 		return $this->messages;
 	}
-
 
     /**
      * @param Message $message
