@@ -15,21 +15,15 @@ import java.util.Set;
 
 public class Cli {
 	private String ordre;
-	private Client client;
-	// private Storage local;
 
 
 	// constructeur
 	/**
 	* Constructeur de la classe Cli, 
-	* @param String : nom
-	* @param HashMap <String, Objet> objets
 	*/
 public
 	 Cli() {
 		this.ordre = null;
-		// this.local = new Storage();
-		// this.client = new Client();
 	}
 
 	// methodes 
@@ -177,7 +171,7 @@ public
 				method = this.getClass().getMethod("command"+commande.substring(0,1).toUpperCase()+commande.substring(1));
 			}
 			if (parametres.length == 2 ){
-				method = this.getClass().getMethod("command"+commande.substring(0,1).toUpperCase()+commande.substring(1), String.class);
+				method = this.getClass().getMethod("command"+commande.substring(0,1).toUpperCase()+commande.substring(1), Integer.class);
 			}
 			if (parametres.length >= 3){
 					method = this.getClass().getMethod("command"+commande.substring(0,1).toUpperCase()+commande.substring(1),String.class, String.class, String.class);
