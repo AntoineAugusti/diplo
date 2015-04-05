@@ -3,14 +3,37 @@
 use Diplo\Cartes\CaseInterface;
 use Diplo\Ordres\Ordre;
 
+/**
+ * Classe qui gère les armées d'un Joueur
+ */
 abstract class Armee {
 	
+    /**
+     * Le joueur proprietaire de l'armee
+     *
+     * @var Joueur
+     */
 	private $proprietaire;
 
+    /**
+     * La case sur laquelle se trouve l'armee
+     *
+     * @var Case
+     */
 	private $case;
 
-	private $ordre;
+    /**
+     * Le prochaine ordre que l'armee va executer
+     *
+     * @var Ordre
+     */
+	private $ordre; 
 
+    /**
+     * Change le proprietaire de cette armee
+     *
+     * @var Joueur
+     */
 	public function setProprietaire(Joueur $j)
 	{
 		$this->proprietaire = $j;
@@ -21,6 +44,11 @@ abstract class Armee {
 		return $this->proprietaire;
 	}
 
+    /**
+     * Change la case sur laquelle se trouve cette armee
+     *
+     * @var CaseInterface
+     */
 	public function setCase(CaseInterface $c)
 	{
 		$this->case = $c;
@@ -31,6 +59,11 @@ abstract class Armee {
 		return $this->case;
 	}
 
+    /**
+     * Donne le prochain ordre de l'armee
+     *
+     * @var Ordre
+     */
     public function setOrdre(Ordre $o)
 	{
 		$this->ordre = $o;
@@ -41,11 +74,17 @@ abstract class Armee {
 		return $this->ordre;
 	}
 
+    /**
+     * @return false
+     */
 	public function estArmeeMaritime()
 	{
 		return false;
 	}
 
+    /**
+     * @return false
+     */
 	public function estArmeeTerrestre()
 	{
 		return false;

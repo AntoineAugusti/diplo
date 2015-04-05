@@ -8,38 +8,40 @@ class Carte
     /**
      * Contient l'ensemble des cases d'une carte
      *
-     * @var List<CaseInterface> cases
+     * @var CaseInterface[] cases
      */
     private $cases;
 
     public function __construct($options)
     {
-        // TODO ! 
-        // code
+        $this->cases = array(); 
     }
 
     /**
      * Retourne le nombre de points d'interets pour un joueur
+     *
+     * Non implémentée
      *
      * @var Joueur j : Le joueur concerné
      * @return integer : Le nombre de points d'interets du joueur
      */
     public function getNbPointsDInteretsParJoueur(Joueur $j)
     {
-        // TODO
-        return 0;
+        return null;
     }
 
     /**
      * Retourne les points d'interets pour un joueur
      *
+     * Non implémentée
+     *
      * @var Joueur j : Le joueur concerné
-     * @return List<PointDInteret> : Les points d'interets du joueur
+     * @return PointDInteret[] : Les points d'interets du joueur
      */
-    public function getPointsDInteretParJoueur(Joueur j)
+    public function getPointsDInteretParJoueur(Joueur $j)
     {
-        // TODO
-        return 0;
+        
+        return null;
     }
 
     /**
@@ -48,9 +50,20 @@ class Carte
      * @var Joueur j : Le joueur concerné
      * @return integer 
      */
-    public function getNbCasesParJoueur(Joueur j)
+    public function getNbCasesParJoueur(Joueur $j)
     {
-        return null;
+        $counter = 0;
+
+        foreach ($this->cases as $case)
+        {
+
+            if ($case.proprietaire == $j) 
+            {
+                $counter++;
+            }
+            
+        }
+        return $counter;
     }
 
     /**
@@ -58,15 +71,27 @@ class Carte
      * @var le joueur concerné
      * @return List<CaseInterface>
      */
-    public function getCasesParJoueur(Joueur j)
+    public function getCasesParJoueur(Joueur $j)
     {
-        // TODO
-        return null;
+        $cases = array();
+
+        foreach ($this->cases as $case) 
+        {
+            if ($case.proprietaire == $j) 
+            {
+                array_pus($cases, $case);
+            }
+            
+        }
+
+        return $cases;
     }
 
 
     /**
      * Retourne le nombre de point d'interets sur la carte
+     *
+     * Non implementée
      *
      * @return integer
      */
@@ -82,8 +107,7 @@ class Carte
      */
     public function getNbCases()
     {
-        // TODO
-        return 0;
+        return count($this->cases);
     }
 
 
@@ -94,7 +118,7 @@ class Carte
      */
     public function getCases()
     {
-        return 0;
+        return $this->cases;
     }
 
 }

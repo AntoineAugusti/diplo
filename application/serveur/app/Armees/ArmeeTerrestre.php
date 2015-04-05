@@ -2,6 +2,7 @@
 
 class ArmeeTerrestre extends Armee {
 
+
 	public function estArmeeTerrestre()
 	{
 		return true;
