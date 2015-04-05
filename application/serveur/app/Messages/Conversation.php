@@ -1,30 +1,55 @@
 <?php namespace Diplo\Messages;
 
 use Diplo\Joueurs\Joueur;
+use Illuminate\Database\Eloquent\Model;
 
-class Conservation {
-	
-	private $joueurs = [];
-	
-	private $messages = [];
+/**
+ * Class Conversation
+ * @package Diplo\Messages
+ */
+class Conversation extends Model {
 
-	public function getJoueurs()
+    /**
+     * @var Joueur[]
+     */
+    private $joueurs = [];
+
+    /**
+     * @var Message[]
+     */
+    private $messages = [];
+
+    /**
+     * @return Joueur[]
+     */
+    public function getJoueurs()
 	{
 		return $this->joueurs;
 	}
 
-	public function addJoueur(Joueur $j)
+    /**
+     * @param Joueur $joueur
+     * @return void
+     */
+    public function addJoueur(Joueur $joueur)
 	{
 		$this->joueurs[] = $j;
 	}
 
-	public function getMessages()
+    /**
+     * @return Message[]
+     */
+    public function getMessages()
 	{
 		return $this->messages;
 	}
 
 
-	public function addMessage(Message $m)
+    /**
+     * @param Message $message
+     * @return void
+     */
+    public function addMessage(Message $message)
 	{
 		$this->messages[] = $m;
 	}
