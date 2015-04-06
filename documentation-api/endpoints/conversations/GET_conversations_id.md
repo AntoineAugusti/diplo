@@ -16,27 +16,30 @@ Renvoie une réponse avec un code HTTP **200**.
 #### Exemple de réponse
 ```json
 {
-	"id": 1
-	"joueurs":[1,3],
-	"messages": [
-		{
-			"joueur": 1
-			"texte": "Bonjour, ça va ?"
-		},
-		{
-			"joueur": 3
-			"texte": "Oui et toi ?"
-		}
-	]
+   "id":1,
+   "joueurs":[1, 3],
+   "messages":[
+      {
+         "joueur":1,
+         "texte":"Bonjour, ça va ?",
+         "created_at":"2014-12-31 11:55:00"
+      },
+      {
+         "joueur":3,
+         "texte":"Oui et toi ?",
+         "created_at":"2014-12-31 12:00:00"
+      }
+   ]
 }
 ```
 #### Description de la réponse
 Variable | Type | Description
 ------------- | ------------- | -------------
-`id`  | Entier positif | Identifiant de la conversation
-`joueurs`  | Tableau d'entiers positifs | Identifiants des joueurs présent dans la conversation
-messages.`joueur`  | Entier positif | Identifiant du joueur à l'origine du message
-messages.`texte`  | Chaîne de caractère | Texte du message
+`id`  | Entier naturel non nul | Identifiant de la conversation
+`joueurs`  | Tableau d'entiers positifs | Identifiants des joueurs présents dans la conversation
+messages.`joueur`  | Entier naturel non nul | Identifiant du joueur à l'origine du message
+messages.`texte`  | Chaîne de caractères | Texte du message
+messages.`created_at`  | Chaîne de caractères | La date de création du message, au format `YYYY-MM-DD HH:MM:SS` et au fuseau horaire UTC
 
 ### Erreurs
 #### Exemple de réponse
