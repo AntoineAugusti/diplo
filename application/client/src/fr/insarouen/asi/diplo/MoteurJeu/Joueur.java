@@ -1,6 +1,5 @@
 package fr.insarouen.asi.diplo.MoteurJeu;
 
-
 public class Joueur{
 	public int id;
 	public String pseudo;
