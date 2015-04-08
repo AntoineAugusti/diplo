@@ -1,7 +1,7 @@
-package fr.insarouen.asi.diplo.Network;
+package fr.insarouen.asi.diplo.Reseau;
 
-import fr.insarouen.asi.diplo.Exception.Network.*;
-import fr.insarouen.asi.diplo.Game.*;
+import fr.insarouen.asi.diplo.Exception.ReseauException.*;
+import fr.insarouen.asi.diplo.MoteurJeu.*;
 import org.json.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,11 +10,11 @@ import java.io.StringReader;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.util.*;
-public class ComServer{
+public class CommunicationServeur{
 	// Doit être de type http://example.com/, afin que les autres méthodes n'aient plus qu'à ajouter l'URI à la fin. 
 	private String serveurURL;
 
-	public ComServer(String URL){
+	public CommunicationServeur(String URL){
 		this.serveurURL=URL;
 	}
 	// Créer un objet partie lorsque l'on rejoint une partie avec un id.

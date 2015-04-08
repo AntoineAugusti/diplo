@@ -1,4 +1,4 @@
-package fr.insarouen.asi.diplo.Game;
+package fr.insarouen.asi.diplo.MoteurJeu;
 
 import java.util.*;
 
