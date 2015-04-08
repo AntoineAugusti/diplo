@@ -7,7 +7,7 @@ Méthode | URI | Description
 ## Paramètres de la requête
 Variable | Type | Description
 ------------- | ------------- | -------------
-`:id`  | Entier naturel | Spécifie l'identifiant de la conversation
+`:id`  | Entier naturel non nul | Spécifie l'identifiant de la conversation
 
 ## Réponses
 ### Succès
