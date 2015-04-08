@@ -1,5 +1,4 @@
-package fr.insarouen.asi.diplo.Exception.Network;
-
+package fr.insarouen.asi.diplo.Exception.ReseauException;
 
 public class PartieIntrouvableException extends Exception{
 

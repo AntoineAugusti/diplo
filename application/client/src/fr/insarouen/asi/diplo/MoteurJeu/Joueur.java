@@ -1,5 +1,4 @@
-package fr.insarouen.asi.diplo.Game;
-
+package fr.insarouen.asi.diplo.MoteurJeu;
 
 public class Joueur{
 	public int id;
