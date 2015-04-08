@@ -1,4 +1,4 @@
-package fr.insarouen.asi.diplo.Display;
+package fr.insarouen.asi.diplo.Affichage;
 
 import java.util.*;
 import java.io.StreamTokenizer;
@@ -23,8 +23,7 @@ public class Cli {
 	/**
 	* Constructeur de la classe Cli, 
 	*/
-public
-	 Cli() {
+	public Cli() {
 		this.ordre = null;
 	}
 
@@ -33,7 +32,7 @@ public
 		this.ordre = ordre;
 	}
 	
-	public void commandCreerPartie(int nbMinJoueurs) {
+	public void commandeCreerPartie(int nbMinJoueurs) {
 		try{
 			//appeler méthode pour créer une partie qui affiche l'id de la partie crée
 		}
@@ -42,7 +41,7 @@ public
 		    return;
 		}
 	}
-	public void commandRejoindre(int idPartie) {
+	public void commandeRejoindre(int idPartie) {
 		try {
 		    //appeler méthode permettant de rejoindre une partie
 		} catch (Exception e) {
@@ -50,7 +49,7 @@ public
 		}
 	}
 
-	public void commandDonnerOrdre(String unite, String ordre) {
+	public void commandeDonnerOrdre(String unite, String ordre) {
 		try {
 		    //appeler méthode ordre;
 
@@ -59,7 +58,7 @@ public
 		}
 	}
 
-	public void commandEnvoyerMessage(String message, String pseudos) {
+	public void commandeEnvoyerMessage(String message, String pseudos) {
 		try {
 		    //appeler méthode envoyer messages qui va aller chercher l'id associé au pseudo
 
@@ -68,7 +67,7 @@ public
 		}
 	}
 
-	public void commandListerUnites() {
+	public void commandeListerUnites() {
 		try {
 		    //appeler méthode lister unités
 
@@ -77,7 +76,7 @@ public
 		}
 	}
 
-	public void commandListerCasesControlees() {
+	public void commandeListerCasesControlees() {
 		try {
 		    //appeler méthode lister cases contrôlées
 
@@ -86,7 +85,7 @@ public
 		}
 	}
 
-	public void commandAfficherCarte() {
+	public void commandeAfficherCarte() {
 		try {
 		    //appeler méthode afficher carte
 
@@ -95,7 +94,7 @@ public
 		}
 	}
 
-	public void commandClear() {
+	public void commandeClear() {
 		Console c = System.console();
 			if (c == null) {
 			    System.err.println("no console");
@@ -107,17 +106,17 @@ public
 			c.flush();
 	}
 
-	public void commandQuitter() {
+	public void commandeQuitter() {
 		System.exit(0);
 	}
 
-	public void commandHelp() {
+	public void commandeAide() {
 		String setPlainText = "\033[0;0m";
 		String setBoldText = "\033[0;1m";
-		System.out.println("List of commands:");
+		System.out.println("Liste des commandes :");
 		System.out.println("");
 
-		System.out.println(setBoldText+"NAME"+setPlainText);
+		System.out.println(setBoldText+"NOM"+setPlainText);
 		System.out.println("creerPartie");
 		System.out.println(setBoldText+"DESCRIPTION"+setPlainText);
 		System.out.println("Permet de créer une partie en spécifiant le nombre minimum de joueurs");
@@ -125,7 +124,7 @@ public
 		System.out.println("nbMinJoueurs  Le nombre minimum de joueurs acceptés dans la partie");
 		System.out.println("");
 
-		System.out.println(setBoldText+"NAME"+setPlainText);
+		System.out.println(setBoldText+"NOM"+setPlainText);
 		System.out.println("rejoindre");
 		System.out.println(setBoldText+"DESCRIPTION"+setPlainText);
 		System.out.println("Rejoindre une partie à partir de son id");
@@ -133,7 +132,7 @@ public
 		System.out.println("idPartie  L'id de la partie à rejoindre");
 		System.out.println("");
 
-		System.out.println(setBoldText+"NAME"+setPlainText);
+		System.out.println(setBoldText+"NOM"+setPlainText);
 		System.out.println("donnerOrdre");
 		System.out.println(setBoldText+"DESCRIPTION"+setPlainText);
 		System.out.println("Donner un ordre à une unité");
@@ -142,7 +141,7 @@ public
 		System.out.println("ordre  L'ordre que l'on veut donner");
 		System.out.println("");
 
-		System.out.println(setBoldText+"NAME"+setPlainText);
+		System.out.println(setBoldText+"NOM"+setPlainText);
 		System.out.println("envoyerMessage");
 		System.out.println(setBoldText+"DESCRIPTION"+setPlainText);
 		System.out.println("Envoyer un message à une liste de joueurs");
@@ -150,25 +149,25 @@ public
 		System.out.println("pseudos  La liste de pseudos des joueurs à qui envoyer le message");
 		System.out.println("");
 
-		System.out.println(setBoldText+"NAME"+setPlainText);
+		System.out.println(setBoldText+"NOM"+setPlainText);
 		System.out.println("listerUnites");
 		System.out.println(setBoldText+"DESCRIPTION"+setPlainText);
 		System.out.println("Lister les unités possédées");
 		System.out.println("");
 
-		System.out.println(setBoldText+"NAME"+setPlainText);
+		System.out.println(setBoldText+"NOM"+setPlainText);
 		System.out.println("listerCasesControlees");
 		System.out.println(setBoldText+"DESCRIPTION"+setPlainText);
 		System.out.println("Lister les cases contrôlées");
 		System.out.println("");
 
-		System.out.println(setBoldText+"NAME"+setPlainText);
+		System.out.println(setBoldText+"NOM"+setPlainText);
 		System.out.println("afficherCarte");
 		System.out.println(setBoldText+"DESCRIPTION"+setPlainText);
 		System.out.println("Affiche la carte du jeu");
 		System.out.println("");
 
-		System.out.println(setBoldText+"NAME"+setPlainText);
+		System.out.println(setBoldText+"NOM"+setPlainText);
 		System.out.println("quitter");
 		System.out.println(setBoldText+"DESCRIPTION"+setPlainText);
 		System.out.println("Quitter le jeu");
@@ -182,13 +181,13 @@ public
 		// À modifier selon le nombre de paramètres en entrées
 		try{
 			if (parametres.length == 1 ){
-				method = this.getClass().getMethod("command"+commande.substring(0,1).toUpperCase()+commande.substring(1));
+				method = this.getClass().getMethod("commande"+commande.substring(0,1).toUpperCase()+commande.substring(1));
 			}
 			if (parametres.length == 2 ){
-				method = this.getClass().getMethod("command"+commande.substring(0,1).toUpperCase()+commande.substring(1), int.class);
+				method = this.getClass().getMethod("commande"+commande.substring(0,1).toUpperCase()+commande.substring(1), int.class);
 			}
 			if (parametres.length >= 3){
-					method = this.getClass().getMethod("command"+commande.substring(0,1).toUpperCase()+commande.substring(1),String.class, String.class, String.class);
+					method = this.getClass().getMethod("commande"+commande.substring(0,1).toUpperCase()+commande.substring(1),String.class, String.class, String.class);
 			}
 		}
 		catch (NoSuchMethodException e){

@@ -1,1 +1,1 @@
-java fr.insarouen.asi.diplo.Main
+java -cp classes/ fr.insarouen.asi.diplo.Main
