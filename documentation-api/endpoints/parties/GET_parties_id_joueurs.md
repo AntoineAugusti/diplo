@@ -7,7 +7,7 @@ Méthode | URI | Description
 ## Paramètres de la requête
 Variable | Type | Description
 ------------- | ------------- | -------------
-`:id`  | Entier naturel | Spécifie l'identifiant de partie
+`:id`  | Entier naturel non nul | Spécifie l'identifiant de partie
 
 ## Réponses
 ### Succès
@@ -38,12 +38,12 @@ Renvoie une réponse avec un code HTTP **200**.
 #### Description de la réponse
 Variable | Type | Description
 ------------- | ------------- | -------------
-`nb_joueurs`  | Entier naturel | Le nombre de joueurs participant à la partie
-*joueurs*.`id`  | Entier naturel | L'identifiant du joueur
+`nb_joueurs`  | Entier naturel non nul | Le nombre de joueurs participant à la partie
+*joueurs*.`id`  | Entier naturel non nul | L'identifiant du joueur
 *joueurs*.`pseudo`  | Chaîne de caractères | Le pseudonyme du joueur
 *joueurs*.`pays`  | Chaîne de caractères | Le code du pays du joueur au format [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3)
-*joueurs*.`armees_restantes`  | Entier naturel | Le nombre d'unités restantes pour le joueur
-*joueurs*.`cases_controlees`  | Entier naturel | Le nombre de cases contrôlées par le joueur
+*joueurs*.`armees_restantes`  | Entier naturel non nul | Le nombre d'unités restantes pour le joueur
+*joueurs*.`cases_controlees`  | Entier naturel non nul | Le nombre de cases contrôlées par le joueur
 
 ### Erreurs
 #### Exemple de réponse
