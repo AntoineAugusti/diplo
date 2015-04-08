@@ -17,7 +17,7 @@ Renvoie une réponse avec un code HTTP **200**.
 ```json
 {
    "statut":"attente_joueurs",
-   "message":"Il n'y a pas assez de joueurs pour démarrer la partie 42"
+   "message":"Il n'y a pas assez de joueurs pour démarrer la partie"
 }
 ```
 #### Description de la réponse
@@ -26,8 +26,12 @@ Variable | Type | Description
 `statut`  | Chaîne de caractères | Une clé donnant des informations sur le statut d'une partie
 `message`  | Chaîne de caractères | Un message, lisible humainement, donnant des informations sur le statut d'une partie
 
-Valeurs possibles de `statut` :
-- `attente_joueurs` : il n'y a pas assez de joueurs pour démarrer la partie
+#### Réponses possibles
+Valeur de `statut` | Valeur de `message` | Description
+------------- | ------------- | -------------
+`attente_joueurs` | `Il n'y a pas assez de joueurs pour démarrer la partie` | Il n'y a pas assez de joueurs pour démarrer la partie
+`en_jeu` | `La partie est en cours` | La partie est en cours. Pour avoir des informations sur le déroulement du jeu, il faut appeler `GET` `parties/:id/statut`.
+`fin` | `La partie est terminée` | La partie est terminée. Pour déterminer si la partie est un match nul ou le joueur gagnant, il faut appeler `GET` `parties/:id/joueurs`
 
 ### Erreurs
 #### Exemple de réponse
