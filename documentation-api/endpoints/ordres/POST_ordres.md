@@ -43,14 +43,13 @@ Méthode | URI | Description
 
 Variable | Type | Description
 ------------- | ------------- | -------------
-`ordres`  | Tableau de demande d'ordres | Tableau des ordres à donner à chaque armée
-*ordres*.`id_armee`  | Entier naturel | Identifiant de l'armée concernée par l'ordre
-*ordres*.`ordre`  | Chaîne de caractères | Ordre à effectuer, ce champ peut prendre les valeurs : "Tenir", "Attaquer", "SoutienDefensif" ou "SoutienOffensif".
-*ordres*.`id_case`  | Entier naturel | Identifiant de la case cible de l'ordre. Ce champ n'est prit en compte que pour les ordres dit *avec cible* ("Attaquer", "SoutienDefensif" ou "SoutienOffensif").
+`id_armee`  | Entier naturel | Identifiant de l'armée concernée par l'ordre
+`ordre`  | Chaîne de caractères | Ordre à effectuer, ce champ peut prendre les valeurs : "Tenir", "Attaquer", "SoutienDefensif" ou "SoutienOffensif".
+`id_case`  | Entier naturel | Identifiant de la case cible de l'ordre. Ce champ n'est prit en compte que pour les ordres dit *avec cible* ("Attaquer", "SoutienDefensif" ou "SoutienOffensif").
 
 ## Réponses
 ### Succès
-Renvoie une réponse avec un code HTTP **201**.
+Renvoie une réponse avec un code HTTP **202**.
 
 ### Erreurs
 #### Exemple de réponse
