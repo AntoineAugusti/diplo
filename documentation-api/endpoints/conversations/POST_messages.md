@@ -40,8 +40,8 @@ Variable | Type | Description
 `id`  | Entier positif | Identifiant de la conversation créée
 `id_conversation`  | Entier positif | Identifiants de la conversation
 `id_joueur`  | Entier positif | Identifiants du joueur émetteur du message
-`texte`  | Chaîne de caractère | Texte du message
-`date_creation`  | Chaîne de caractère | Date de création du message sous la forme "YYYY-MM-DD HH:MM:SS" 
+`texte`  | Chaîne de caractères | Texte du message
+`date_creation`  | Chaîne de caractères | Date de création du message sous la forme "YYYY-MM-DD HH:MM:SS" 
 
 ### Erreurs
 #### Exemple de réponse
