@@ -27,8 +27,8 @@ Renvoie une réponse avec un code HTTP **201**.
 ```json
 {
    "id": 1,
-   "conversation":42,
-   "joueur":2,
+   "id_conversation":42,
+   "id_joueur":2,
    "texte":"Bonjour, comment ça va ?",
    "date_creation":"1975-12-25 14:15:16"
 }
@@ -41,7 +41,7 @@ Variable | Type | Description
 `id_conversation`  | Entier positif | Identifiants de la conversation
 `id_joueur`  | Entier positif | Identifiants du joueur émetteur du message
 `texte`  | Chaîne de caractères | Texte du message
-`date_creation`  | Chaîne de caractères | Date de création du message sous la forme "YYYY-MM-DD HH:MM:SS" 
+`date_creation`  | Chaîne de caractères | Date de création du message sous la forme "YYYY-MM-DD HH:MM:SS"
 
 ### Erreurs
 #### Exemple de réponse
