@@ -31,7 +31,7 @@ Renvoie une réponse avec un code HTTP **201**.
 #### Description de la réponse
 Variable | Type | Description
 ------------- | ------------- | -------------
-`id`  | Entier positif | Identifiant de la conversation créée
+`id`  | Entier naturel non nul | Identifiant de la conversation créée
 `joueurs`  | Tableau d'entiers naturels non nuls | Identifiants des joueurs présents dans la conversation
 `messages`  | Tableau de Message | Tableau vide
 

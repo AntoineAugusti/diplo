@@ -24,7 +24,7 @@ Renvoie une réponse avec un code HTTP **200**.
 Variable | Type | Description
 ------------- | ------------- | -------------
 `phase`  | Chaîne de caractères | Phase courante de la partie
-`chrono`  | Entier positif | Nombre de secondes restantes pour cette phase
+`chrono`  | Entier naturel non nul | Nombre de secondes restantes pour cette phase
 
 Valeurs possibles de `phase` :
 - `NEGOCIATION` : phase de négociation
