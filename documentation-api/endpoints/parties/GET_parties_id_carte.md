@@ -33,7 +33,7 @@ Renvoie une réponse avec un code HTTP **200**.
             "id_armee":1
         }
     ],
-    nb_cases:"2"
+    "nb_cases":2
 }
 ```
 #### Description de la réponse
