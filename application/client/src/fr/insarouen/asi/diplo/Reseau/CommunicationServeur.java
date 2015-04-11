@@ -163,6 +163,51 @@ public class CommunicationServeur{
 		}
 		return phaseCourante;
 	}
+	public Carte recupererInfosCarte(int partieID) throws PartieIntrouvableException, RuntimeException{
+		Carte carte = new Carte();
+		try{
+			URL url = new URL(serveurURL+"parties/"+partieID+"/carte");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Accept", "text/plain");
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+			String reponse = br.readLine();
+			if(conn.getResponseCode() == 200){
+				JSONObject obj = new JSONObject(reponse);
+				JSONArray listeCase = obj.getJSONArray("cases");
+				for(int i=0; i<listeCase.length();i++){
+					int joueur_val,armee_val;
+					if (!listeCase.getJSONObject(i).getBoolean("est_occupee")){
+						armee_val=0;
+					}
+					else{
+						armee_val=listeCase.getJSONObject(i).getInt("id_armee");
+					}
+					if (listeCase.getJSONObject(i).getBoolean("est_libre")){
+						joueur_val=0;
+					}
+					else{
+						joueur_val=listeCase.getJSONObject(i).getInt("id_joueur");
+					}
+					carte.ajouterCase(new Case(listeCase.getJSONObject(i).getInt("id"),listeCase.getJSONObject(i).getBoolean("est_libre"),joueur_val,listeCase.getJSONObject(i).getBoolean("est_occupee"),armee_val));
+				}
+			}
+			if(conn.getResponseCode() == 404){
+				JSONObject obj = new JSONObject(reponse);
+				String message = obj.getString("erreur");
+				throw new PartieIntrouvableException(message);
+			}
+			if(conn.getResponseCode() != 404 && conn.getResponseCode() != 200){
+				throw new RuntimeException("Echec :" +conn.getResponseCode());
+			}
+			conn.disconnect();
 
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return carte;
+	}
 }
 ;
