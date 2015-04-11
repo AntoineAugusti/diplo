@@ -10,6 +10,7 @@ import java.io.StringReader;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.util.*;
+
 public class CommunicationServeur{
 	// Doit être de type http://example.com/, afin que les autres méthodes n'aient plus qu'à ajouter l'URI à la fin. 
 	private String serveurURL;
@@ -18,10 +19,10 @@ public class CommunicationServeur{
 		this.serveurURL=URL;
 	}
 	// Créer un objet partie lorsque l'on rejoint une partie avec un id.
-	public Jeu rejoindrePartie(int id) throws RuntimeException, PartieIntrouvableException, PartiePleineException{
+	public Jeu rejoindrePartie(int partieID) throws RuntimeException, PartieIntrouvableException, PartiePleineException{
 		Jeu jeuCourant=null;
 		try{
-			URL url = new URL(serveurURL+"parties/"+id+"/rejoindre");
+			URL url = new URL(serveurURL+"parties/"+partieID+"/rejoindre");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Accept", "text/plain");
@@ -58,10 +59,10 @@ public class CommunicationServeur{
 		return jeuCourant;
 	}
 	// Renvoi un tableau de joueurs.
-	public ArrayList<Joueur> recupererInfosJoueurs(int id) throws PartieIntrouvableException, RuntimeException{
+	public ArrayList<Joueur> recupererInfosJoueurs(int partieID) throws PartieIntrouvableException, RuntimeException{
 		ArrayList<Joueur> liste = new ArrayList<Joueur>();
 		try{
-			URL url = new URL(serveurURL+"parties/"+id+"/joueurs");
+			URL url = new URL(serveurURL+"parties/"+partieID+"/joueurs");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "text/plain");
@@ -92,10 +93,10 @@ public class CommunicationServeur{
 		return liste;
 	}
 	// Renvoi une chaîne de caractères décrivant l'état de la partie
-	public String recupererInfosPartie(int id) throws PartieIntrouvableException, RuntimeException{
+	public String recupererInfosPartie(int partieID) throws PartieIntrouvableException, RuntimeException{
 		String etat="En cours";
 		try{
-			URL url = new URL(serveurURL+"parties/"+id+"/statut");
+			URL url = new URL(serveurURL+"parties/"+partieID+"/statut");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "text/plain");
@@ -123,4 +124,45 @@ public class CommunicationServeur{
 		return etat;
 	}
 
+	public Phase recupererInfosPhase(int partieID){
+		Phase phaseCourante = null;
+		try{
+			URL url = new URL(serveurURL+"parties/"+partieID+"/phase");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Accept", "text/plain");
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+			String reponse = br.readLine();
+			if(conn.getResponseCode() == 200){
+				JSONObject message = new JSONObject(reponse);
+				switch(message.getString("phase")){
+					case "NEGOCIATION" : phaseCourante = new Phase(Phase.Statut.NEGOCIATION,message.getInt("chrono"));break;
+					case "COMBAT" : phaseCourante = new Phase(Phase.Statut.COMBAT,message.getInt("chrono"));break;
+					default : phaseCourante = new Phase(Phase.Statut.INACTIF,1);
+				}
+			}
+			if(conn.getResponseCode() == 404){
+				JSONObject obj = new JSONObject(reponse);
+				String message = obj.getString("erreur");
+				throw new PartieIntrouvableException(message);
+			}
+			if(conn.getResponseCode() == 405){
+				JSONObject obj = new JSONObject(reponse);
+				String message = obj.getString("erreur");
+				throw new PartieInvalideException(message);
+			}
+			if(conn.getResponseCode() != 404 && conn.getResponseCode() != 405  && conn.getResponseCode() != 200){
+				throw new RuntimeException("Echec :" +conn.getResponseCode());
+			}
+			conn.disconnect();
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return phaseCourante;
+	}
+
 }
+;
