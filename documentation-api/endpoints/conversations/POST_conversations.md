@@ -36,4 +36,19 @@ Variable | Type | Description
 `messages`  | Tableau de Message | Tableau vide
 
 ### Erreurs
-Il n'y a pas d'erreurs possibles.
+#### Exemple de réponse
+Une erreur renvoie automatiquement un code HTTP de la famille des 400 et un objet JSON contenant au moins les clés `statut` et `erreur`.
+
+```json
+{
+   "statut":"joueur_non_present",
+   "erreur":"Au moins un des joueurs n'existe pas. Impossible de créer la conversation"
+}
+```
+
+#### Réponses possibles
+Code HTTP | Valeur de `statut` | Valeur de `erreur`
+------------- | ------------- | -------------
+400  | `manque_joueurs` | `Une conversation ne peut être créée qu'entre deux joueurs ou plus`
+403  | `joueur_non_present` | `Au moins un des joueurs n'existe pas. Impossible de créer la conversation`
+403  | `conversation_existante` | `Une conversation entre ces joueurs existe déjà. Utilisez cette conversation`
