@@ -3,7 +3,7 @@
 - Conversations
 	- [<code>GET</code> conversations/:id](endpoints/conversations/GET_conversations_id.md)
 	- [<code>POST</code> conversations](endpoints/conversations/POST_conversations.md)
-	- [<code>POST</code> messages](endpoints/conversations/POST_messages.md)
+	- [<code>POST</code> conversations/:id/](endpoints/conversations/POST_conversations_id_conversation_messages.md)
 
 - Ordres
 	- [<code>POST</code> ordres](endpoints/ordres/POST_ordres.md)

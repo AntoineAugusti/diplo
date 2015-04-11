@@ -3,7 +3,7 @@
 ### Conversations
 - **[<code>GET</code> conversations/:id](endpoints/conversations/GET_conversations_id.md)** Récupère les messages d'une conversation
 - **[<code>POST</code> conversations](endpoints/conversations/POST_conversations.md)** Crée une nouvelle conversation
-- **[<code>POST</code> messages](endpoints/conversations/POST_messages.md)** Ajoute un message à une conversation
+- **[<code>POST</code> conversations/:id/messages](endpoints/conversations/POST_conversations_id_conversation_messages.md)** Ajoute un message à une conversation
 
 ### Ordres
 - **[<code>POST</code> ordres](endpoints/ordres/POST_ordres.md)** Donne un ordre à une armée
