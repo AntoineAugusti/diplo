@@ -12,7 +12,7 @@ public class Jeu{
 	private HashMap<String,Joueur> listeDesJoueurs;
 	private Phase phaseCourante;
 	private Carte carte;
-	
+
 	public Jeu(int id, int requis, int inscrits){
 		this.id=id;
 		this.nb_joueurs_requis = requis;
@@ -45,6 +45,4 @@ public class Jeu{
 		this.carte = nouvelleCarte;
 		return true;
 	}
-	}
-
 }
