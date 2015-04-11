@@ -17,7 +17,7 @@ public class Jeu{
 		this.nb_joueurs_requis = requis;
 		this.nb_joueurs_inscrits = inscrits;
 		this.listeDesJoueurs = new HashMap<String,Joueur>();
-		this.phaseCourante = new Phase(Phase.Statut.INACTIF,0);
+		this.phaseCourante = new Phase(Phase.Statut.INACTIF,1);
 	}
 
 	public int getID(){
