@@ -32,7 +32,9 @@ public class CommunicationServeur{
 				JSONObject obj = new JSONObject(reponse);
 				JSONObject partie = obj.getJSONObject("partie");
 				jeuCourant = new Jeu(partie.getInt("id"),partie.getInt("nb_joueurs_requis"),partie.getInt("nb_joueurs_inscrits"));
-				//TODO traiter les informations du joueur si elles sont utiles.
+				JSONObject joueurJSON = obj.getJSONObject("joueur");
+				Joueur joueurCourant = new Joueur(joueurJSON.getInt("id"),joueurJSON.getString("pseudo"),joueurJSON.getString("pays"),0,0);
+				jeuCourant.miseAJourJoueur(joueurCourant);
 			}
 			if(conn.getResponseCode() == 400){
 				JSONObject obj = new JSONObject(reponse);
@@ -70,7 +72,7 @@ public class CommunicationServeur{
 				JSONObject obj = new JSONObject(reponse);
 				JSONArray listeJoueurs = obj.getJSONArray("joueurs");
 				for(int i=0; i<listeJoueurs.length();i++){
-					liste.add(new Joueur(listeJoueurs.getJSONObject(i).getInt("id"),listeJoueurs.getJSONObject(i).getString("pseudo"),listeJoueurs.getJSONObject(i).getString("pseudo"),listeJoueurs.getJSONObject(i).getInt("armees_restantes"),listeJoueurs.getJSONObject(i).getInt("cases_controlees")));
+					liste.add(new Joueur(listeJoueurs.getJSONObject(i).getInt("id"),listeJoueurs.getJSONObject(i).getString("pseudo"),listeJoueurs.getJSONObject(i).getString("pays"),listeJoueurs.getJSONObject(i).getInt("armees_restantes"),listeJoueurs.getJSONObject(i).getInt("cases_controlees")));
 				}
 			}
 			if(conn.getResponseCode() == 404){
