@@ -6,6 +6,10 @@ javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/
 echo 'Compilation des Exceptions';
 javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/Exception/ReseauException/*.java
 javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/Exception/OrdresException/*.java
+echo 'Compilation de Negociation';
+javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/MoteurJeu/Negociation/*.java
+echo 'Compilation de Ordres';
+javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/MoteurJeu/Ordres/*.java
 echo 'Compilation du Moteur de jeu';
 javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/MoteurJeu/*.java
 echo 'Compilation du main';
