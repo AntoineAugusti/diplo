@@ -15,9 +15,9 @@ Méthode | URI | Description
 
 Variable | Type | Description
 ------------- | ------------- | -------------
-`id_conversation`  | Entier positif | Identifiant de la conversation
-`id_joueur`  | Entier positif | Identifiant du joueur émetteur du message
-`texte`  | Chaîne de caractère | Texte du message
+`id_conversation`  | Entier naturel non nul | Identifiant de la conversation
+`id_joueur`  | Entier naturel non nul | Identifiant du joueur émetteur du message
+`texte`  | Chaîne de caractères | Texte du message
 
 ## Réponses
 ### Succès
@@ -37,9 +37,9 @@ Renvoie une réponse avec un code HTTP **201**.
 #### Description de la réponse
 Variable | Type | Description
 ------------- | ------------- | -------------
-`id`  | Entier positif | Identifiant de la conversation créée
-`id_conversation`  | Entier positif | Identifiants de la conversation
-`id_joueur`  | Entier positif | Identifiants du joueur émetteur du message
+`id`  | Entier naturel non nul | Identifiant du message créé
+`id_conversation`  | Entier naturel non nul | Identifiants de la conversation
+`id_joueur`  | Entier naturel non nul | Identifiants du joueur émetteur du message
 `texte`  | Chaîne de caractères | Texte du message
 `date_creation`  | Chaîne de caractères | Date de création du message sous la forme "YYYY-MM-DD HH:MM:SS"
 
