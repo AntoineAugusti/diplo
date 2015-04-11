@@ -6,7 +6,6 @@ import java.util.*;
 import org.json.*;
 import fr.insarouen.asi.diplo.MoteurJeu.*;
 import java.util.*;
-import java.lang.ClassLoader;
 
 public class Tests {
 
@@ -20,6 +19,7 @@ public class Tests {
 				jeuCourant.miseAJourJoueur(joueurCourant);
 				return jeuCourant;
 	} 
+
 	public static ArrayList<Joueur> parsageJSONInfosJoueurs(){
 				ArrayList<Joueur> liste = new ArrayList<Joueur>();
 				String jsonFile = "{ \n\"joueurs\":[\n {\n \"id\":1,\n \"pseudo\":\"Fake\",\n \"pays\":\"FRA\",\n \"armees_restantes\":10,\n \"cases_controlees\":3 },\n {\n \"id\":2,\n \"pseudo\":\"Dummy\",\n \"pays\":\"GBR\",\n \"armees_restantes\":5,\n \"cases_controlees\":2 }\n ],\n \"nb_joueurs\":2\n }";
@@ -29,7 +29,30 @@ public class Tests {
 					liste.add(new Joueur(listeJoueurs.getJSONObject(i).getInt("id"),listeJoueurs.getJSONObject(i).getString("pseudo"),listeJoueurs.getJSONObject(i).getString("pays"),listeJoueurs.getJSONObject(i).getInt("armees_restantes"),listeJoueurs.getJSONObject(i).getInt("cases_controlees")));
 				}
 				return liste;
+	}
 
+	public static Carte parsageJSONInfosCarte(){
+		Carte carte = new Carte();
+		String jsonFile = "{ \"cases\": [\n {\n \"id\":1,\n \"est_libre\":false,\n \"id_joueur\":1,\n \"est_occupee\":false,\n \"id_armee\":null\n }, {\n \"id\":2,\n \"est_libre\": true,\n \"id_joueur\":null,\n \"est_occupee\":true,\n \"id_armee\":1\n }\n ],\n \"nb_cases\":2\n }";
+		JSONObject obj = new JSONObject(jsonFile);
+				JSONArray listeCase = obj.getJSONArray("cases");
+				for(int i=0; i<listeCase.length();i++){
+					int joueur_val,armee_val;
+					if (!listeCase.getJSONObject(i).getBoolean("est_occupee")){
+						armee_val=0;
+					}
+					else{
+						armee_val=listeCase.getJSONObject(i).getInt("id_armee");
+					}
+					if (listeCase.getJSONObject(i).getBoolean("est_libre")){
+						joueur_val=0;
+					}
+					else{
+						joueur_val=listeCase.getJSONObject(i).getInt("id_joueur");
+					}
+					carte.ajouterCase(new Case(listeCase.getJSONObject(i).getInt("id"),listeCase.getJSONObject(i).getBoolean("est_libre"),joueur_val,listeCase.getJSONObject(i).getBoolean("est_occupee"),armee_val));
+				}
+		return carte;
 	}
 
 	public static void main(String[] args) throws Throwable {
@@ -57,6 +80,18 @@ public class Tests {
 		assert joueurs.get("Blah").pseudo.equals("Blah"): "Le joueur Blah a en pseudo "+joueurs.get("Blah").pseudo;
 		assert joueurs.get("Blah").armees_restantes==0: "Le joueur Blah a 0 armees_restantes "+joueurs.get("Blah").armees_restantes;
 		assert joueurs.get("Blah").cases_controlees==0: "Le joueur Blah a 0 cases_controlees "+joueurs.get("Blah").cases_controlees;
+	
+		Carte carte = parsageJSONInfosCarte();
+		assert carte.getCase(1).id==1 : "La case 1 a pour id "+carte.getCase(1).id;
+		assert carte.getCase(1).est_libre==false : "La case 1 a pour est_libre "+carte.getCase(1).est_libre;
+		assert carte.getCase(1).id_joueur==1 : "La case 1 a pour id_joueur "+carte.getCase(1).id_joueur;
+		assert carte.getCase(1).est_occupee==false : "La case 1 a pour est_occupee "+carte.getCase(1).est_occupee;
+		assert carte.getCase(1).id_armee==0 : "La case 1 a pour id_armee "+carte.getCase(1).id_armee;
+		assert carte.getCase(2).id==2 : "La case 2 a pour id "+carte.getCase(2).id;
+		assert carte.getCase(2).est_libre==true : "La case 2 a pour est_libre "+carte.getCase(2).est_libre;
+		assert carte.getCase(2).id_joueur==0 : "La case 2 a pour id_joueur "+carte.getCase(2).id_joueur;
+		assert carte.getCase(2).est_occupee==true : "La case 2 a pour est_occupee "+carte.getCase(2).est_occupee;
+		assert carte.getCase(2).id_armee==1 : "La case 2 a pour id_armee "+carte.getCase(2).id_armee;
 	}
 	
 
