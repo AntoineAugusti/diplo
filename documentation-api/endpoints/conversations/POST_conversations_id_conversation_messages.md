@@ -2,12 +2,11 @@
 
 Méthode | URI | Description
 ------------- | ------------- | -------------
-`POST`  | messages | Crée un nouveau message dans une conversation
+`POST`  | conversations/`:id_conversation`/messages | Crée un nouveau message dans une conversation
 
 ## Paramètres de la requête
 ```json
 {
-   "id_conversation":42,
    "id_joueur":2,
    "texte":"Bonjour, comment ça va ?"
 }
@@ -27,7 +26,6 @@ Renvoie une réponse avec un code HTTP **201**.
 ```json
 {
    "id": 1,
-   "id_conversation":42,
    "id_joueur":2,
    "texte":"Bonjour, comment ça va ?",
    "date_creation":"1975-12-25 14:15:16"
@@ -38,7 +36,6 @@ Renvoie une réponse avec un code HTTP **201**.
 Variable | Type | Description
 ------------- | ------------- | -------------
 `id`  | Entier naturel non nul | Identifiant du message créé
-`id_conversation`  | Entier naturel non nul | Identifiants de la conversation
 `id_joueur`  | Entier naturel non nul | Identifiants du joueur émetteur du message
 `texte`  | Chaîne de caractères | Texte du message
 `date_creation`  | Chaîne de caractères | Date de création du message sous la forme "YYYY-MM-DD HH:MM:SS"
