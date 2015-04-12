@@ -10,6 +10,9 @@ import java.io.StringReader;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.util.*;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.io.IOException;
 
 public class CommunicationServeur{
 	// Doit être de type http://example.com/, afin que les autres méthodes n'aient plus qu'à ajouter l'URI à la fin. 
@@ -53,8 +56,14 @@ public class CommunicationServeur{
 			conn.disconnect();
 
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(MalformedURLException e){
+			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
+		}
+		catch(ProtocolException e){
+			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
+		}
+		catch(IOException e){
+			System.out.println(" Problème d'E/S :"+e.getMessage());
 		}
 		return jeuCourant;
 	}
@@ -87,8 +96,14 @@ public class CommunicationServeur{
 			conn.disconnect();
 
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(MalformedURLException e){
+			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
+		}
+		catch(ProtocolException e){
+			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
+		}
+		catch(IOException e){
+			System.out.println(" Problème d'E/S :"+e.getMessage());
 		}
 		return liste;
 	}
@@ -118,13 +133,19 @@ public class CommunicationServeur{
 			conn.disconnect();
 
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(MalformedURLException e){
+			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
+		}
+		catch(ProtocolException e){
+			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
+		}
+		catch(IOException e){
+			System.out.println(" Problème d'E/S :"+e.getMessage());
 		}
 		return etat;
 	}
 
-	public Phase recupererInfosPhase(int partieID){
+	public Phase recupererInfosPhase(int partieID) throws PartieIntrouvableException, PartieInvalideException, RuntimeException{
 		Phase phaseCourante = null;
 		try{
 			URL url = new URL(serveurURL+"parties/"+partieID+"/phase");
@@ -156,10 +177,15 @@ public class CommunicationServeur{
 				throw new RuntimeException("Echec :" +conn.getResponseCode());
 			}
 			conn.disconnect();
-
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(MalformedURLException e){
+			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
+		}
+		catch(ProtocolException e){
+			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
+		}
+		catch(IOException e){
+			System.out.println(" Problème d'E/S :"+e.getMessage());
 		}
 		return phaseCourante;
 	}
@@ -202,10 +228,15 @@ public class CommunicationServeur{
 				throw new RuntimeException("Echec :" +conn.getResponseCode());
 			}
 			conn.disconnect();
-
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(MalformedURLException e){
+			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
+		}
+		catch(ProtocolException e){
+			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
+		}
+		catch(IOException e){
+			System.out.println(" Problème d'E/S :"+e.getMessage());
 		}
 		return carte;
 	}
