@@ -1,0 +1,5 @@
+language: java
+script:
+    - cd application/client
+    - ./compil.sh
+    - ./execTests.sh
