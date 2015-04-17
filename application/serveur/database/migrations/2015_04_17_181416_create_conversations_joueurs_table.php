@@ -3,21 +3,17 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessagesTable extends Migration
+class CreateConversationsJoueursTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('conversations_joueurs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_conversation')->unsigned()->references('id')->on('conversations')->onDelete('cascade');
             $table->integer('id_joueur')->unsigned()->references('id')->on('joueurs')->onDelete('cascade');
-            $table->string('texte');
-            $table->timestamps();
-
-            $table->index('id_conversation');
         });
     }
 
@@ -26,6 +22,6 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('messages');
+        Schema::drop('conversations_joueurs');
     }
 }
