@@ -1,143 +1,30 @@
-<?php namespace Diplo\Joueurs;
+<?php
 
-use Diplo\Armees\Armee;
-use Diplo\Cartes\CaseInterface;
-use Diplo\Core\Partie;
-use Diplo\Ordres\Ordre;
+namespace Diplo\Joueurs;
 
-/**
- * Class Joueur
- * @package Diplo\Joueurs
- */
-class Joueur
+use Eloquent;
+
+class Joueur extends Eloquent
 {
+    protected $fillable = ['pseudo', 'pays'];
+
     /**
-     * Liste des armées que le joueur possède
+     * Le pseudo du joueur.
      *
-     * @var Armee[]
-     */
-    private $armees;
-
-    /**
-     * Le nom du joueur
-     *
-     * @var string
-     */
-    private $nom;
-
-    /**
-     * La partie dans laquelle est le joueur
-     *
-     * @var Partie
-     */
-    private $partie;
-
-    /**
-     * @param Armee $armee
-     * @return void
-     */
-    public function ajouterArmee(Armee $armee) 
-    {
-
-        array_push($this->cases, $armee);
-
-    }
-
-    /**
-     * @param Armee $armee
-     * @return void
-     */
-    public function supprimerArmee(Armee $armee) 
-    {
-
-
-    }
-
-    /**
-     * @return Armee[]
-     */
-    public function getArmees() 
-    {
-
-        return $this->armee;
-    }
-
-    /**
-     * @param Armee $armee
-     * @param Ordre $ordre
-     * @return void
-     */
-    public function donnerOrdre(Armee $armee, Ordre $ordre)
-    {
-
-        $armee->setOrdre($ordre);
-        $ordre->setArmee($armee);
-
-    }
-
-    /**
      * @return string
      */
-    public function getNom()
+    private function getPseudo()
     {
-        return $nom;
+        return $this->pseudo;
     }
 
     /**
-     * Non implementée
+     * Le pays du joueur au format ISO 3166-1 alpha-3.
      *
-     * @return CaseInterface[]
+     * @return string
      */
-    public function getPointsDInterets() 
+    private function getPays()
     {
-
-        return null;
+        return $this->pays;
     }
-
-    /**
-     * Non implementée
-     *
-     * @return integer
-     */
-    public function getNbPoinsDInterets()
-    {
-        return 0;
-    }
-
-    /**
-     * @return CaseInterface[]
-     */
-    public function getCasesControlees()
-    {
-
-        $cases = array();
-
-        foreach ($this->armees as $armee)
-        {
-
-            array_push($cases, $armee->getCase());
-
-        }
-
-        return $cases;
-    }
-
-    /**
-     * @param Partie $partie
-     * @return void
-     */
-    public function rejoindrePartie(Partie $partie)
-    {
-
-        $this.partie = $partie;
-    }
-
-    /**
-     * @return void
-     */
-    public function quitterPartie()
-    {
-
-    }
-
 }
