@@ -1,15 +1,16 @@
-<?php namespace Diplo\Messages;
+<?php
+
+namespace Diplo\Messages;
 
 use Diplo\Joueurs\Joueur;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class Message
- * @package Diplo\Messages
+ * Class Message.
  */
-class Message extends Model {
-
+class Message extends Model
+{
     /**
      * @var Joueur
      */
@@ -46,7 +47,6 @@ class Message extends Model {
 
     /**
      * @param Joueur $joueur
-     * @return void
      */
     public function setJoueur(Joueur $joueur)
     {
@@ -57,16 +57,15 @@ class Message extends Model {
      * @return string
      */
     public function getTexte()
-	{
-		return $this->texte;
-	}
+    {
+        return $this->texte;
+    }
 
     /**
      * @param string $texte
-     * @return void
      */
     public function setTexte($texte)
-	{
-		$this->texte = $texte;
-	}
+    {
+        $this->texte = $texte;
+    }
 }

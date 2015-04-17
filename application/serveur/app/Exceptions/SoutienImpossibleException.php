@@ -1,5 +1,7 @@
-<?php namespace Diplo\Exceptions;
+<?php
 
-class SoutienImpossibleException extends OrdreException {
+namespace Diplo\Exceptions;
 
+class SoutienImpossibleException extends OrdreException
+{
 }

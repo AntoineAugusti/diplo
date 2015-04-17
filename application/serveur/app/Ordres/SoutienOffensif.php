@@ -1,9 +1,11 @@
-<?php namespace Diplo\Ordres;
+<?php
 
-class SoutienOffensif extends OrdreCible {
+namespace Diplo\Ordres;
 
-	public function estSoutienOffensif()
-	{
-		return true;
-	}
+class SoutienOffensif extends OrdreCible
+{
+    public function estSoutienOffensif()
+    {
+        return true;
+    }
 }

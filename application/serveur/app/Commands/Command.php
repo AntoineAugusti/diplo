@@ -1,7 +1,8 @@
-<?php namespace Diplo\Commands;
+<?php
 
-abstract class Command {
+namespace Diplo\Commands;
 
-	//
-
+abstract class Command
+{
+    //
 }

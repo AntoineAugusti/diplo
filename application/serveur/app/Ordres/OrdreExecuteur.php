@@ -1,18 +1,20 @@
-<?php namespace Diplo\Ordres;
+<?php
 
-abstract class OrdreExecuteur {
+namespace Diplo\Ordres;
 
-	private $ordre;
+abstract class OrdreExecuteur
+{
+    private $ordre;
 
-	public function getOrdre()
-	{
-		return $this->ordre;
-	}
+    public function getOrdre()
+    {
+        return $this->ordre;
+    }
 
-	public function setOrdre(Ordre $o)
-	{
-		return $this->ordre = $o;
-	}
+    public function setOrdre(Ordre $o)
+    {
+        return $this->ordre = $o;
+    }
 
-	abstract public function executer();
+    abstract public function executer();
 }

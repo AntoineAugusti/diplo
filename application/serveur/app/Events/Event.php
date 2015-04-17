@@ -1,7 +1,8 @@
-<?php namespace Diplo\Events;
+<?php
 
-abstract class Event {
+namespace Diplo\Events;
 
-	//
-
+abstract class Event
+{
+    //
 }

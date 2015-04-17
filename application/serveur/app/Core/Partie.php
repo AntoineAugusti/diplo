@@ -1,12 +1,13 @@
-<?php namespace Diplo\Core;
+<?php
+
+namespace Diplo\Core;
 
 use Diplo\Cartes\Carte;
 use Diplo\Cartes\CaseInterface;
 use Diplo\Joueurs\Joueur;
 
 /**
- * Class Partie
- * @package Diplo\Core
+ * Class Partie.
  */
 class Partie
 {
@@ -20,78 +21,78 @@ class Partie
      */
     protected $joueurs;
     /**
-     * @var integer
+     * @var int
      */
     protected $nbTours;
     /**
-     * @var integer
+     * @var int
      */
     protected $tourCourant;
 
     /**
      * @param Joueur $joueur
-     * @return void
      */
-    public function ajouterJoueur(Joueur $joueur) {
-
+    public function ajouterJoueur(Joueur $joueur)
+    {
     }
 
     /**
      * @param Joueur $joueur
-     * @return void
      */
-    public function supprimerJoueur(Joueur $joueur) {
-
+    public function supprimerJoueur(Joueur $joueur)
+    {
     }
 
     /**
      * @return Joueur[]
      */
-    public function getJoueurs() {
-
+    public function getJoueurs()
+    {
     }
 
     /**
      * @param Joueur $joueur
-     * @return integer
+     *
+     * @return int
      */
-    public function getNbPointsDInteretsParJoueur(Joueur $joueur) {
-
+    public function getNbPointsDInteretsParJoueur(Joueur $joueur)
+    {
     }
 
     /**
      * @param Joueur $joueur
+     *
      * @return CaseInterface[]
      */
-    public function getPointsDInteretsParJoueur(Joueur $joueur) {
-
+    public function getPointsDInteretsParJoueur(Joueur $joueur)
+    {
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function tourEstAutomne() {
-
+    public function tourEstAutomne()
+    {
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function tourEstPrintemps() {
-
+    public function tourEstPrintemps()
+    {
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function phaseEstNegociation() {
-
+    public function phaseEstNegociation()
+    {
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function phaseEstCombat() {
-
+    public function phaseEstCombat()
+    {
     }
 }

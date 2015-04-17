@@ -1,5 +1,7 @@
-<?php namespace Diplo\Exceptions;
+<?php
 
-class SoutienCaseNonPraticableException extends SoutienImpossibleException {
+namespace Diplo\Exceptions;
 
+class SoutienCaseNonPraticableException extends SoutienImpossibleException
+{
 }

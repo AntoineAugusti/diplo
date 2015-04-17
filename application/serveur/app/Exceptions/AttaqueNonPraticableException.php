@@ -1,5 +1,7 @@
-<?php namespace Diplo\Exceptions;
+<?php
 
-class AttaqueCaseNonPraticableException extends AttaqueImpossibleException {
+namespace Diplo\Exceptions;
 
+class AttaqueNonPraticableException extends AttaqueImpossibleException
+{
 }

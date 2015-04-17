@@ -1,9 +1,11 @@
-<?php namespace Diplo\Ordres;
+<?php
 
-class AttaquerExecuteur extends OrdreExecuteur {
-	
-	public function executer()
-	{
-		// TODO
-	}
+namespace Diplo\Ordres;
+
+class AttaquerExecuteur extends OrdreExecuteur
+{
+    public function executer()
+    {
+        // TODO
+    }
 }

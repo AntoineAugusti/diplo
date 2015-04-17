@@ -1,4 +1,6 @@
-<?php namespace Diplo\Messages;
+<?php
+
+namespace Diplo\Messages;
 
 use Diplo\Joueurs\Joueur;
 use Illuminate\Database\Eloquent\Model;
@@ -6,11 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class Conversation
- * @package Diplo\Messages
+ * Class Conversation.
  */
-class Conversation extends Model {
-
+class Conversation extends Model
+{
     /**
      * @var Joueur[]
      */
@@ -33,18 +34,17 @@ class Conversation extends Model {
      * @return Joueur[]
      */
     public function getJoueurs()
-	{
-		return $this->joueurs;
-	}
+    {
+        return $this->joueurs;
+    }
 
     /**
      * @param Joueur $joueur
-     * @return void
      */
     public function addJoueur(Joueur $joueur)
-	{
-		$this->joueurs[] = $j;
-	}
+    {
+        $this->joueurs[] = $j;
+    }
 
     /**
      * @return HasMany
@@ -58,16 +58,15 @@ class Conversation extends Model {
      * @return Message[]
      */
     public function getMessages()
-	{
-		return $this->messages;
-	}
+    {
+        return $this->messages;
+    }
 
     /**
      * @param Message $message
-     * @return void
      */
     public function addMessage(Message $message)
-	{
-		$this->messages[] = $m;
-	}
+    {
+        $this->messages[] = $m;
+    }
 }

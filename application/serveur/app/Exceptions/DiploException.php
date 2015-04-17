@@ -1,7 +1,9 @@
-<?php namespace Diplo\Exceptions;
+<?php
+
+namespace Diplo\Exceptions;
 
 use Exception;
 
-class DiploException extends Exception {
-
+class DiploException extends Exception
+{
 }

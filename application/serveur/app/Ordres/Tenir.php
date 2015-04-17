@@ -1,5 +1,7 @@
-<?php namespace Diplo\Ordres;
+<?php
 
-class Tenir extends Ordre {
+namespace Diplo\Ordres;
 
+class Tenir extends Ordre
+{
 }

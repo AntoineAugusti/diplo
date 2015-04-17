@@ -1,9 +1,11 @@
-<?php namespace Diplo\Ordres;
+<?php
 
-class Attaquer extends OrdreCible {
+namespace Diplo\Ordres;
 
-	public function estAttaque()
-	{
-		return true;
-	}
+class Attaquer extends OrdreCible
+{
+    public function estAttaque()
+    {
+        return true;
+    }
 }
