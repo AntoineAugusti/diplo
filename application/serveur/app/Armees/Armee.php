@@ -1,92 +1,58 @@
-<?php namespace Diplo\Armees;
+<?php
 
-use Diplo\Cartes\CaseInterface;
-use Diplo\Ordres\Ordre;
+namespace Diplo\Armees;
 
-/**
- * Classe qui gère les armées d'un Joueur
- */
-abstract class Armee {
-	
+use Eloquent;
+
+class Armee extends Eloquent
+{
     /**
-     * Le joueur proprietaire de l'armee
+     * Récupère le joueur propriétaire d'une armée.
      *
-     * @var Joueur
+     * @return Illuminate\Database\Eloquent\Relations\Relation
      */
-	private $proprietaire;
-
-    /**
-     * La case sur laquelle se trouve l'armee
-     *
-     * @var Case
-     */
-	private $case;
+    public function proprietaire()
+    {
+        return $this->belongsTo(Joueur::class, 'id_joueur', 'id');
+    }
 
     /**
-     * Le prochaine ordre que l'armee va executer
+     * Récupère la case sur laquelle se trouve une armée.
      *
-     * @var Ordre
+     * @return Illuminate\Database\Eloquent\Relations\Relation
      */
-	private $ordre; 
+    public function caseOccupee()
+    {
+        return $this->hasOne(CaseClass::class, 'id_case', 'id');
+    }
 
     /**
-     * Change le proprietaire de cette armee
+     * Le propriétaire de l'armée.
      *
-     * @var Joueur
+     * @return \Diplo\Joueurs\Joueur
      */
-	public function setProprietaire(Joueur $j)
-	{
-		$this->proprietaire = $j;
-	}
-
-	public function getProprietaire()
-	{
-		return $this->proprietaire;
-	}
+    public function getProprietaire()
+    {
+        return $this->proprietaire;
+    }
 
     /**
-     * Change la case sur laquelle se trouve cette armee
+     * La case occupée par une armée.
      *
-     * @var CaseInterface
+     * @return null|Diplo\Cartes\CaseInterface
      */
-	public function setCase(CaseInterface $c)
-	{
-		$this->case = $c;
-	}
-
-	public function getCase()
-	{
-		return $this->case;
-	}
+    public function getCase()
+    {
+        return $this->caseOccupee;
+    }
 
     /**
-     * Donne le prochain ordre de l'armee
+     * L'ordre donné à l'armée.
      *
-     * @var Ordre
+     * @return \Diplo\Ordres\Ordre
      */
-    public function setOrdre(Ordre $o)
-	{
-		$this->ordre = $o;
-	}
-
     public function getOrdre()
-	{
-		return $this->ordre;
-	}
-
-    /**
-     * @return false
-     */
-	public function estArmeeMaritime()
-	{
-		return false;
-	}
-
-    /**
-     * @return false
-     */
-	public function estArmeeTerrestre()
-	{
-		return false;
-	}
+    {
+        return $this->ordre;
+    }
 }
