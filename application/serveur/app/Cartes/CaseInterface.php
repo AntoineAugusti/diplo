@@ -1,25 +1,34 @@
-<?php namespace Diplo\Cartes;
+<?php
 
-use Diplo\Armees\Armee;
-use Diplo\Joueurs\Joueur;
+namespace Diplo\Cartes;
 
-interface CaseInterface {
-	
-	public function getNom();
-	
-	public function getVoisins();
-	
-	public function getArmee();
-	
-	public function setArmee(Armee $a);
-	
-	public function getProprietaire();
-	
-	public function setProprietaire(Joueur $j);
-	
-	public function estLibre();
-	
-	public function estMaritime();
+interface CaseInterface
+{
+    /**
+     * Récupère les identifiants des cases voisines.
+     *
+     * @return array
+     */
+    public function getCasesVoisinesIds();
 
-	public function estTerrestre();
+    /**
+     * Récupère les cases voisines.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function casesVoisines();
+
+    /**
+     * Récupère la case sur laquelle se trouve une armée.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\Relation
+     */
+    public function armee();
+
+    /**
+     * Récupère le joueur sur la case.
+     *
+     * @return \Diplo\Joueurs\Joueur
+     */
+    public function joueur();
 }
