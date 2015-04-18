@@ -18,6 +18,26 @@ class Partie extends Eloquent implements PhaseInterface
     const FIN = 'fin';
 
     /**
+     * Les attributs cachés lors de la conversion en array ou JSON.
+     *
+     * @var array
+     */
+    protected $hidden = ['created_at', 'updated_at'];
+
+    /**
+     * Les attributs du modèle qui doivent être castés vers des types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id'                  => 'integer',
+        'tour_courant'        => 'integer',
+        'nb_tours'            => 'integer',
+        'nb_joueurs_requis'   => 'integer',
+        'nb_joueurs_inscrits' => 'integer',
+    ];
+
+    /**
      * Récupère les joueurs d'une partie.
      *
      * @return \Illuminate\Database\Eloquent\Relations\Relation
