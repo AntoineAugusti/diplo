@@ -12,7 +12,7 @@ class CreatePartiesTable extends Migration
     {
         Schema::create('parties', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tour_courant')->unsigned()->default(0);
+            $table->integer('tour_courant')->unsigned()->default(1);
             $table->integer('nb_tours')->unsigned()->default(5);
             $table->integer('nb_joueurs_requis')->unsigned()->default(5);
             $table->integer('nb_joueurs_inscrits')->unsigned()->default(0);
