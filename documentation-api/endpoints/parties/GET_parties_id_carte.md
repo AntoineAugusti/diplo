@@ -8,7 +8,7 @@ Méthode | URI | Description
 ## Paramètres de la requête
 Variable | Type | Description
 ------------- | ------------- | -------------
-`:id`  | Entier naturel | Spécifie l'identifiant de partie
+`:id`  | Entier naturel non nul | Spécifie l'identifiant de partie
 
 ## Réponses
 ### Succès
@@ -39,12 +39,12 @@ Renvoie une réponse avec un code HTTP **200**.
 #### Description de la réponse
 Variable | Type | Description
 ------------- | ------------- | -------------
-`nb_cases` | Entier naturel | Le nombre de cases de le carte
-*cases*.`id`  | Entier naturel | L'identifiant de la case
+`nb_cases` | Entier naturel non nul | Le nombre de cases de le carte
+*cases*.`id`  | Entier naturel non nul | L'identifiant de la case
 *cases*.`est_libre`  | Booléen | Vrai si la case est possédée par un joueur, faux sinon
-*cases*.`id_joueur`  | Entier naturel | L'identifiant du joueur si `est_libre` vaut faux, null sinon
+*cases*.`id_joueur`  | Entier naturel non nul | L'identifiant du joueur si `est_libre` vaut faux, null sinon
 *cases*.`est_occupee`  | Booléen | Vrai si une armée est sur la case, faux sinon
-*cases*.`id_armee`  | Entier naturel | L'identifiant de l'armée si `est_occupee` vaut vrai, null sinon
+*cases*.`id_armee`  | Entier naturel non nul | L'identifiant de l'armée si `est_occupee` vaut vrai, null sinon
 
 ### Erreurs
 #### Exemple de réponse

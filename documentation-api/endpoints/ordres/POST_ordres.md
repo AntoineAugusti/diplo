@@ -43,9 +43,9 @@ Méthode | URI | Description
 
 Variable | Type | Description
 ------------- | ------------- | -------------
-`id_armee`  | Entier naturel | Identifiant de l'armée concernée par l'ordre
+`id_armee`  | Entier naturel non nul | Identifiant de l'armée concernée par l'ordre
 `ordre`  | Chaîne de caractères | Ordre à effectuer, ce champ peut prendre les valeurs : "Tenir", "Attaquer", "SoutienDefensif" ou "SoutienOffensif".
-`id_case`  | Entier naturel | Identifiant de la case cible de l'ordre. Ce champ n'est prit en compte que pour les ordres dit *avec cible* ("Attaquer", "SoutienDefensif" ou "SoutienOffensif").
+`id_case`  | Entier naturel non nul | Identifiant de la case cible de l'ordre. Ce champ n'est prit en compte que pour les ordres dit *avec cible* ("Attaquer", "SoutienDefensif" ou "SoutienOffensif").
 
 ## Réponses
 ### Succès
