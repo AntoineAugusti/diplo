@@ -3,6 +3,7 @@
 namespace Diplo\Exceptions;
 
 use Exception;
+use Response;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -38,6 +39,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof PartieIntrouvableException) {
+            $statut = 'non_trouve';
+            $erreur = 'La partie '.$e->getMessage()." n'existe pas";
+
+            return Response::json(compact('statut', 'erreur'), 404);
+        }
+
         return parent::render($request, $e);
     }
 }

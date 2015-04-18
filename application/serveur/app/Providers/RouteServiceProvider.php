@@ -2,7 +2,11 @@
 
 namespace Diplo\Providers;
 
+use App;
 use Illuminate\Routing\Router;
+use Diplo\Parties\PartiesRepository;
+use Diplo\Exceptions\PartieIntrouvableException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -25,7 +29,16 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot($router);
 
-        //
+        $router->pattern('partie', '[0-9]+');
+
+        $partiesRepo = App::make(PartiesRepository::class);
+        $router->bind('partie', function ($id_partie) use ($partiesRepo) {
+            try {
+                return $partiesRepo->trouverParId($id_partie);
+            } catch (ModelNotFoundException $e) {
+                throw new PartieIntrouvableException($id_partie);
+            }
+        });
     }
 
     /**
