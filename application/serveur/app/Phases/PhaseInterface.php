@@ -2,19 +2,19 @@
 
 namespace Diplo\Phases;
 
-abstract class Phase
+interface PhaseInterface
 {
     /**
      * Détermine si une phase est une phase de négociation.
      *
      * @return bool
      */
-    abstract public function estNegociation();
+    public function estNegociation();
 
     /**
      * Détermine si une phase est une phase de combat.
      *
      * @return bool
      */
-    abstract public function estCombat();
+    public function estCombat();
 }

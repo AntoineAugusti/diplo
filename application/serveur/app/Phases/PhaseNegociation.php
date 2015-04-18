@@ -2,7 +2,7 @@
 
 namespace Diplo\Phases;
 
-class PhaseNegociation
+class PhaseNegociation implements PhaseInterface
 {
     /**
      * Détermine si une phase est une phase de négociation.

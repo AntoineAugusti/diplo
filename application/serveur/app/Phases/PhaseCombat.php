@@ -2,7 +2,7 @@
 
 namespace Diplo\Phases;
 
-class PhaseCombat
+class PhaseCombat implements PhaseInterface
 {
     /**
      * Détermine si une phase est une phase de combat.
