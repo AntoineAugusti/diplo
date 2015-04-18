@@ -25,7 +25,8 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
     private $phase;
 
     /**
-     * Crée la commande
+     * Crée la commande.
+     *
      * @param Partie $partie La partie où l'on va changer de phase
      * @param string $phase  La nouvelle phase de jeu
      */
@@ -36,9 +37,10 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
     }
 
     /**
-     * Exécute la commande
-     * @param  Queue  $queue
-     * @param  Event  $event
+     * Exécute la commande.
+     *
+     * @param Queue $queue
+     * @param Event $event
      */
     public function handle(Queue $queue, Event $event)
     {
@@ -58,18 +60,20 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
             // On met à jour la nouvelle phase
             $partie->phase = $phase;
 
-	        // On incrémente le numéro de tour si on retourne sur une phase de combat
-	        // Sauf dans le cas particulier du premier
-	        if ($partie->estCombat() and $phase != 'DEBUT') {
-	            $partie->tour_courant = $partie->tour_courant + 1;
-	        }
-	        $partie->save();
+            // On incrémente le numéro de tour si on retourne sur une phase de combat
+            // Sauf dans le cas particulier du premier
+            if ($partie->estCombat() and $phase != 'DEBUT') {
+                $partie->tour_courant = $partie->tour_courant + 1;
+            }
 
             $prochainePhase = $this->prochainePhase($partie);
         }
 
         // On détermine la date du prochain changement de phase
         $date = $this->datePourPhase($prochainePhase);
+        // On se souvient de la date du prochain changement
+        $partie->date_prochaine_phase = $date;
+        $partie->save();
 
         // On queue le prochain changement de phase
         $queue->later($date, new self($partie, $prochainePhase));
