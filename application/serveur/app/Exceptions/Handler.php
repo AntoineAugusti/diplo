@@ -53,6 +53,13 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 400);
         }
 
+        if ($e instanceof PartieNonEnJeuException) {
+            $statut = 'partie_invalide';
+            $erreur = 'La partie '.$e->getMessage()." n'est pas en jeu : la partie peut être en attente de joueurs ou terminée";
+
+            return Response::json(compact('statut', 'erreur'), 405);
+        }
+
         return parent::render($request, $e);
     }
 }

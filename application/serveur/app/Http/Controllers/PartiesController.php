@@ -2,6 +2,7 @@
 
 namespace Diplo\Http\Controllers;
 
+use Diplo\Exceptions\PartieNonEnJeuException;
 use Diplo\Joueurs\Joueur;
 use Diplo\Parties\Partie;
 use Diplo\Parties\PartiesRepository;
@@ -38,6 +39,28 @@ class PartiesController extends Controller
         $nb_joueurs = $joueurs->count();
 
         return Response::json(compact('joueurs', 'nb_joueurs'), 200);
+    }
+
+    /**
+     * Donne des informations sur la phase courante d'une partie.
+     *
+     * @param Partie $partie La partie en question
+     *
+     * @return Response
+     *
+     * @throws PartieNonEnJeuException La partie n'est pas en cours de jeu
+     */
+    public function getPhase(Partie $partie)
+    {
+        // La partie n'est pas en cours, on lance une exception
+        if (!$partie->estEnJeu()) {
+            throw new PartieNonEnJeuException($partie->id);
+        }
+
+        $phase = strtoupper($partie->phase);
+        $chrono = $partie->date_prochaine_phase->diffInSeconds();
+
+        return Response::json(compact('phase', 'chrono'), 200);
     }
 
     /**

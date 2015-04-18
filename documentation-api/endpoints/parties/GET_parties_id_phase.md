@@ -44,4 +44,4 @@ Une erreur renvoie automatiquement un code HTTP de la famille des 400 et un obje
 Code HTTP | Valeur de `statut` | Valeur de `erreur`
 ------------- | ------------- | -------------
 404  | `non_trouve` | `La partie :id n'existe pas`
-405  | `partie_invalide` | `La partie :id n'est pas en jeu : la partie peut être en attente de joueurs ou terminée.`
+405  | `partie_invalide` | `La partie :id n'est pas en jeu : la partie peut être en attente de joueurs ou terminée`
