@@ -2,19 +2,27 @@
 
 namespace Diplo\Parties;
 
-use Diplo\Joueurs\JoueurGeneratorInterface;
+use Diplo\Events\PartiePreteACommencer;
 use Diplo\Exceptions\PartiePleineException;
+use Diplo\Joueurs\JoueurGeneratorInterface;
+use Illuminate\Events\Dispatcher as Event;
 
 class EloquentPartiesRepository implements PartiesRepository
 {
     /**
-     * @var \Diplo\Joueurs\JoueurGeneratorInterface
+     * @var JoueurGeneratorInterface
      */
     private $joueurGenerator;
 
-    public function __construct(JoueurGeneratorInterface $joueurGenerator)
+    /**
+     * @var Event
+     */
+    private $event;
+
+    public function __construct(JoueurGeneratorInterface $joueurGenerator, Event $event)
     {
         $this->joueurGenerator = $joueurGenerator;
+        $this->event = $event;
     }
 
     /**
@@ -51,9 +59,9 @@ class EloquentPartiesRepository implements PartiesRepository
         }
 
         // Il manquait un seul joueur pour débuter la partie
-        // La partie peut commencer ensuite
+        // On lève l'événement disant que la partie peut démarrer
         if ($partie->manqueUnJoueur()) {
-            $partie->statut = Partie::EN_JEU;
+            $this->event->fire(new PartiePreteACommencer($partie));
         }
 
         // Génération et ajout du joueur dans la partie

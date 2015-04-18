@@ -1,0 +1,41 @@
+<?php
+
+namespace Diplo\Handlers\Events;
+
+use Diplo\Parties\Partie;
+use Diplo\Events\PartiePreteACommencer;
+use Illuminate\Contracts\Queue\ShouldBeQueued;
+use Illuminate\Queue\QueueManager as Queue;
+use Diplo\Commands\PartiePhaseSwitcherHandler;
+
+class DemarragePartie implements ShouldBeQueued
+{
+    /**
+     * @var Queue
+     */
+    private $queue;
+
+    /**
+     * Create the event handler.
+     */
+    public function __construct(Queue $queue)
+    {
+        $this->queue = $queue;
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param PartiePreteACommencer $event
+     */
+    public function handle(PartiePreteACommencer $event)
+    {
+        $partie = $event->partie;
+        $partie->statut = Partie::EN_JEU;
+        $partie->save();
+
+        // On prévoit le changement de la prochaine phase
+        $prochainePhase = Partie::NEGOCIATION;
+        $this->queue->push(new PartiePhaseSwitcherHandler($partie, 'DEBUT'));
+    }
+}
