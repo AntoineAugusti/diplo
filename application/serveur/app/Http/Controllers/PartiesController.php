@@ -60,8 +60,8 @@ class PartiesController extends Controller
     /**
      * Prépare la réponse pour rejoindre une partie.
      *
-     * @param Partie $partie [description]
-     * @param Joueur $joueur [description]
+     * @param Partie $partie
+     * @param Joueur $joueur
      *
      * @return array Contient le joueur et la partie
      */
