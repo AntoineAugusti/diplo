@@ -33,7 +33,7 @@ Variable | Type | Description
 ------------- | ------------- | -------------
 *partie*.`id`  | Entier naturel non nul | L'identifiant de la partie
 *partie*.`nb_joueurs_requis`  | Entier naturel non nul | Le nombre de joueurs requis avant de démarrer la partie
-*partie*.`nb_joueurs_inscrits`  | Entier naturel non nul | Le nombre de joueurs inscrits dans la partie
+*partie*.`nb_joueurs_inscrits`  | Entier naturel non nul | Le nombre de joueurs inscrits dans la partie, avant d'avoir fait la demande de rejoindre la partie
 *joueur*.`id`  | Entier naturel non nul | L'identifiant du joueur ayant demandé à rejoindre la partie
 *joueur*.`pseudo`  | Chaîne de caractères | Le pseudonyme du joueur ayant demandé à rejoindre la partie
 *joueur*.`pays`  | Chaîne de caractères | Le code du pays du joueur ayant demandé à rejoindre la partie au format [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3)
