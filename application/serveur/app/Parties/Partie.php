@@ -4,9 +4,7 @@ namespace Diplo\Parties;
 
 use InvalidArgumentException;
 use Eloquent;
-use Diplo\Phases\PhaseCombat;
 use Diplo\Phases\PhaseInterface;
-use Diplo\Phases\PhaseNegociation;
 use Diplo\Joueurs\Joueur;
 
 class Partie extends Eloquent implements PhaseInterface
@@ -22,7 +20,7 @@ class Partie extends Eloquent implements PhaseInterface
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at', 'date_prochaine_phase'];
 
     /**
      * Les attributs du modèle qui doivent être castés vers des types.
@@ -45,6 +43,16 @@ class Partie extends Eloquent implements PhaseInterface
     public function joueurs()
     {
         return $this->hasMany(Joueur::class, 'id_partie', 'id');
+    }
+
+    /**
+     * Les attributs qui doivent être traités comme des dates.
+     *
+     * @return array
+     */
+    public function getDates()
+    {
+        return ['created_at', 'updated_at', 'date_prochaine_phase'];
     }
 
     /**
