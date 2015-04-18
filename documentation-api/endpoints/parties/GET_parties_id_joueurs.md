@@ -19,6 +19,7 @@ Renvoie une réponse avec un code HTTP **200**.
    "joueurs":[
       {
          "id":1,
+         "id_partie":1,
          "pseudo":"Fake",
          "pays":"FRA",
          "armees_restantes":10,
@@ -26,6 +27,7 @@ Renvoie une réponse avec un code HTTP **200**.
       },
       {
          "id":2,
+         "id_partie":1,
          "pseudo":"Dummy",
          "pays":"GBR",
          "armees_restantes":5,
@@ -40,6 +42,7 @@ Variable | Type | Description
 ------------- | ------------- | -------------
 `nb_joueurs`  | Entier naturel non nul | Le nombre de joueurs participant à la partie
 *joueurs*.`id`  | Entier naturel non nul | L'identifiant du joueur
+*joueurs*.`id_partie`  | Entier naturel non nul | L'identifiant de la partie dans laquelle se trouve le joueur
 *joueurs*.`pseudo`  | Chaîne de caractères | Le pseudonyme du joueur
 *joueurs*.`pays`  | Chaîne de caractères | Le code du pays du joueur au format [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3)
 *joueurs*.`armees_restantes`  | Entier naturel non nul | Le nombre d'unités restantes pour le joueur

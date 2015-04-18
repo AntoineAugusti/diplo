@@ -29,6 +29,16 @@ class Joueur extends Eloquent
     protected $appends = ['armees_restantes', 'cases_controlees'];
 
     /**
+     * Les attributs du modèle qui doivent être castés vers des types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id'        => 'integer',
+        'id_partie' => 'integer',
+    ];
+
+    /**
      * Récupère la partie d'un joueur.
      *
      * @return \Illuminate\Database\Eloquent\Relations\Relation

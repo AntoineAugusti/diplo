@@ -24,6 +24,21 @@ class PartiesController extends Controller
     }
 
     /**
+     * Retourne les joueurs d'une partie.
+     *
+     * @param Partie $partie La partie en question
+     *
+     * @return Response
+     */
+    public function getJoueurs(Partie $partie)
+    {
+        $joueurs = $partie->joueurs;
+        $nb_joueurs = $joueurs->count();
+
+        return Response::json(compact('joueurs', 'nb_joueurs'), 200);
+    }
+
+    /**
      * Détermine le message associé à un statut.
      *
      * @param string $statut Le statut d'une partie
