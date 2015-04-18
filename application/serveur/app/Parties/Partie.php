@@ -14,7 +14,7 @@ class Partie extends Eloquent implements PhaseInterface
     const NEGOCIATION = 'negociation';
     const COMBAT = 'combat';
     const ATTENTE_JOUEURS = 'attente_joueurs';
-    const EN_JEU = 'attente_joueurs';
+    const EN_JEU = 'en_jeu';
     const FIN = 'fin';
 
     /**
@@ -60,14 +60,27 @@ class Partie extends Eloquent implements PhaseInterface
             throw new InvalidArgumentException('Phase inconnue : '.$value);
         }
 
-        switch ($string) {
-            case 'NEGOCIATION':
-                $this->attributes['phaseObject'] = new PhaseNegociation();
-                break;
-            case 'COMBAT':
-                $this->attributes['phaseObject'] = new PhaseCombat();
-                break;
-        }
+        $this->attributes['phase'] = $value;
+    }
+
+    /**
+     * Indique si la partie est dans son dernier tour.
+     *
+     * @return bool
+     */
+    public function estDernierTour()
+    {
+        return $this->tour_courant == $this->nb_tours;
+    }
+
+    /**
+     * Indique si la partie est dans son premier tour.
+     *
+     * @return bool
+     */
+    public function estPremierTour()
+    {
+        return $this->tour_courant == 1;
     }
 
     /**
@@ -81,7 +94,7 @@ class Partie extends Eloquent implements PhaseInterface
     }
 
     /**
-     * Détermine s'il manque un seul joueur pour débuter une partie.
+     * Indique s'il manque un joueur pour démarrer une partie.
      *
      * @return bool
      */
@@ -147,7 +160,7 @@ class Partie extends Eloquent implements PhaseInterface
      */
     public function estNegociation()
     {
-        return $this->phaseObject->estNegociation();
+        return $this->phase == self::NEGOCIATION;
     }
 
     /**
@@ -157,6 +170,6 @@ class Partie extends Eloquent implements PhaseInterface
      */
     public function estCombat()
     {
-        return $this->phaseObject->estCombat();
+        return $this->phase == self::COMBAT;
     }
 }
