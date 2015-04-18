@@ -11,6 +11,12 @@ use Diplo\Joueurs\Joueur;
 
 class Partie extends Eloquent implements PhaseInterface
 {
+    const NEGOCIATION = 'negociation';
+    const COMBAT = 'combat';
+    const ATTENTE_JOUEURS = 'attente_joueurs';
+    const EN_JEU = 'attente_joueurs';
+    const FIN = 'fin';
+
     /**
      * Récupère les joueurs d'une partie.
      *
@@ -30,7 +36,7 @@ class Partie extends Eloquent implements PhaseInterface
      */
     public function setPhaseAttribute($value)
     {
-        if (!in_array($value, ['NEGOCIATION', 'COMBAT'])) {
+        if (!in_array($value, self::phasesPossibles())) {
             throw new InvalidArgumentException('Phase inconnue : '.$value);
         }
 
@@ -42,6 +48,46 @@ class Partie extends Eloquent implements PhaseInterface
                 $this->attributes['phaseObject'] = new PhaseCombat();
                 break;
         }
+    }
+
+    /**
+     * Détermine si une partie est pleine.
+     *
+     * @return bool
+     */
+    public function estPleine()
+    {
+        return $this->nb_joueurs_inscrits == $this->nb_joueurs_requis;
+    }
+
+    /**
+     * Détermine s'il manque un seul joueur pour débuter une partie.
+     *
+     * @return bool
+     */
+    public function manqueUnJoueur()
+    {
+        return $this->nb_joueurs_inscrits == ($this->nb_joueurs_requis - 1);
+    }
+
+    /**
+     * Retourne les phases possibles.
+     *
+     * @return array Tableau de chaînes de caractères
+     */
+    public static function phasesPossibles()
+    {
+        return [self::COMBAT, self::NEGOCIATION];
+    }
+
+    /**
+     * Retourne les statuts possibles.
+     *
+     * @return array Tableau de chaînes de caractères
+     */
+    public static function statutsPossibles()
+    {
+        return [self::ATTENTE_JOUEURS, self::EN_JEU, self::FIN];
     }
 
     /**

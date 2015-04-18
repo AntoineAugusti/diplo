@@ -16,7 +16,7 @@ class CreatePartiesTable extends Migration
             $table->integer('nb_tours')->unsigned()->default(5);
             $table->integer('nb_joueurs_requis')->unsigned()->default(5);
             $table->integer('nb_joueurs_inscrits')->unsigned()->default(0);
-            $table->enum('phase', ['NEGOCIATION', 'COMBAT'])->default('COMBAT');
+            $table->enum('phase', ['negociation', 'combat'])->default('combat');
             $table->enum('statut', ['attente_joueurs', 'en_jeu', 'fin'])->default('attente_joueurs');
             $table->timestamps();
         });

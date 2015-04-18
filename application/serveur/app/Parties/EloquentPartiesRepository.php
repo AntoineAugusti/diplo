@@ -46,8 +46,14 @@ class EloquentPartiesRepository implements PartiesRepository
         $partie = $this->trouverParId($id);
 
         // Vérifions que la partie n'est pas pleine
-        if ($partie->nb_joueurs_inscrits >= $partie->nb_joueurs_requis) {
+        if ($partie->estPleine()) {
             throw new PartiePleineException();
+        }
+
+        // Il manquait un seul joueur pour débuter la partie
+        // La partie peut commencer ensuite
+        if ($partie->manqueUnJoueur()) {
+            $partie->statut = Partie::EN_JEU;
         }
 
         // Génération et ajout du joueur dans la partie
