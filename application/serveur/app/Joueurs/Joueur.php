@@ -3,17 +3,28 @@
 namespace Diplo\Joueurs;
 
 use Eloquent;
+use Diplo\Parties\Partie;
 
 class Joueur extends Eloquent
 {
     protected $fillable = ['pseudo', 'pays'];
 
     /**
+     * Récupère la partie d'un joueur.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     */
+    public function partie()
+    {
+        return $this->belongsTo(Partie::class, 'id_partie', 'id');
+    }
+
+    /**
      * Le pseudo du joueur.
      *
      * @return string
      */
-    private function getPseudo()
+    public function getPseudo()
     {
         return $this->pseudo;
     }
@@ -23,7 +34,7 @@ class Joueur extends Eloquent
      *
      * @return string
      */
-    private function getPays()
+    public function getPays()
     {
         return $this->pays;
     }

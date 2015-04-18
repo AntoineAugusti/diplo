@@ -2,7 +2,7 @@
 
 namespace Diplo\Joueurs;
 
-class JoueurGenerator
+class JoueurGenerator implements JoueurGeneratorInterface
 {
     /**
      * Génère un joueur à partir du numéro du joueur dans une partie.
