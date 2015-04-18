@@ -2,34 +2,20 @@
 
 namespace Diplo\Http\Controllers;
 
+use Response;
+
 class WelcomeController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Welcome Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller renders the "marketing page" for the application and
-    | is configured to only allow guests. Like most of the other sample
-    | controllers, you are free to modify or remove it as you desire.
-    |
-    */
-
     /**
-     * Create a new controller instance.
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
-    /**
-     * Show the application welcome screen to the user.
+     * Souhaite la bienvenue et donne des informations utiles.
      *
      * @return Response
      */
-    public function index()
+    public function showWelcome()
     {
-        return view('welcome');
+        $documentation_url = 'https://developers.diplo-lejeu.fr';
+        $project_url = 'https://github.com/AntoineAugusti/diplo';
+
+        return Response::json(compact('documentation_url', 'project_url'), 200);
     }
 }
