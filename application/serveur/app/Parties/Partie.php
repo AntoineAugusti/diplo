@@ -111,6 +111,36 @@ class Partie extends Eloquent implements PhaseInterface
     }
 
     /**
+     * Détermine si la partie est en attente.
+     *
+     * @return bool
+     */
+    public function estEnAttente()
+    {
+        return $this->statut == self::ATTENTE_JOUEURS;
+    }
+
+    /**
+     * Détermine si la partie est en jeu.
+     *
+     * @return bool
+     */
+    public function estEnJeu()
+    {
+        return $this->statut == self::EN_JEU;
+    }
+
+    /**
+     * Détermine si la partie est terminée.
+     *
+     * @return bool
+     */
+    public function estTerminee()
+    {
+        return $this->statut == self::FIN;
+    }
+
+    /**
      * Détermine si une phase est une phase de négociation.
      *
      * @return bool
