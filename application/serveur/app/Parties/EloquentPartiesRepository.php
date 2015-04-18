@@ -32,7 +32,7 @@ class EloquentPartiesRepository implements PartiesRepository
     }
 
     /**
-     * Demande à rejoindre une partie, crée un joueur et le met dans la partir.
+     * Demande à rejoindre une partie, crée un joueur et le met dans la partie.
      *
      * @param int $id L'identifiant de la partie
      *
@@ -47,7 +47,7 @@ class EloquentPartiesRepository implements PartiesRepository
 
         // Vérifions que la partie n'est pas pleine
         if ($partie->estPleine()) {
-            throw new PartiePleineException();
+            throw new PartiePleineException($id);
         }
 
         // Il manquait un seul joueur pour débuter la partie

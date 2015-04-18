@@ -46,6 +46,13 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 404);
         }
 
+        if ($e instanceof PartiePleineException) {
+            $statut = 'partie_pleine';
+            $erreur = 'La partie '.$e->getMessage().' est pleine';
+
+            return Response::json(compact('statut', 'erreur'), 400);
+        }
+
         return parent::render($request, $e);
     }
 }

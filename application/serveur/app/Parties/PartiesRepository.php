@@ -16,7 +16,7 @@ interface PartiesRepository
     public function trouverParId($id);
 
     /**
-     * Demande à rejoindre une partie, crée un joueur et le met dans la partir.
+     * Demande à rejoindre une partie, crée un joueur et le met dans la partie.
      *
      * @param int $id L'identifiant de la partie
      *
