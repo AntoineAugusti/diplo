@@ -34,8 +34,7 @@ class DemarragePartie implements ShouldBeQueued
         $partie->statut = Partie::EN_JEU;
         $partie->save();
 
-        // On prévoit le changement de la prochaine phase
-        $prochainePhase = Partie::NEGOCIATION;
+        // On initialise les changements de phases
         $this->queue->push(new PartiePhaseSwitcherHandler($partie, 'DEBUT'));
     }
 }
