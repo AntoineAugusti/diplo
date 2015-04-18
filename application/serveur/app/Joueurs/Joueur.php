@@ -7,7 +7,26 @@ use Diplo\Parties\Partie;
 
 class Joueur extends Eloquent
 {
+    /**
+     * Les attributs que l'on peut définir lors de l'appel au constructeur.
+     *
+     * @var array
+     */
     protected $fillable = ['pseudo', 'pays'];
+
+    /**
+     * Les attributs cachés lors de la conversion en array ou JSON.
+     *
+     * @var array
+     */
+    protected $hidden = ['created_at', 'updated_at'];
+
+    /**
+     * Les attributs à rajouter au modèle.
+     *
+     * @var array
+     */
+    protected $appends = ['armees_restantes', 'cases_controlees'];
 
     /**
      * Récupère la partie d'un joueur.
@@ -37,5 +56,27 @@ class Joueur extends Eloquent
     public function getPays()
     {
         return $this->pays;
+    }
+
+    /**
+     * Retourne le nombre d'armées possédées par le joueur.
+     *
+     * @return int
+     */
+    public function getArmeesRestantesAttribute()
+    {
+        // TODO
+        return 0;
+    }
+
+    /**
+     * Retourne le nombre de cases contrôlées par le joueur.
+     *
+     * @return int
+     */
+    public function getCasesControleesAttribute()
+    {
+        // TODO
+        return 0;
     }
 }
