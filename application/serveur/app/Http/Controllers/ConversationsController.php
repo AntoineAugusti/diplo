@@ -2,42 +2,66 @@
 
 namespace Diplo\Http\Controllers;
 
+use Input;
+use Response;
+use Diplo\Messages\ConversationsRepository;
 use Diplo\Messages\Conversation;
-use Illuminate\Http\Response;
 
 class ConversationsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @var ConversationsRepository
      */
-    public function index($joueurId)
+    private $conversationsRepo;
+
+    public function __construct(ConversationsRepository $conversationsRepo)
     {
-        // TODO
+        $this->conversationsRepo = $conversationsRepo;
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Créer une conversation entre joueurs.
+     *
+     * @throws PasAssezDeJoueursException     Une conversation doit être créée au moins entre 2 joueurs
+     * @throws JoueurInexistantException      Un des joueurs n'existe pas
+     * @throws ConversationExistanteException Une conversation entre ces joueurs existait déjà
+     * @throws JoueurDupliqueException        Un joueur ne peut être plus d'une fois dans la même conversation
      *
      * @return Response
      */
-    public function store()
+    public function postConversations()
     {
-        $data = Input::only('joueurs');
+        // Récupération des données
+        $joueurs = json_decode(Input::get('joueurs'), true);
 
-        return Conversation::create($data);
+        // On s'assure d'avoir un tableau
+        if (empty($joueurs)) {
+            $joueurs = [];
+        }
+
+        $conversation = $this->conversationsRepo->creerConversation($joueurs);
+
+        // Préparation des valeurs de retour
+        $id = $conversation->id;
+        $messages = [];
+        $joueurs = $conversation->joueursIds();
+
+        return Response::json(compact('id', 'joueurs', 'messages'), 201);
     }
 
     /**
-     * Display the specified resource.
+     * Retourne des informations sur une conversation.
      *
-     * @param int $id
+     * @param Conversation $conversation
      *
      * @return Response
      */
-    public function show($id)
+    public function getConversation(Conversation $conversation)
     {
-        return Conversation::find($id);
+        $id = $conversation->id;
+        $joueurs = $conversation->joueursIds();
+        $messages = $conversation->messages;
+
+        return Response::json(compact('id', 'joueurs', 'messages'), 200);
     }
 }

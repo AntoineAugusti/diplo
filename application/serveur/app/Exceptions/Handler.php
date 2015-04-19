@@ -21,6 +21,8 @@ class Handler extends ExceptionHandler
         'Diplo\Exceptions\PasAssezDeJoueursException',
         'Diplo\Exceptions\JoueurInexistantException',
         'Diplo\Exceptions\ConversationExistanteException',
+        'Diplo\Exceptions\JoueurDupliqueException',
+        'Diplo\Exceptions\ConversationIntrouvableException',
     ];
 
     /**
@@ -48,6 +50,13 @@ class Handler extends ExceptionHandler
         if ($e instanceof PartieIntrouvableException) {
             $statut = 'non_trouve';
             $erreur = 'La partie '.$e->getMessage()." n'existe pas";
+
+            return Response::json(compact('statut', 'erreur'), 404);
+        }
+
+        if ($e instanceof ConversationIntrouvableException) {
+            $statut = 'non_trouve';
+            $erreur = 'La conversation '.$e->getMessage()." n'existe pas";
 
             return Response::json(compact('statut', 'erreur'), 404);
         }
@@ -85,6 +94,13 @@ class Handler extends ExceptionHandler
             $erreur = 'Une conversation entre ces joueurs existe déjà. Utilisez cette conversation';
 
             return Response::json(compact('statut', 'erreur'), 403);
+        }
+
+        if ($e instanceof JoueurDupliqueException) {
+            $statut = 'joueur_duplique';
+            $erreur = "Un joueur ne peut être plus d'une fois dans la même conversation";
+
+            return Response::json(compact('statut', 'erreur'), 400);
         }
 
         return parent::render($request, $e);

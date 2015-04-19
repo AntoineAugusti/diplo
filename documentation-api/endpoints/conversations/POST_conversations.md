@@ -32,7 +32,7 @@ Renvoie une réponse avec un code HTTP **201**.
 Variable | Type | Description
 ------------- | ------------- | -------------
 `id`  | Entier naturel non nul | Identifiant de la conversation créée
-`joueurs`  | Tableau d'entiers naturels non nuls | Identifiants des joueurs présents dans la conversation
+`joueurs`  | Tableau d'entiers naturels non nuls | Identifiants des joueurs présents dans la conversation, dans l'ordre croissant
 `messages`  | Tableau de Message | Tableau vide
 
 ### Erreurs
@@ -50,5 +50,6 @@ Une erreur renvoie automatiquement un code HTTP de la famille des 400 et un obje
 Code HTTP | Valeur de `statut` | Valeur de `erreur`
 ------------- | ------------- | -------------
 400  | `manque_joueurs` | `Une conversation ne peut être créée qu'entre deux joueurs ou plus`
+400  | `joueur_duplique` | `Un joueur ne peut être plus d'une fois dans la même conversation`
 403  | `joueur_non_present` | `Au moins un des joueurs n'existe pas. Impossible de créer la conversation`
 403  | `conversation_existante` | `Une conversation entre ces joueurs existe déjà. Utilisez cette conversation`

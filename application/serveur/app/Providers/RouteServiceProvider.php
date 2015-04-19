@@ -3,11 +3,13 @@
 namespace Diplo\Providers;
 
 use App;
-use Illuminate\Routing\Router;
-use Diplo\Parties\PartiesRepository;
+use Diplo\Exceptions\ConversationIntrouvableException;
 use Diplo\Exceptions\PartieIntrouvableException;
+use Diplo\Messages\ConversationsRepository;
+use Diplo\Parties\PartiesRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Routing\Router;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -30,13 +32,23 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot($router);
 
         $router->pattern('partie', '[0-9]+');
+        $router->pattern('conversation', '[0-9]+');
 
         $partiesRepo = App::make(PartiesRepository::class);
-        $router->bind('partie', function ($id_partie) use ($partiesRepo) {
+        $router->bind('partie', function ($idPartie) use ($partiesRepo) {
             try {
-                return $partiesRepo->trouverParId($id_partie);
+                return $partiesRepo->trouverParId($idPartie);
             } catch (ModelNotFoundException $e) {
-                throw new PartieIntrouvableException($id_partie);
+                throw new PartieIntrouvableException($idPartie);
+            }
+        });
+
+        $conversationsRepo = App::make(ConversationsRepository::class);
+        $router->bind('conversation', function ($idConversation) use ($conversationsRepo) {
+            try {
+                return $conversationsRepo->trouverParId($idConversation);
+            } catch (ModelNotFoundException $e) {
+                throw new ConversationIntrouvableException($idConversation);
             }
         });
     }

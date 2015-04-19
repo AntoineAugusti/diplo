@@ -8,6 +8,15 @@ use Diplo\Joueurs\Joueur;
 class Conversation extends Eloquent
 {
     /**
+     * Les attributs du modèle qui doivent être castés vers des types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id'        => 'integer',
+    ];
+
+    /**
      * Récupère les joueurs dans une conversation.
      *
      * @return \Illuminate\Database\Eloquent\Relations\Relation
@@ -25,7 +34,10 @@ class Conversation extends Eloquent
     public function joueursIds()
     {
         $ids = $this->joueurs->lists('id');
+        // Tri dans l'ordre croissant
         sort($ids);
+        // Conversion en entiers
+        array_map('intval', $ids);
 
         return $ids;
     }

@@ -3,6 +3,7 @@
 namespace Diplo\Messages;
 
 use Diplo\Exceptions\ConversationExistanteException;
+use Diplo\Exceptions\JoueurDupliqueException;
 use Diplo\Exceptions\JoueurInexistantException;
 use Diplo\Exceptions\PasAssezDeJoueursException;
 use Diplo\Joueurs\JoueursRepository;
@@ -21,6 +22,20 @@ class EloquentConversationsRepository implements ConversationsRepository
     }
 
     /**
+     * Trouve une conversation à l'aide de son identifiant.
+     *
+     * @param int $id L'identifiant de la conversation
+     *
+     * @return Conversation
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException La conversation n'a pas été trouvée
+     */
+    public function trouverParId($id)
+    {
+        return Conversation::findOrFail($id);
+    }
+
+    /**
      * Demande à créer une conversation entre plusieurs joueurs.
      *
      * @param array $idsJoueurs Les identifiants des joueurs
@@ -28,8 +43,9 @@ class EloquentConversationsRepository implements ConversationsRepository
      * @return Conversation
      *
      * @throws PasAssezDeJoueursException     Une conversation doit être créée au moins entre 2 joueurs
-     * @throws JoueurInexistantException      Un des joueurs n'existe
+     * @throws JoueurInexistantException      Un des joueurs n'existe pas
      * @throws ConversationExistanteException Une conversation entre ces joueurs existait déjà
+     * @throws JoueurDupliqueException        Un joueur ne peut être plus d'une fois dans la même conversation
      */
     public function creerConversation(array $idsJoueurs)
     {
@@ -49,7 +65,6 @@ class EloquentConversationsRepository implements ConversationsRepository
         return $conversation;
     }
 
-
     /**
      * Vérifie qu'il est possible de créer la conversation entre plusieurs joueurs.
      *
@@ -57,6 +72,7 @@ class EloquentConversationsRepository implements ConversationsRepository
      *
      * @throws PasAssezDeJoueursException     Une conversation doit être créée au moins entre 2 joueurs
      * @throws ConversationExistanteException Une conversation entre ces joueurs existait déjà
+     * @throws JoueurDupliqueException        Un joueur ne peut être plus d'une fois dans la même conversation
      */
     private function verifiePossibiliteCreerConversation(array $idsJoueurs)
     {
@@ -65,10 +81,26 @@ class EloquentConversationsRepository implements ConversationsRepository
             throw new PasAssezDeJoueursException();
         }
 
+        if ($this->tableauPossedeDoublons($idsJoueurs)) {
+            throw new JoueurDupliqueException();
+        }
+
         // Vérifions qu'une conversation entre ces joueurs n'existe pas
         if ($this->conversationEntreJoueursExiste($idsJoueurs)) {
             throw new ConversationExistanteException();
         }
+    }
+
+    /**
+     * Détermine si un tableau possède des valeurs en double.
+     *
+     * @param array $a
+     *
+     * @return bool
+     */
+    private function tableauPossedeDoublons(array $a)
+    {
+        return count($a) !== count(array_unique($a));
     }
 
     /**
