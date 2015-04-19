@@ -47,16 +47,31 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        $response = $this->handleConversationsExceptions($e);
+        if (!is_null($response)) {
+            return $response;
+        }
+
+        $response = $this->handlePartiesExceptions($e);
+        if (!is_null($response)) {
+            return $response;
+        }
+
+        return parent::render($request, $e);
+    }
+
+    /**
+     * Gère les exceptions pour les parties.
+     *
+     * @param Exception $e
+     *
+     * @return Response|null
+     */
+    private function handlePartiesExceptions(Exception $e)
+    {
         if ($e instanceof PartieIntrouvableException) {
             $statut = 'non_trouve';
             $erreur = 'La partie '.$e->getMessage()." n'existe pas";
-
-            return Response::json(compact('statut', 'erreur'), 404);
-        }
-
-        if ($e instanceof ConversationIntrouvableException) {
-            $statut = 'non_trouve';
-            $erreur = 'La conversation '.$e->getMessage()." n'existe pas";
 
             return Response::json(compact('statut', 'erreur'), 404);
         }
@@ -75,11 +90,30 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 405);
         }
 
-        if ($e instanceof JoueurInexistantException) {
-            $statut = 'joueur_non_present';
-            $erreur = "Au moins un des joueurs n'existe pas. Impossible de créer la conversation";
+        return;
+    }
+
+    /**
+     * Gère les exceptions pour les conversations.
+     *
+     * @param Exception $e
+     *
+     * @return Response|null
+     */
+    private function handleConversationsExceptions(Exception $e)
+    {
+        if ($e instanceof ConversationExistanteException) {
+            $statut = 'conversation_existante';
+            $erreur = 'Une conversation entre ces joueurs existe déjà. Utilisez cette conversation';
 
             return Response::json(compact('statut', 'erreur'), 403);
+        }
+
+        if ($e instanceof ConversationIntrouvableException) {
+            $statut = 'non_trouve';
+            $erreur = 'La conversation '.$e->getMessage()." n'existe pas";
+
+            return Response::json(compact('statut', 'erreur'), 404);
         }
 
         if ($e instanceof PasAssezDeJoueursException) {
@@ -89,9 +123,9 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 400);
         }
 
-        if ($e instanceof ConversationExistanteException) {
-            $statut = 'conversation_existante';
-            $erreur = 'Une conversation entre ces joueurs existe déjà. Utilisez cette conversation';
+        if ($e instanceof JoueurInexistantException) {
+            $statut = 'joueur_non_present';
+            $erreur = "Au moins un des joueurs n'existe pas. Impossible de créer la conversation";
 
             return Response::json(compact('statut', 'erreur'), 403);
         }
@@ -103,6 +137,6 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 400);
         }
 
-        return parent::render($request, $e);
+        return;
     }
 }
