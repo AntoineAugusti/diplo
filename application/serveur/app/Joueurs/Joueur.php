@@ -3,6 +3,8 @@
 namespace Diplo\Joueurs;
 
 use Eloquent;
+use Diplo\Messages\Conversation;
+use Diplo\Messages\Message;
 use Diplo\Parties\Partie;
 
 class Joueur extends Eloquent
@@ -46,6 +48,26 @@ class Joueur extends Eloquent
     public function partie()
     {
         return $this->belongsTo(Partie::class, 'id_partie', 'id');
+    }
+
+    /**
+     * Récupère les conversations d'un joueur.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     */
+    public function conversations()
+    {
+        return $this->belongsToMany(Conversation::class, 'conversations_joueurs', 'id_joueur', 'id_conversation');
+    }
+
+    /**
+     * Récupère les messages d'un joueur.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'id_joueur', 'id');
     }
 
     /**

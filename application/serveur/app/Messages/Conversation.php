@@ -2,71 +2,28 @@
 
 namespace Diplo\Messages;
 
+use Eloquent;
 use Diplo\Joueurs\Joueur;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * Class Conversation.
- */
-class Conversation extends Model
+class Conversation extends Eloquent
 {
     /**
-     * @var Joueur[]
-     */
-    private $joueurs = [];
-
-    /**
-     * @var Message[]
-     */
-    private $messages = [];
-
-    /**
-     * @return BelongsToMany
+     * Récupère les joueurs dans une conversation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
     public function joueurs()
     {
-        return $this->belongsToMany(Joueur::class);
+        return $this->belongsToMany(Joueur::class, 'conversations_joueurs', 'id_conversation', 'id_joueur');
     }
 
     /**
-     * @return Joueur[]
-     */
-    public function getJoueurs()
-    {
-        return $this->joueurs;
-    }
-
-    /**
-     * @param Joueur $joueur
-     */
-    public function addJoueur(Joueur $joueur)
-    {
-        $this->joueurs[] = $j;
-    }
-
-    /**
-     * @return HasMany
+     * Récupère les messages d'une conversation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
     public function messages()
     {
-        return $this->hasMany(Message::class);
-    }
-
-    /**
-     * @return Message[]
-     */
-    public function getMessages()
-    {
-        return $this->messages;
-    }
-
-    /**
-     * @param Message $message
-     */
-    public function addMessage(Message $message)
-    {
-        $this->messages[] = $m;
+        return $this->hasMany(Message::class, 'id_conversation', 'id');
     }
 }

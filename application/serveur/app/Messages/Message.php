@@ -2,70 +2,28 @@
 
 namespace Diplo\Messages;
 
+use Eloquent;
 use Diplo\Joueurs\Joueur;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * Class Message.
- */
-class Message extends Model
+class Message extends Eloquent
 {
     /**
-     * @var Joueur
-     */
-    private $joueur;
-
-    /**
-     * @var string
-     */
-    private $texte;
-
-    /**
-     * @return BelongsTo
-     */
-    public function conversation()
-    {
-        return $this->belongsTo(Conversation::class);
-    }
-
-    /**
-     * @return BelongsTo
+     * Récupère l'auteur d'un message.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
     public function joueur()
     {
-        return $this->belongsTo(Joueur::class);
+        return $this->belongsTo(Joueur::class, 'id_joueur', 'id');
     }
 
     /**
-     * @return Joueur
+     * Récupère la conversation associée à un message.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
-    public function getJoueur()
+    public function conversation()
     {
-        return $this->joueur;
-    }
-
-    /**
-     * @param Joueur $joueur
-     */
-    public function setJoueur(Joueur $joueur)
-    {
-        $this->joueur = $joueur;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTexte()
-    {
-        return $this->texte;
-    }
-
-    /**
-     * @param string $texte
-     */
-    public function setTexte($texte)
-    {
-        $this->texte = $texte;
+        return $this->belongsTo(Conversation::class, 'id_conversation', 'id');
     }
 }
