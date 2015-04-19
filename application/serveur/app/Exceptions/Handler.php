@@ -23,6 +23,7 @@ class Handler extends ExceptionHandler
         'Diplo\Exceptions\JoueurInexistantException',
         'Diplo\Exceptions\ConversationExistanteException',
         'Diplo\Exceptions\JoueurDupliqueException',
+        'Diplo\Exceptions\JoueurAbsentConversationException',
         'Diplo\Exceptions\ConversationIntrouvableException',
     ];
 
@@ -154,6 +155,13 @@ class Handler extends ExceptionHandler
             $erreur = "Un joueur ne peut être plus d'une fois dans la même conversation";
 
             return Response::json(compact('statut', 'erreur'), 400);
+        }
+
+        if ($e instanceof JoueurAbsentConversationException) {
+            $statut = 'joueur_non_present';
+            $erreur = 'Le joueur '.$e->getMessage()." n'est pas présent dans la conversation";
+
+            return Response::json(compact('statut', 'erreur'), 403);
         }
 
         return;

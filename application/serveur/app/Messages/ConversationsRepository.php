@@ -2,6 +2,12 @@
 
 namespace Diplo\Messages;
 
+use Diplo\Exceptions\ConversationExistanteException;
+use Diplo\Exceptions\JoueurDupliqueException;
+use Diplo\Exceptions\JoueurInexistantConversationException;
+use Diplo\Exceptions\PasAssezDeJoueursException;
+use Diplo\Exceptions\JoueurAbsentConversationException;
+
 interface ConversationsRepository
 {
     /**
@@ -27,4 +33,17 @@ interface ConversationsRepository
      * @throws ConversationExistanteException        Une conversation entre ces joueurs existait déjà
      */
     public function creerConversation(array $idsJoueurs);
+
+    /**
+     * Ajoute un message à une conversation.
+     *
+     * @param Conversation $conversation La conversation
+     * @param int          $idJoueur     L'identifiant du joueur
+     * @param string       $texte        Le contenu du message
+     *
+     * @return Message
+     *
+     * @throws JoueurAbsentConversationException L'auteur du message n'est pas présent dans la conversation
+     */
+    public function posterMessage(Conversation $conversation, $idJoueur, $texte);
 }

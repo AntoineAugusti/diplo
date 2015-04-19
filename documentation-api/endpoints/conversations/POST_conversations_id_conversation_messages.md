@@ -28,7 +28,7 @@ Renvoie une réponse avec un code HTTP **201**.
    "id": 1,
    "id_joueur":2,
    "texte":"Bonjour, comment ça va ?",
-   "date_creation":"1975-12-25 14:15:16"
+   "created_at":"1975-12-25 14:15:16"
 }
 ```
 
@@ -38,7 +38,7 @@ Variable | Type | Description
 `id`  | Entier naturel non nul | Identifiant du message créé
 `id_joueur`  | Entier naturel non nul | Identifiants du joueur émetteur du message
 `texte`  | Chaîne de caractères | Texte du message
-`date_creation`  | Chaîne de caractères | Date de création du message sous la forme "YYYY-MM-DD HH:MM:SS"
+`created_at`  | Chaîne de caractères | Date de création du message sous la forme "YYYY-MM-DD HH:MM:SS"
 
 ### Erreurs
 #### Exemple de réponse

@@ -4,10 +4,10 @@
 Route::get('/', 'WelcomeController@showWelcome');
 
 // Conversations
-Route::post('conversations', 'ConversationsController@postConversations');
-Route::get('conversations/{conversation}', 'ConversationsController@getConversation');
 Route::get('conversations/{conversation}', 'ConversationsController@getConversation');
 Route::get('conversations/joueurs/{joueur}', 'ConversationsController@getConversationJoueur');
+Route::post('conversations', 'ConversationsController@postConversations');
+Route::post('conversations/{conversation}/messages', 'ConversationsController@postConversationMessages');
 
 // Parties
 Route::get('parties/{partie}/statut', 'PartiesController@getStatut');

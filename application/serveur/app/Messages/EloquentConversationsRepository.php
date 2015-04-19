@@ -6,6 +6,7 @@ use Diplo\Exceptions\ConversationExistanteException;
 use Diplo\Exceptions\JoueurDupliqueException;
 use Diplo\Exceptions\JoueurInexistantConversationException;
 use Diplo\Exceptions\PasAssezDeJoueursException;
+use Diplo\Exceptions\JoueurAbsentConversationException;
 use Diplo\Joueurs\JoueursRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -63,6 +64,47 @@ class EloquentConversationsRepository implements ConversationsRepository
         }
 
         return $conversation;
+    }
+
+    /**
+     * Ajoute un message à une conversation.
+     *
+     * @param Conversation $conversation La conversation
+     * @param int          $idJoueur     L'identifiant du joueur
+     * @param string       $texte        Le contenu du message
+     *
+     * @return Message
+     *
+     * @throws JoueurAbsentConversationException L'auteur du message n'est pas présent dans la conversation
+     */
+    public function posterMessage(Conversation $conversation, $idJoueur, $texte)
+    {
+        if ($this->joueurAbsentConversation($conversation, $idJoueur)) {
+            throw new JoueurAbsentConversationException($idJoueur);
+        }
+
+        $messageData = [
+            'id_joueur'       => $idJoueur,
+            'id_conversation' => $conversation->id,
+            'texte'           => $texte,
+        ];
+        $message = Message::create($messageData);
+        $conversation->messages()->save($message);
+
+        return $message;
+    }
+
+    /**
+     * Détermine si un joueur est absent d'une conversation ou non.
+     *
+     * @param Conversation $c
+     * @param int          $idJoueur L'identifiant du joueur
+     *
+     * @return bool
+     */
+    private function joueurAbsentConversation(Conversation $c, $idJoueur)
+    {
+        return !in_array($idJoueur, $c->joueursIds());
     }
 
     /**

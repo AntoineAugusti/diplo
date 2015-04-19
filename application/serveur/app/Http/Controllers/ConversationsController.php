@@ -84,4 +84,23 @@ class ConversationsController extends Controller
 
         return Response::json(compact('conversations'), 200);
     }
+
+    /**
+     * Ajoute un message à une conversation.
+     *
+     * @param Conversation $conversation La conversation
+     *
+     * @return Response
+     *
+     * @throws JoueurAbsentConversationException L'auteur du message n'est pas présent dans la conversation
+     */
+    public function postConversationMessages(Conversation $conversation)
+    {
+        $idJoueur = Input::get('id_joueur');
+        $texte = Input::get('texte');
+
+        $message = $this->conversationsRepo->posterMessage($conversation, $idJoueur, $texte);
+
+        return Response::json($message, 201);
+    }
 }

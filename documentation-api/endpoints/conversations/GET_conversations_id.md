@@ -20,11 +20,13 @@ Renvoie une réponse avec un code HTTP **200**.
    "joueurs":[1, 3],
    "messages":[
       {
+         "id":21,
          "joueur":1,
          "texte":"Bonjour, ça va ?",
          "created_at":"2014-12-31 11:55:00"
       },
       {
+         "id":32,
          "joueur":3,
          "texte":"Oui et toi ?",
          "created_at":"2014-12-31 12:00:00"
@@ -37,6 +39,7 @@ Variable | Type | Description
 ------------- | ------------- | -------------
 `id`  | Entier naturel non nul | Identifiant de la conversation
 `joueurs`  | Tableau d'entiers positifs | Identifiants des joueurs présents dans la conversation
+messages.`id`  | Entier naturel non nul | L'identifiant du message
 messages.`joueur`  | Entier naturel non nul | Identifiant du joueur à l'origine du message
 messages.`texte`  | Chaîne de caractères | Texte du message
 messages.`created_at`  | Chaîne de caractères | La date de création du message, au format `YYYY-MM-DD HH:MM:SS` et au fuseau horaire UTC
