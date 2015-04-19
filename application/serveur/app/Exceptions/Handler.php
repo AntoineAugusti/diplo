@@ -4,7 +4,7 @@ namespace Diplo\Exceptions;
 
 use Exception;
 use Response;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -15,6 +15,9 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         'Symfony\Component\HttpKernel\Exception\HttpException',
+        'Diplo\Exceptions\PartieIntrouvableException',
+        'Diplo\Exceptions\PartieNonEnJeuException',
+        'Diplo\Exceptions\PartiePleineException',
     ];
 
     /**
