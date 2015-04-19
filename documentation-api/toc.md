@@ -2,6 +2,7 @@
 
 - Conversations
 	- [<code>GET</code> conversations/:id](endpoints/conversations/GET_conversations_id.md)
+	- [<code>GET</code> conversations/joueurs/:id](endpoints/conversations/GET_conversations_joueurs_id.md)
 	- [<code>POST</code> conversations](endpoints/conversations/POST_conversations.md)
 	- [<code>POST</code> conversations/:id/messages](endpoints/conversations/POST_conversations_id_conversation_messages.md)
 
