@@ -13,7 +13,7 @@ class Conversation extends Eloquent
      * @var array
      */
     protected $casts = [
-        'id'        => 'integer',
+        'id' => 'integer',
     ];
 
     /**

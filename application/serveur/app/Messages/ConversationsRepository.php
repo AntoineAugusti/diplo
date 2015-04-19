@@ -22,9 +22,9 @@ interface ConversationsRepository
      *
      * @return Conversation
      *
-     * @throws PasAssezDeJoueursException     Une conversation doit être créée au moins entre 2 joueurs
-     * @throws JoueurInexistantException      Un des joueurs n'existe pas
-     * @throws ConversationExistanteException Une conversation entre ces joueurs existait déjà
+     * @throws PasAssezDeJoueursException            Une conversation doit être créée au moins entre 2 joueurs
+     * @throws JoueurInexistantConversationException Un des joueurs n'existe pas
+     * @throws ConversationExistanteException        Une conversation entre ces joueurs existait déjà
      */
     public function creerConversation(array $idsJoueurs);
 }

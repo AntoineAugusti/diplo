@@ -4,8 +4,9 @@ namespace Diplo\Http\Controllers;
 
 use Input;
 use Response;
-use Diplo\Messages\ConversationsRepository;
+use Diplo\Joueurs\Joueur;
 use Diplo\Messages\Conversation;
+use Diplo\Messages\ConversationsRepository;
 
 class ConversationsController extends Controller
 {
@@ -22,10 +23,10 @@ class ConversationsController extends Controller
     /**
      * Créer une conversation entre joueurs.
      *
-     * @throws PasAssezDeJoueursException     Une conversation doit être créée au moins entre 2 joueurs
-     * @throws JoueurInexistantException      Un des joueurs n'existe pas
-     * @throws ConversationExistanteException Une conversation entre ces joueurs existait déjà
-     * @throws JoueurDupliqueException        Un joueur ne peut être plus d'une fois dans la même conversation
+     * @throws PasAssezDeJoueursException            Une conversation doit être créée au moins entre 2 joueurs
+     * @throws JoueurInexistantConversationException Un des joueurs n'existe pas
+     * @throws ConversationExistanteException        Une conversation entre ces joueurs existait déjà
+     * @throws JoueurDupliqueException               Un joueur ne peut être plus d'une fois dans la même conversation
      *
      * @return Response
      */
@@ -63,5 +64,24 @@ class ConversationsController extends Controller
         $messages = $conversation->messages;
 
         return Response::json(compact('id', 'joueurs', 'messages'), 200);
+    }
+
+    /**
+     * Récupère les conversations auxquelles participe un joueur.
+     *
+     * @param Joueur $joueur
+     *
+     * @return Response
+     */
+    public function getConversationJoueur(Joueur $joueur)
+    {
+        $conversations = [];
+        foreach ($joueur->conversations as $conversation) {
+            $id = $conversation->id;
+            $joueurs = $conversation->joueursIds();
+            $conversations[] = compact('id', 'joueurs');
+        }
+
+        return Response::json(compact('conversations'), 200);
     }
 }

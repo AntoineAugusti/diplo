@@ -19,6 +19,7 @@ class Handler extends ExceptionHandler
         'Diplo\Exceptions\PartieNonEnJeuException',
         'Diplo\Exceptions\PartiePleineException',
         'Diplo\Exceptions\PasAssezDeJoueursException',
+        'Diplo\Exceptions\JoueurInexistantConversationException',
         'Diplo\Exceptions\JoueurInexistantException',
         'Diplo\Exceptions\ConversationExistanteException',
         'Diplo\Exceptions\JoueurDupliqueException',
@@ -47,14 +48,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        $response = $this->handleConversationsExceptions($e);
-        if (!is_null($response)) {
-            return $response;
-        }
-
-        $response = $this->handlePartiesExceptions($e);
-        if (!is_null($response)) {
-            return $response;
+        $modules = ['conversations', 'parties', 'joueurs'];
+        foreach ($modules as $module) {
+            $method = 'handle'.ucfirst($module).'Exceptions';
+            $response = $this->$method($e);
+            if (!is_null($response)) {
+                return $response;
+            }
         }
 
         return parent::render($request, $e);
@@ -94,6 +94,25 @@ class Handler extends ExceptionHandler
     }
 
     /**
+     * Gère les exceptions pour les joueurs.
+     *
+     * @param Exception $e
+     *
+     * @return Response|null
+     */
+    private function handleJoueursExceptions(Exception $e)
+    {
+        if ($e instanceof JoueurInexistantException) {
+            $statut = 'joueur_inexistant';
+            $erreur = 'Le joueur '.$e->getMessage()." n'existe pas";
+
+            return Response::json(compact('statut', 'erreur'), 404);
+        }
+
+        return;
+    }
+
+    /**
      * Gère les exceptions pour les conversations.
      *
      * @param Exception $e
@@ -123,7 +142,7 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 400);
         }
 
-        if ($e instanceof JoueurInexistantException) {
+        if ($e instanceof JoueurInexistantConversationException) {
             $statut = 'joueur_non_present';
             $erreur = "Au moins un des joueurs n'existe pas. Impossible de créer la conversation";
 

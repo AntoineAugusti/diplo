@@ -4,7 +4,7 @@ namespace Diplo\Messages;
 
 use Diplo\Exceptions\ConversationExistanteException;
 use Diplo\Exceptions\JoueurDupliqueException;
-use Diplo\Exceptions\JoueurInexistantException;
+use Diplo\Exceptions\JoueurInexistantConversationException;
 use Diplo\Exceptions\PasAssezDeJoueursException;
 use Diplo\Joueurs\JoueursRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -42,10 +42,10 @@ class EloquentConversationsRepository implements ConversationsRepository
      *
      * @return Conversation
      *
-     * @throws PasAssezDeJoueursException     Une conversation doit être créée au moins entre 2 joueurs
-     * @throws JoueurInexistantException      Un des joueurs n'existe pas
-     * @throws ConversationExistanteException Une conversation entre ces joueurs existait déjà
-     * @throws JoueurDupliqueException        Un joueur ne peut être plus d'une fois dans la même conversation
+     * @throws PasAssezDeJoueursException            Une conversation doit être créée au moins entre 2 joueurs
+     * @throws JoueurInexistantConversationException Un des joueurs n'existe pas
+     * @throws ConversationExistanteException        Une conversation entre ces joueurs existait déjà
+     * @throws JoueurDupliqueException               Un joueur ne peut être plus d'une fois dans la même conversation
      */
     public function creerConversation(array $idsJoueurs)
     {
@@ -57,7 +57,7 @@ class EloquentConversationsRepository implements ConversationsRepository
             try {
                 $joueur = $this->joueurRepo->trouverParId($idJoueur);
             } catch (ModelNotFoundException $e) {
-                throw new JoueurInexistantException();
+                throw new JoueurInexistantConversationException();
             }
             $conversation->joueurs()->save($joueur);
         }

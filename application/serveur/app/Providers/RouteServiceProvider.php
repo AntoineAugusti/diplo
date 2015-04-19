@@ -4,7 +4,9 @@ namespace Diplo\Providers;
 
 use App;
 use Diplo\Exceptions\ConversationIntrouvableException;
+use Diplo\Exceptions\JoueurInexistantException;
 use Diplo\Exceptions\PartieIntrouvableException;
+use Diplo\Joueurs\JoueursRepository;
 use Diplo\Messages\ConversationsRepository;
 use Diplo\Parties\PartiesRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -33,6 +35,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $router->pattern('partie', '[0-9]+');
         $router->pattern('conversation', '[0-9]+');
+        $router->pattern('joueur', '[0-9]+');
 
         $partiesRepo = App::make(PartiesRepository::class);
         $router->bind('partie', function ($idPartie) use ($partiesRepo) {
@@ -49,6 +52,15 @@ class RouteServiceProvider extends ServiceProvider
                 return $conversationsRepo->trouverParId($idConversation);
             } catch (ModelNotFoundException $e) {
                 throw new ConversationIntrouvableException($idConversation);
+            }
+        });
+
+        $joueursRepo = App::make(JoueursRepository::class);
+        $router->bind('joueur', function ($idJoueur) use ($joueursRepo) {
+            try {
+                return $joueursRepo->trouverParId($idJoueur);
+            } catch (ModelNotFoundException $e) {
+                throw new JoueurInexistantException($idJoueur);
             }
         });
     }
