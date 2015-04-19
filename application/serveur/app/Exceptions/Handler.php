@@ -18,6 +18,9 @@ class Handler extends ExceptionHandler
         'Diplo\Exceptions\PartieIntrouvableException',
         'Diplo\Exceptions\PartieNonEnJeuException',
         'Diplo\Exceptions\PartiePleineException',
+        'Diplo\Exceptions\PasAssezDeJoueursException',
+        'Diplo\Exceptions\JoueurInexistantException',
+        'Diplo\Exceptions\ConversationExistanteException',
     ];
 
     /**
@@ -61,6 +64,27 @@ class Handler extends ExceptionHandler
             $erreur = 'La partie '.$e->getMessage()." n'est pas en jeu : la partie peut être en attente de joueurs ou terminée";
 
             return Response::json(compact('statut', 'erreur'), 405);
+        }
+
+        if ($e instanceof JoueurInexistantException) {
+            $statut = 'joueur_non_present';
+            $erreur = "Au moins un des joueurs n'existe pas. Impossible de créer la conversation";
+
+            return Response::json(compact('statut', 'erreur'), 403);
+        }
+
+        if ($e instanceof PasAssezDeJoueursException) {
+            $statut = 'manque_joueurs';
+            $erreur = "Une conversation ne peut être créée qu'entre deux joueurs ou plus";
+
+            return Response::json(compact('statut', 'erreur'), 400);
+        }
+
+        if ($e instanceof ConversationExistanteException) {
+            $statut = 'conversation_existante';
+            $erreur = 'Une conversation entre ces joueurs existe déjà. Utilisez cette conversation';
+
+            return Response::json(compact('statut', 'erreur'), 403);
         }
 
         return parent::render($request, $e);

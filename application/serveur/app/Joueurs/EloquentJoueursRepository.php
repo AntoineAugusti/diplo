@@ -1,0 +1,20 @@
+<?php
+
+namespace Diplo\Joueurs;
+
+class EloquentJoueursRepository implements JoueursRepository
+{
+    /**
+     * Trouve un joueur à l'aide de son identifiant.
+     *
+     * @param int $id L'identifiant du joueur
+     *
+     * @return Joueur
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Le joueur n'a pas été trouvée
+     */
+    public function trouverParId($id)
+    {
+        return Joueur::findOrFail($id);
+    }
+}

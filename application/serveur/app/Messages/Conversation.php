@@ -18,6 +18,19 @@ class Conversation extends Eloquent
     }
 
     /**
+     * Les identifiants des joueurs présents dans la conversation, triés dans l'ordre croissant.
+     *
+     * @return array
+     */
+    public function joueursIds()
+    {
+        $ids = $this->joueurs->lists('id');
+        sort($ids);
+
+        return $ids;
+    }
+
+    /**
      * Récupère les messages d'une conversation.
      *
      * @return \Illuminate\Database\Eloquent\Relations\Relation

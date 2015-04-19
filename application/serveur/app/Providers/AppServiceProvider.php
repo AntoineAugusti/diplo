@@ -2,10 +2,14 @@
 
 namespace Diplo\Providers;
 
+use Diplo\Joueurs\EloquentJoueursRepository;
+use Diplo\Joueurs\JoueurGenerator;
+use Diplo\Joueurs\JoueurGeneratorInterface;
+use Diplo\Joueurs\JoueursRepository;
+use Diplo\Messages\ConversationsRepository;
+use Diplo\Messages\EloquentConversationsRepository;
 use Diplo\Parties\EloquentPartiesRepository;
 use Diplo\Parties\PartiesRepository;
-use Diplo\Joueurs\JoueurGeneratorInterface;
-use Diplo\Joueurs\JoueurGenerator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +30,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             PartiesRepository::class,
             EloquentPartiesRepository::class
+        );
+
+        $this->app->bind(
+            JoueursRepository::class,
+            EloquentJoueursRepository::class
+        );
+
+        $this->app->bind(
+            ConversationsRepository::class,
+            EloquentConversationsRepository::class
         );
 
         $this->app->bind(
