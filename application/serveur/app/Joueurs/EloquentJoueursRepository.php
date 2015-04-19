@@ -11,7 +11,7 @@ class EloquentJoueursRepository implements JoueursRepository
      *
      * @return Joueur
      *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Le joueur n'a pas été trouvée
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Le joueur n'a pas été trouvé
      */
     public function trouverParId($id)
     {
