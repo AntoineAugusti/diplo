@@ -16,12 +16,14 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         'Symfony\Component\HttpKernel\Exception\HttpException',
         'Diplo\Exceptions\PartieIntrouvableException',
-        'Diplo\Exceptions\PartieNonEnJeuException',
         'Diplo\Exceptions\PartiePleineException',
         'Diplo\Exceptions\PasAssezDeJoueursException',
         'Diplo\Exceptions\JoueurInexistantConversationException',
         'Diplo\Exceptions\JoueurInexistantException',
         'Diplo\Exceptions\ConversationExistanteException',
+        'Diplo\Exceptions\PartiesDifferentesException',
+        'Diplo\Exceptions\PartieNonEnJeuException',
+        'Diplo\Exceptions\PartieEnPhasedeCombatException',
         'Diplo\Exceptions\JoueurDupliqueException',
         'Diplo\Exceptions\JoueurAbsentConversationException',
         'Diplo\Exceptions\ConversationIntrouvableException',
@@ -89,6 +91,13 @@ class Handler extends ExceptionHandler
             $erreur = 'La partie '.$e->getMessage()." n'est pas en jeu : la partie peut être en attente de joueurs ou terminée";
 
             return Response::json(compact('statut', 'erreur'), 405);
+        }
+
+        if ($e instanceof PartieEnPhasedeCombatException) {
+            $statut = 'partie_phase_combat';
+            $erreur = 'La partie '.$e->getMessage().' est en phase de combat';
+
+            return Response::json(compact('statut', 'erreur'), 403);
         }
 
         return;
@@ -160,6 +169,13 @@ class Handler extends ExceptionHandler
         if ($e instanceof JoueurAbsentConversationException) {
             $statut = 'joueur_non_present';
             $erreur = 'Le joueur '.$e->getMessage()." n'est pas présent dans la conversation";
+
+            return Response::json(compact('statut', 'erreur'), 403);
+        }
+
+        if ($e instanceof PartiesDifferentesException) {
+            $statut = 'parties_differentes';
+            $erreur = 'Les joueurs ne sont pas dans la même partie';
 
             return Response::json(compact('statut', 'erreur'), 403);
         }

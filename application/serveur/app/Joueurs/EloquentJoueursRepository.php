@@ -17,4 +17,16 @@ class EloquentJoueursRepository implements JoueursRepository
     {
         return Joueur::findOrFail($id);
     }
+
+    /**
+     * Trouve plusieurs joueurs depuis un ensemble d'identifiants.
+     *
+     * @param array $ids Les identifiants des joueurs
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function trouverParIds(array $ids)
+    {
+        return Joueur::whereIn('id', $ids)->get();
+    }
 }

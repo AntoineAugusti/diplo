@@ -3,7 +3,6 @@
 namespace Diplo\Messages;
 
 use Diplo\Exceptions\ConversationExistanteException;
-use Diplo\Exceptions\JoueurDupliqueException;
 use Diplo\Exceptions\JoueurInexistantConversationException;
 use Diplo\Exceptions\PasAssezDeJoueursException;
 use Diplo\Exceptions\JoueurAbsentConversationException;
@@ -29,10 +28,14 @@ interface ConversationsRepository
      * @return Conversation
      *
      * @throws PasAssezDeJoueursException            Une conversation doit être créée au moins entre 2 joueurs
-     * @throws JoueurInexistantConversationException Un des joueurs n'existe pas
      * @throws ConversationExistanteException        Une conversation entre ces joueurs existait déjà
+     * @throws JoueurDupliqueException               Un joueur ne peut être plus d'une fois dans la même conversation
+     * @throws JoueurInexistantConversationException Au moins un des joueurs n'existait pas
+     * @throws PartiesDifferentesException           Au moins un des joueurs n'était pas dans la même partie que les autres
+     * @throws PartieNonEnJeuException               La partie n'est pas en jeu
+     * @throws PartieEnPhasedeCombatException        La partie n'est pas en phase de négociation
      */
-    public function creerConversation(array $idsJoueurs);
+    public function creerConversation(array $idsJoueurs)
 
     /**
      * Ajoute un message à une conversation.

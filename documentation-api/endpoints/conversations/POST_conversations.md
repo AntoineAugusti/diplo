@@ -52,4 +52,7 @@ Code HTTP | Valeur de `statut` | Valeur de `erreur`
 400  | `manque_joueurs` | `Une conversation ne peut être créée qu'entre deux joueurs ou plus`
 400  | `joueur_duplique` | `Un joueur ne peut être plus d'une fois dans la même conversation`
 403  | `joueur_non_present` | `Au moins un des joueurs n'existe pas. Impossible de créer la conversation`
+403  | `partie_phase_combat` | `La partie :id est en phase de combat`
+403  | `parties_differentes` | `Les joueurs ne sont pas dans la même partie`
+403  | `partie_invalide` | `La partie :id n'est pas en jeu : la partie peut être en attente de joueurs ou terminée`
 403  | `conversation_existante` | `Une conversation entre ces joueurs existe déjà. Utilisez cette conversation`
