@@ -15,7 +15,9 @@ class PartieEstTerminee extends Event
     public $partie;
 
     /**
-     * Create a new event instance.
+     * Constructeur.
+     *
+     * @param Partie $partie La partie
      */
     public function __construct(Partie $partie)
     {

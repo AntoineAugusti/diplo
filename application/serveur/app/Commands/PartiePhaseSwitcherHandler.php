@@ -3,6 +3,8 @@
 namespace Diplo\Commands;
 
 use Carbon\Carbon;
+use Diplo\Events\PartieChangeDePhase;
+use Diplo\Events\PartieChangeDeTour;
 use Diplo\Events\PartieEstTerminee;
 use Diplo\Parties\Partie;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -41,6 +43,10 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
      *
      * @param Queue $queue
      * @param Event $event
+     *
+     * @event PartieChangeDePhase Quand la partie change de phase
+     * @event PartieChangeDeTour  Quand la partie change de tour
+     * @event PartieEstTerminee   Quand la partie vient de se terminer
      */
     public function handle(Queue $queue, Event $event)
     {
@@ -59,11 +65,14 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
         } else {
             // On met à jour la nouvelle phase
             $partie->phase = $phase;
+            $event->fire(new PartieChangeDePhase($partie, $phase));
 
             // On incrémente le numéro de tour si on retourne sur une phase de combat
-            // Sauf dans le cas particulier du premier
+            // Sauf dans le cas particulier du premier tour
             if ($partie->estCombat() and $phase != 'DEBUT') {
-                $partie->tour_courant = $partie->tour_courant + 1;
+                $nouveauTour = $partie->tour_courant + 1;
+                $partie->tour_courant = $nouveauTour;
+                $event->fire(new PartieChangeDeTour($partie, $nouveauTour));
             }
 
             $prochainePhase = $this->prochainePhase($partie);
