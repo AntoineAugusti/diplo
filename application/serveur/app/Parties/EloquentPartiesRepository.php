@@ -48,6 +48,8 @@ class EloquentPartiesRepository implements PartiesRepository
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException La partie n'a pas été trouvée
      * @throws \Diplo\Exceptions\PartiePleineException              La partie est pleine
+     *
+     * @event PartiePreteACommencer La partie est prête à commencer
      */
     public function rejoindre($id)
     {
