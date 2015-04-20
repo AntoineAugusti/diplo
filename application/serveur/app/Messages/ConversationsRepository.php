@@ -35,7 +35,7 @@ interface ConversationsRepository
      * @throws PartieNonEnJeuException               La partie n'est pas en jeu
      * @throws PartieEnPhasedeCombatException        La partie n'est pas en phase de négociation
      */
-    public function creerConversation(array $idsJoueurs)
+    public function creerConversation(array $idsJoueurs);
 
     /**
      * Ajoute un message à une conversation.
