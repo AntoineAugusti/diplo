@@ -3,12 +3,12 @@ package fr.insarouen.asi.diplo.Reseau;
 import fr.insarouen.asi.diplo.Exception.ReseauException.*;
 import fr.insarouen.asi.diplo.MoteurJeu.*;
 import org.json.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.HttpURLConnection;
+import java.security.cert.Certificate;
+import java.io.*;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLPeerUnverifiedException;
 import java.util.*;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -26,10 +26,10 @@ public class CommunicationServeur{
 		Jeu jeuCourant=null;
 		try{
 			URL url = new URL(serveurURL+"parties/"+partieID+"/rejoindre");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
-			conn.setRequestProperty("Accept", "text/plain");
-			
+			conn.setRequestProperty("Accept", "application/json");
+			conn.setDoOutput(true);
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 			String reponse = br.readLine();
 			if(conn.getResponseCode() == 201){
@@ -72,7 +72,7 @@ public class CommunicationServeur{
 		ArrayList<Joueur> liste = new ArrayList<Joueur>();
 		try{
 			URL url = new URL(serveurURL+"parties/"+partieID+"/joueurs");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "text/plain");
 			
@@ -112,7 +112,7 @@ public class CommunicationServeur{
 		String etat="En cours";
 		try{
 			URL url = new URL(serveurURL+"parties/"+partieID+"/statut");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "text/plain");
 			
@@ -149,7 +149,7 @@ public class CommunicationServeur{
 		Phase phaseCourante = null;
 		try{
 			URL url = new URL(serveurURL+"parties/"+partieID+"/phase");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "text/plain");
 			
@@ -193,7 +193,7 @@ public class CommunicationServeur{
 		Carte carte = new Carte();
 		try{
 			URL url = new URL(serveurURL+"parties/"+partieID+"/carte");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "text/plain");
 			

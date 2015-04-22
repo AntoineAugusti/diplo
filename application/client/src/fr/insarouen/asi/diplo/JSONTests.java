@@ -7,7 +7,7 @@ import org.json.*;
 import fr.insarouen.asi.diplo.MoteurJeu.*;
 import java.util.*;
 
-public class Tests {
+public class JSONTests {
 
 	public static Jeu parsageJSONRejoindrePartie(){
 				String jsonFile="{\n \"partie\":{\n \"id\":1,\n \"nb_joueurs_requis\":5,\n \"nb_joueurs_inscrits\":3\n },\n \"joueur\":{\n \"id\":2,\n \"pseudo\":\"Blah\",\n \"pays\":\"FRA\"\n }\n}";
