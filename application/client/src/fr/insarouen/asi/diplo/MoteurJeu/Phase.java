@@ -10,6 +10,11 @@ public class Phase{
 	private Statut statut;
 	private int chrono;
 
+	public Phase(){
+		this.statut=Phase.Statut.INACTIF;
+		this.chrono=0;
+	}
+
 	public Phase(Statut statut, int chrono){
 		this.statut=statut;
 		this.chrono=chrono;
