@@ -61,7 +61,7 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
         }
 
         if ($partie->estPremierTour() and $phase == 'DEBUT') {
-            $prochainePhase = Partie::NEGOCIATION;
+            $prochainePhase = Partie::COMBAT;
         } else {
             // On met à jour la nouvelle phase
             $partie->phase = $phase;
@@ -69,7 +69,7 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
 
             // On incrémente le numéro de tour si on retourne sur une phase de combat
             // Sauf dans le cas particulier du premier tour
-            if ($partie->estCombat() and $phase != 'DEBUT') {
+            if ($partie->estNegociation() and $phase != 'DEBUT') {
                 $nouveauTour = $partie->tour_courant + 1;
                 $partie->tour_courant = $nouveauTour;
                 $event->fire(new PartieChangeDeTour($partie, $nouveauTour));
@@ -113,14 +113,13 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
      */
     private function prochainePhase(Partie $partie)
     {
+        // Phase de combat lors du dernier tour, on peut demander la clôture de la partie
+        if ($partie->estDernierTour() and $partie->estCombat()) {
+            return 'FIN';
+        }
+
         if ($partie->estCombat()) {
-            if (!$partie->estDernierTour()) {
-                return PARTIE::NEGOCIATION;
-            // Phase de combat lors du dernier tour
-            // On peut demander la clôture de la partie
-            } else {
-                return 'FIN';
-            }
+            return PARTIE::NEGOCIATION;
         }
 
         return PARTIE::COMBAT;
