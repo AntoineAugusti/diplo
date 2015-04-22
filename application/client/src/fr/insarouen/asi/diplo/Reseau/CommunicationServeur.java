@@ -22,23 +22,73 @@ public class CommunicationServeur{
 		this.serveurURL=URL;
 	}
 	// Créer un objet partie lorsque l'on rejoint une partie avec un id.
+	// private abstract String getRequetes(){
+
+	// } 
+
+	// private abstract String postRequete(){
+
+	// }
+	private Jeu parserJSONRejoindre(String fichier){
+				JSONObject obj = new JSONObject(fichier);
+				JSONObject partie = obj.getJSONObject("partie");
+				Jeu jeuCourant = new Jeu(partie.getInt("id"),partie.getInt("nb_joueurs_requis"),partie.getInt("nb_joueurs_inscrits"));
+				JSONObject joueurJSON = obj.getJSONObject("joueur");
+				Joueur joueurCourant = new Joueur(joueurJSON.getInt("id"),joueurJSON.getString("pseudo"),joueurJSON.getString("pays"),0,0);
+				jeuCourant.miseAJourJoueur(joueurCourant);
+				return jeuCourant;
+	}
+
+	private ArrayList<Joueur> parserJSONInfosJoueurs(String fichier){
+				ArrayList<Joueur> liste = new ArrayList<Joueur>();
+				JSONObject obj = new JSONObject(fichier);
+				JSONArray listeJoueurs = obj.getJSONArray("joueurs");
+				for(int i=0; i<listeJoueurs.length();i++){
+					liste.add(new Joueur(listeJoueurs.getJSONObject(i).getInt("id"),listeJoueurs.getJSONObject(i).getString("pseudo"),listeJoueurs.getJSONObject(i).getString("pays"),listeJoueurs.getJSONObject(i).getInt("armees_restantes"),listeJoueurs.getJSONObject(i).getInt("cases_controlees")));
+				}
+				return liste;
+	}
+
+	private String parserJSONInfosPartie(String fichier){
+				String etat;
+				JSONObject message = new JSONObject(fichier);
+				etat=message.getString("message");
+				return etat;
+	}
+
+	private Phase parserJSONInfosPhase(String fichier){
+				Phase phaseCourante = null;
+				JSONObject message = new JSONObject(fichier);
+				switch(message.getString("phase")){
+					case "NEGOCIATION" : phaseCourante = new Phase(Phase.Statut.NEGOCIATION,message.getInt("chrono"));break;
+					case "COMBAT" : phaseCourante = new Phase(Phase.Statut.COMBAT,message.getInt("chrono"));break;
+					default : phaseCourante = new Phase(Phase.Statut.INACTIF,1);
+				}
+				return phaseCourante;
+	}
 	public Jeu rejoindrePartie(int partieID) throws RuntimeException, PartieIntrouvableException, PartiePleineException{
 		Jeu jeuCourant=null;
+		String line="";
+		String reponse="";
 		try{
 			URL url = new URL(serveurURL+"parties/"+partieID+"/rejoindre");
 			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
-			conn.setRequestProperty("Accept", "application/json");
+			conn.setUseCaches(false);
+			conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
 			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			String postData="&test=lol";
+			DataOutputStream postOut=new DataOutputStream(conn.getOutputStream());
+  			postOut.writeBytes(postData);
+  			postOut.flush();
+  			postOut.close();
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-			String reponse = br.readLine();
+			 while ((line=br.readLine()) != null) {
+	     		 reponse+=line;
+	    	}
 			if(conn.getResponseCode() == 201){
-				JSONObject obj = new JSONObject(reponse);
-				JSONObject partie = obj.getJSONObject("partie");
-				jeuCourant = new Jeu(partie.getInt("id"),partie.getInt("nb_joueurs_requis"),partie.getInt("nb_joueurs_inscrits"));
-				JSONObject joueurJSON = obj.getJSONObject("joueur");
-				Joueur joueurCourant = new Joueur(joueurJSON.getInt("id"),joueurJSON.getString("pseudo"),joueurJSON.getString("pays"),0,0);
-				jeuCourant.miseAJourJoueur(joueurCourant);
+				jeuCourant = parserJSONRejoindre(reponse);
 			}
 			if(conn.getResponseCode() == 400){
 				JSONObject obj = new JSONObject(reponse);
@@ -74,16 +124,12 @@ public class CommunicationServeur{
 			URL url = new URL(serveurURL+"parties/"+partieID+"/joueurs");
 			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "text/plain");
+			conn.setRequestProperty("Accept", "application/json");
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 			String reponse = br.readLine();
 			if(conn.getResponseCode() == 200){
-				JSONObject obj = new JSONObject(reponse);
-				JSONArray listeJoueurs = obj.getJSONArray("joueurs");
-				for(int i=0; i<listeJoueurs.length();i++){
-					liste.add(new Joueur(listeJoueurs.getJSONObject(i).getInt("id"),listeJoueurs.getJSONObject(i).getString("pseudo"),listeJoueurs.getJSONObject(i).getString("pays"),listeJoueurs.getJSONObject(i).getInt("armees_restantes"),listeJoueurs.getJSONObject(i).getInt("cases_controlees")));
-				}
+				liste = parserJSONInfosJoueurs(reponse);
 			}
 			if(conn.getResponseCode() == 404){
 				JSONObject obj = new JSONObject(reponse);
@@ -114,13 +160,12 @@ public class CommunicationServeur{
 			URL url = new URL(serveurURL+"parties/"+partieID+"/statut");
 			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "text/plain");
+			conn.setRequestProperty("Accept", "application/json");
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 			String reponse = br.readLine();
 			if(conn.getResponseCode() == 200){
-				JSONObject message = new JSONObject(reponse);
-				etat=message.getString("message");
+				etat=parserJSONInfosPartie(reponse);
 			}
 			if(conn.getResponseCode() == 404){
 				JSONObject obj = new JSONObject(reponse);
@@ -151,17 +196,12 @@ public class CommunicationServeur{
 			URL url = new URL(serveurURL+"parties/"+partieID+"/phase");
 			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "text/plain");
+			conn.setRequestProperty("Accept", "application/json");
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 			String reponse = br.readLine();
 			if(conn.getResponseCode() == 200){
-				JSONObject message = new JSONObject(reponse);
-				switch(message.getString("phase")){
-					case "NEGOCIATION" : phaseCourante = new Phase(Phase.Statut.NEGOCIATION,message.getInt("chrono"));break;
-					case "COMBAT" : phaseCourante = new Phase(Phase.Statut.COMBAT,message.getInt("chrono"));break;
-					default : phaseCourante = new Phase(Phase.Statut.INACTIF,1);
-				}
+				phaseCourante = parserJSONInfosPhase(reponse);
 			}
 			if(conn.getResponseCode() == 404){
 				JSONObject obj = new JSONObject(reponse);
@@ -195,7 +235,7 @@ public class CommunicationServeur{
 			URL url = new URL(serveurURL+"parties/"+partieID+"/carte");
 			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "text/plain");
+			conn.setRequestProperty("Accept", "application/json");
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 			String reponse = br.readLine();
