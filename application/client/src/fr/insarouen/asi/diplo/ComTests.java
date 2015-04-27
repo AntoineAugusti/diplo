@@ -45,6 +45,7 @@ public class ComTests{
 	  }
 	  return response;
 	}
+	
 	public static void main(String[] args) throws Throwable {
 		CommunicationServeur current = new CommunicationServeur("https://api.diplo-lejeu.fr/");
 		//current.recupererInfosJoueurs(1);
