@@ -55,6 +55,25 @@ public class JSONTests {
 		return carte;
 	}
 
+	public static Phase parsageJSONInfosPhase(){
+		Phase phase = new Phase();
+		String jsonFile = "{ \"phase\": \"NEGOCIATION\",\n \"chrono\":42\n }";
+		JSONObject obj = new JSONObject(jsonFile);
+		Phase.Statut statut = Phase.Statut.valueOf(obj.getString("phase"));
+
+		phase.setStatutPhaseCourante(statut);
+		phase.setChrono(obj.getInt("chrono"));
+		return phase;
+	}
+
+	public static StatutDuJeu parsageJSONInfosStatut(){
+		String jsonFile = "{ \"statut\": \"attente_joueurs\",\n \"message\":\"Il n'y a pas assez de joueurs pour démarrer la partie\"\n }";
+		JSONObject obj = new JSONObject(jsonFile);
+		StatutDuJeu statut = new StatutDuJeu(obj.getString("statut"), obj.getString("message"));
+		
+		return statut;
+	}
+
 	public static void main(String[] args) throws Throwable {
 
 		ArrayList<Joueur> infosJoueurs = parsageJSONInfosJoueurs();
@@ -92,6 +111,14 @@ public class JSONTests {
 		assert carte.getCase(2).id_joueur==0 : "La case 2 a pour id_joueur "+carte.getCase(2).id_joueur;
 		assert carte.getCase(2).est_occupee==true : "La case 2 a pour est_occupee "+carte.getCase(2).est_occupee;
 		assert carte.getCase(2).id_armee==1 : "La case 2 a pour id_armee "+carte.getCase(2).id_armee;
+
+		Phase phase = parsageJSONInfosPhase();
+		assert phase.getChrono()==42 : "Le chrono vaut "+phase.getChrono();
+		assert phase.getStatutPhaseCourante().equals(Phase.Statut.NEGOCIATION) : "Le statut de la phase est "+phase.getStatutPhaseCourante();
+
+		StatutDuJeu statut = parsageJSONInfosStatut();
+		assert statut.getStatutDuJeu().equals("attente_joueurs") : "Le statut de la partie courante est "+statut.getStatutDuJeu();
+		assert statut.getMessage().equals("Il n'y a pas assez de joueurs pour démarrer la partie") : "Le message associé au statut est : "+statut.getMessage();
 	}
 	
 
