@@ -78,9 +78,9 @@ public class ComTests{
 	
 	public static void main(String[] args) throws Throwable {
 		CommunicationServeur current = new CommunicationServeur("https://api.diplo-lejeu.fr/");
-		Jeu jeu = current.rejoindrePartie(1);
-		assert jeu.getID()==1 : "id du jeu";
-		assert jeu.getRequis()==5 : "requis";
+		// Jeu jeu = current.rejoindrePartie(1);
+		// assert jeu.getID()==1 : "id du jeu";
+		// assert jeu.getRequis()==5 : "requis";
 
 	}
 }
