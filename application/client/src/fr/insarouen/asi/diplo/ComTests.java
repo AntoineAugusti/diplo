@@ -60,7 +60,16 @@ public class ComTests{
 		// 	assert c.id_joueur >=0 : "L'id du joueur est plus grand ou egal a 0";
 		// 	assert c.id_armee >=0 : "L'id_armee est non nul";
 		// }
-
+		// ArrayList<Integer> dest = new ArrayList<Integer>();
+		// dest.add(1);
+		// dest.add(2);
+		// dest.add(3);
+		// dest.add(4);
+		// dest.add(5);
+		// dest.add(6);
+		// dest.add(7);
+		// dest.add(8);
+		// System.out.println(current.conversationToJSON(dest).toString());
 
 
 	}
