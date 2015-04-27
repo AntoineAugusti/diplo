@@ -25,6 +25,8 @@ public class CommunicationServeur{
 	private String getRequete(String uri) throws PartieHTTPSException{
 		String line ="";
 		String reponse="";
+		String response0 = "";
+		String line0 = "";
 		try{
 			URL url = new URL(serveurURL+uri);
 			HttpsURLConnection httpsConnection = (HttpsURLConnection) url.openConnection();
@@ -33,8 +35,12 @@ public class CommunicationServeur{
 			httpsConnection.setRequestProperty("Content-Type","application/json");
 			BufferedReader br = new BufferedReader(new InputStreamReader((httpsConnection.getInputStream())));
 			int responseCode=httpsConnection.getResponseCode();
-			if (responseCode != 200 && responseCode != 201){
-			 	throw new PartieHTTPSException(responseCode);
+			if (responseCode != 200 && responseCode != 201 && responseCode!= 202){
+			  	BufferedReader br0=new BufferedReader(new InputStreamReader(httpsConnection.getErrorStream()));
+			  	while ((line0=br0.readLine()) != null) {
+			  	      response0+=line0;
+			  }
+			 	throw new PartieHTTPSException(responseCode,response0);
 			}
 			while ((line=br.readLine()) != null){
 			reponse +=line;
@@ -56,6 +62,9 @@ public class CommunicationServeur{
 
 	private String postRequete(String uri, String postData) throws PartieHTTPSException{
 		  String response="";
+		  String response0 = "";
+		  String line0 = "";
+		  String line = "";
 		  try{
 		  	  URL url=new URL(serveurURL+uri);
 			  HttpsURLConnection httpsConnection=(HttpsURLConnection)url.openConnection();
@@ -70,10 +79,13 @@ public class CommunicationServeur{
 			  postOut.flush();
 			  postOut.close();
 			  int responseCode=httpsConnection.getResponseCode();
-			  if (responseCode != 200 && responseCode != 201){
-			  	throw new PartieHTTPSException(responseCode);
+			  if (responseCode != 200 && responseCode != 201 && responseCode!= 202){
+			  	 BufferedReader br0=new BufferedReader(new InputStreamReader(httpsConnection.getErrorStream()));
+			  	 while ((line0=br0.readLine()) != null) {
+			  	      response0+=line0;
+			  	}
+			  	throw new PartieHTTPSException(responseCode, response0);
 			  }
-			  String line;
 			  BufferedReader br=new BufferedReader(new InputStreamReader(httpsConnection.getInputStream()));
 			  while ((line=br.readLine()) != null) {
 			  	      response+=line;
@@ -155,15 +167,20 @@ public class CommunicationServeur{
 		Jeu jeuCourant=null;
 		String reponse="";
 		try{
-			reponse = postRequete("parties/1/rejoindre","");
+			reponse = postRequete("parties/"+partieID+"/rejoindre","");
+			System.out.println(reponse);
 			jeuCourant = parserJSONRejoindre(reponse);
 		}
 		catch(PartieHTTPSException e){
 			if (e.error == 400){
-				throw new PartiePleineException(e.getMessage());
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartiePleineException(message);
 			}
 			else{
-				throw new PartieIntrouvableException(e.getMessage());
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieIntrouvableException(message);
 			}
 		}
 		return jeuCourant;
@@ -179,7 +196,9 @@ public class CommunicationServeur{
 		}
 		catch(PartieHTTPSException e){
 			if (e.error == 404){
-				throw new PartieIntrouvableException(e.getMessage());
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieIntrouvableException(message);
 			}
 		}
 		return liste;
@@ -195,7 +214,9 @@ public class CommunicationServeur{
 		}
 		catch(PartieHTTPSException e){
 			if (e.error == 404){
-				throw new PartieIntrouvableException(e.getMessage());
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieIntrouvableException(message);
 			}
 		}
 		return etat;
@@ -211,7 +232,9 @@ public class CommunicationServeur{
 		}
 		catch(PartieHTTPSException e){
 			if (e.error == 404){
-				throw new PartieIntrouvableException(e.getMessage());
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieIntrouvableException(message);
 			}
 		}
 		return phaseCourante;
@@ -226,7 +249,9 @@ public class CommunicationServeur{
 		}
 		catch(PartieHTTPSException e){
 			if (e.error == 404){
-				throw new PartieIntrouvableException(e.getMessage());
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieIntrouvableException(message);
 			}
 		}
 		return carte;
