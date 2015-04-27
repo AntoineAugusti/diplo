@@ -21,14 +21,76 @@ public class CommunicationServeur{
 	public CommunicationServeur(String URL){
 		this.serveurURL=URL;
 	}
-	// Créer un objet partie lorsque l'on rejoint une partie avec un id.
-	// private abstract String getRequetes(){
 
-	// } 
+	private String getRequete(String uri) throws PartieHTTPSException{
+		String line ="";
+		String reponse="";
+		try{
+			URL url = new URL(serveurURL+uri);
+			HttpsURLConnection httpsConnection = (HttpsURLConnection) url.openConnection();
+			httpsConnection.setRequestMethod("GET");
+			httpsConnection.setRequestProperty("User-Agent", "Diplo/1.0");
+			httpsConnection.setRequestProperty("Content-Type","application/json");
+			BufferedReader br = new BufferedReader(new InputStreamReader((httpsConnection.getInputStream())));
+			int responseCode=httpsConnection.getResponseCode();
+			if (responseCode != 200 && responseCode != 201){
+			 	throw new PartieHTTPSException(responseCode);
+			}
+			while ((line=br.readLine()) != null){
+			reponse +=line;
+			}
+			httpsConnection.disconnect();
 
-	// private abstract String postRequete(){
+		}
+		catch(MalformedURLException e){
+			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
+		}
+		catch(ProtocolException e){
+			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
+		}
+		catch(IOException e){
+			System.out.println(" Problème d'E/S :"+e.getMessage());
+		}
+		return reponse;
+	} 
 
-	// }
+	private String postRequete(String uri, String postData) throws PartieHTTPSException{
+			  String response="";
+			  try{
+			  	  URL url=new URL(serveurURL+uri);
+				  HttpsURLConnection httpsConnection=(HttpsURLConnection)url.openConnection();
+				  httpsConnection.setRequestMethod("POST");
+				  httpsConnection.setDoInput(true);
+				  httpsConnection.setDoOutput(true);
+				  httpsConnection.setUseCaches(false);
+				  httpsConnection.setRequestProperty("User-Agent", "Diplo/1.0");
+				  httpsConnection.setRequestProperty("Content-Type","application/json");
+				  DataOutputStream postOut=new DataOutputStream(httpsConnection.getOutputStream());
+				  postOut.writeBytes(postData);
+				  postOut.flush();
+				  postOut.close();
+				  int responseCode=httpsConnection.getResponseCode();
+				  if (responseCode != 200 && responseCode != 201){
+				  	throw new PartieHTTPSException(responseCode);
+				  }
+				  String line;
+				  BufferedReader br=new BufferedReader(new InputStreamReader(httpsConnection.getInputStream()));
+				  while ((line=br.readLine()) != null) {
+				  	      response+=line;
+				  }
+			   }
+			   catch(MalformedURLException e){
+			    	System.out.println(" L URL du serveur est invalide :"+e.getMessage());
+			   }
+			   catch(ProtocolException e){
+			    	System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
+			   }
+			   catch(IOException e){
+					System.out.println(" Problème d'E/S :"+e.getMessage());
+			   }
+			  return response;
+			
+	}
 	private Jeu parserJSONRejoindre(String fichier){
 				JSONObject obj = new JSONObject(fichier);
 				JSONObject partie = obj.getJSONObject("partie");
@@ -66,181 +128,10 @@ public class CommunicationServeur{
 				}
 				return phaseCourante;
 	}
-	public Jeu rejoindrePartie(int partieID) throws RuntimeException, PartieIntrouvableException, PartiePleineException{
-		Jeu jeuCourant=null;
-		String line="";
-		String reponse="";
-		try{
-			URL url = new URL(serveurURL+"parties/"+partieID+"/rejoindre");
-			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-			conn.setRequestMethod("POST");
-			conn.setUseCaches(false);
-			conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
-			conn.setDoOutput(true);
-			conn.setDoInput(true);
-			String postData="&test=lol";
-			DataOutputStream postOut=new DataOutputStream(conn.getOutputStream());
-  			postOut.writeBytes(postData);
-  			postOut.flush();
-  			postOut.close();
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-			 while ((line=br.readLine()) != null) {
-	     		 reponse+=line;
-	    	}
-			if(conn.getResponseCode() == 201){
-				jeuCourant = parserJSONRejoindre(reponse);
-			}
-			if(conn.getResponseCode() == 400){
-				JSONObject obj = new JSONObject(reponse);
-				String message = obj.getString("erreur");
-				throw new PartiePleineException(message);			
-			}
-			if(conn.getResponseCode() == 404){
-				JSONObject obj = new JSONObject(reponse);
-				String message = obj.getString("erreur");
-				throw new PartieIntrouvableException(message);
-			}
-			if(conn.getResponseCode() != 404 && conn.getResponseCode() != 400 && conn.getResponseCode() != 201){
-				throw new RuntimeException("Echec :" +conn.getResponseCode());
-			}
-			conn.disconnect();
 
-		}
-		catch(MalformedURLException e){
-			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
-		}
-		catch(ProtocolException e){
-			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
-		}
-		catch(IOException e){
-			System.out.println(" Problème d'E/S :"+e.getMessage());
-		}
-		return jeuCourant;
-	}
-	// Renvoi un tableau de joueurs.
-	public ArrayList<Joueur> recupererInfosJoueurs(int partieID) throws PartieIntrouvableException, RuntimeException{
-		ArrayList<Joueur> liste = new ArrayList<Joueur>();
-		try{
-			URL url = new URL(serveurURL+"parties/"+partieID+"/joueurs");
-			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "application/json");
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-			String reponse = br.readLine();
-			if(conn.getResponseCode() == 200){
-				liste = parserJSONInfosJoueurs(reponse);
-			}
-			if(conn.getResponseCode() == 404){
-				JSONObject obj = new JSONObject(reponse);
-				String message = obj.getString("erreur");
-				throw new PartieIntrouvableException(message);
-			}
-			if(conn.getResponseCode() != 404 && conn.getResponseCode() != 200){
-				throw new RuntimeException("Echec :" +conn.getResponseCode());
-			}
-			conn.disconnect();
-
-		}
-		catch(MalformedURLException e){
-			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
-		}
-		catch(ProtocolException e){
-			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
-		}
-		catch(IOException e){
-			System.out.println(" Problème d'E/S :"+e.getMessage());
-		}
-		return liste;
-	}
-	// Renvoi une chaîne de caractères décrivant l'état de la partie
-	public String recupererInfosPartie(int partieID) throws PartieIntrouvableException, RuntimeException{
-		String etat="En cours";
-		try{
-			URL url = new URL(serveurURL+"parties/"+partieID+"/statut");
-			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "application/json");
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-			String reponse = br.readLine();
-			if(conn.getResponseCode() == 200){
-				etat=parserJSONInfosPartie(reponse);
-			}
-			if(conn.getResponseCode() == 404){
-				JSONObject obj = new JSONObject(reponse);
-				String message = obj.getString("erreur");
-				throw new PartieIntrouvableException(message);
-			}
-			if(conn.getResponseCode() != 404 && conn.getResponseCode() != 200){
-				throw new RuntimeException("Echec :" +conn.getResponseCode());
-			}
-			conn.disconnect();
-
-		}
-		catch(MalformedURLException e){
-			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
-		}
-		catch(ProtocolException e){
-			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
-		}
-		catch(IOException e){
-			System.out.println(" Problème d'E/S :"+e.getMessage());
-		}
-		return etat;
-	}
-
-	public Phase recupererInfosPhase(int partieID) throws PartieIntrouvableException, PartieInvalideException, RuntimeException{
-		Phase phaseCourante = null;
-		try{
-			URL url = new URL(serveurURL+"parties/"+partieID+"/phase");
-			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "application/json");
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-			String reponse = br.readLine();
-			if(conn.getResponseCode() == 200){
-				phaseCourante = parserJSONInfosPhase(reponse);
-			}
-			if(conn.getResponseCode() == 404){
-				JSONObject obj = new JSONObject(reponse);
-				String message = obj.getString("erreur");
-				throw new PartieIntrouvableException(message);
-			}
-			if(conn.getResponseCode() == 405){
-				JSONObject obj = new JSONObject(reponse);
-				String message = obj.getString("erreur");
-				throw new PartieInvalideException(message);
-			}
-			if(conn.getResponseCode() != 404 && conn.getResponseCode() != 405  && conn.getResponseCode() != 200){
-				throw new RuntimeException("Echec :" +conn.getResponseCode());
-			}
-			conn.disconnect();
-		}
-		catch(MalformedURLException e){
-			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
-		}
-		catch(ProtocolException e){
-			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
-		}
-		catch(IOException e){
-			System.out.println(" Problème d'E/S :"+e.getMessage());
-		}
-		return phaseCourante;
-	}
-	public Carte recupererInfosCarte(int partieID) throws PartieIntrouvableException, RuntimeException{
-		Carte carte = new Carte();
-		try{
-			URL url = new URL(serveurURL+"parties/"+partieID+"/carte");
-			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "application/json");
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-			String reponse = br.readLine();
-			if(conn.getResponseCode() == 200){
-				JSONObject obj = new JSONObject(reponse);
+	private Carte parserJSONInfosCarte(String fichier){
+				Carte carteCourante=null;
+				JSONObject obj = new JSONObject(fichier);
 				JSONArray listeCase = obj.getJSONArray("cases");
 				for(int i=0; i<listeCase.length();i++){
 					int joueur_val,armee_val;
@@ -256,27 +147,86 @@ public class CommunicationServeur{
 					else{
 						joueur_val=listeCase.getJSONObject(i).getInt("id_joueur");
 					}
-					carte.ajouterCase(new Case(listeCase.getJSONObject(i).getInt("id"),listeCase.getJSONObject(i).getBoolean("est_libre"),joueur_val,listeCase.getJSONObject(i).getBoolean("est_occupee"),armee_val));
+					carteCourante.ajouterCase(new Case(listeCase.getJSONObject(i).getInt("id"),listeCase.getJSONObject(i).getBoolean("est_libre"),joueur_val,listeCase.getJSONObject(i).getBoolean("est_occupee"),armee_val));
 				}
-			}
-			if(conn.getResponseCode() == 404){
-				JSONObject obj = new JSONObject(reponse);
-				String message = obj.getString("erreur");
-				throw new PartieIntrouvableException(message);
-			}
-			if(conn.getResponseCode() != 404 && conn.getResponseCode() != 200){
-				throw new RuntimeException("Echec :" +conn.getResponseCode());
-			}
-			conn.disconnect();
+				return carteCourante;
+	}
+	public Jeu rejoindrePartie(int partieID) throws RuntimeException, PartieIntrouvableException, PartiePleineException{
+		Jeu jeuCourant=null;
+		String reponse="";
+		try{
+			reponse = postRequete("parties/1/rejoindre","");
+			jeuCourant = parserJSONRejoindre(reponse);
 		}
-		catch(MalformedURLException e){
-			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
+		catch(PartieHTTPSException e){
+			if (e.error == 400){
+				throw new PartiePleineException(e.getMessage());
+			}
+			else{
+				throw new PartieIntrouvableException(e.getMessage());
+			}
 		}
-		catch(ProtocolException e){
-			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
+		return jeuCourant;
+	}
+	// Renvoi un tableau de joueurs.
+	public ArrayList<Joueur> recupererInfosJoueurs(int partieID) throws PartieIntrouvableException, RuntimeException{
+		ArrayList<Joueur> liste = new ArrayList<Joueur>();
+		String reponse;
+		try{
+			reponse = getRequete("parties/"+partieID+"/joueurs");
+			liste = parserJSONInfosJoueurs(reponse);
+
 		}
-		catch(IOException e){
-			System.out.println(" Problème d'E/S :"+e.getMessage());
+		catch(PartieHTTPSException e){
+			if (e.error == 404){
+				throw new PartieIntrouvableException(e.getMessage());
+			}
+		}
+		return liste;
+	}
+	// Renvoi une chaîne de caractères décrivant l'état de la partie
+	public String recupererInfosPartie(int partieID) throws PartieIntrouvableException, RuntimeException{
+		String etat="En cours";
+		String reponse = "";
+		try{
+			reponse = getRequete("parties/"+partieID+"/statut");
+			etat = parserJSONInfosPartie(reponse);
+
+		}
+		catch(PartieHTTPSException e){
+			if (e.error == 404){
+				throw new PartieIntrouvableException(e.getMessage());
+			}
+		}
+		return etat;
+	}
+
+	public Phase recupererInfosPhase(int partieID) throws PartieIntrouvableException, PartieInvalideException, RuntimeException{
+		Phase phaseCourante = null;
+		String reponse = "";
+		try{
+			reponse =getRequete("parties/"+partieID+"/phase");
+			phaseCourante = parserJSONInfosPhase(reponse);
+			
+		}
+		catch(PartieHTTPSException e){
+			if (e.error == 404){
+				throw new PartieIntrouvableException(e.getMessage());
+			}
+		}
+		return phaseCourante;
+	}
+	public Carte recupererInfosCarte(int partieID) throws PartieIntrouvableException, RuntimeException{
+		Carte carte = null;
+		String reponse = "";
+		try{
+			reponse = getRequete("parties/"+partieID+"/carte");
+			carte = parserJSONInfosCarte(reponse);
+		}
+		catch(PartieHTTPSException e){
+			if (e.error == 404){
+				throw new PartieIntrouvableException(e.getMessage());
+			}
 		}
 		return carte;
 	}
