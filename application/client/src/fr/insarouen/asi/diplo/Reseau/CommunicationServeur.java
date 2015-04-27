@@ -1,7 +1,10 @@
 package fr.insarouen.asi.diplo.Reseau;
 
 import fr.insarouen.asi.diplo.Exception.ReseauException.*;
+import fr.insarouen.asi.diplo.Exception.OrdresException.*;
 import fr.insarouen.asi.diplo.MoteurJeu.*;
+import fr.insarouen.asi.diplo.MoteurJeu.Negociation.*;
+import fr.insarouen.asi.diplo.MoteurJeu.Ordres.*;
 import org.json.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,7 +36,6 @@ public class CommunicationServeur{
 			httpsConnection.setRequestMethod("GET");
 			httpsConnection.setRequestProperty("User-Agent", "Diplo/1.0");
 			httpsConnection.setRequestProperty("Content-Type","application/json");
-			BufferedReader br = new BufferedReader(new InputStreamReader((httpsConnection.getInputStream())));
 			int responseCode=httpsConnection.getResponseCode();
 			if (responseCode != 200 && responseCode != 201 && responseCode!= 202){
 			  	BufferedReader br0=new BufferedReader(new InputStreamReader(httpsConnection.getErrorStream()));
@@ -42,6 +44,7 @@ public class CommunicationServeur{
 			  }
 			 	throw new PartieHTTPSException(responseCode,response0);
 			}
+			BufferedReader br = new BufferedReader(new InputStreamReader((httpsConnection.getInputStream())));
 			while ((line=br.readLine()) != null){
 			reponse +=line;
 			}
@@ -163,12 +166,39 @@ public class CommunicationServeur{
 		}
 		return carteCourante;
 	}
+
+	private JSONObject ordreToJSON(Ordre ordre){
+		JSONObject ordreJSON = new JSONObject();
+		if (ordre instanceof Attaquer){
+			Attaquer ordreCourant = (Attaquer) ordre;
+			ordreJSON.put("id_armee",ordreCourant.id_armee);
+			ordreJSON.put("ordre",ordreCourant.ordre);
+			ordreJSON.put("id_case",ordreCourant.id_case);
+		}
+		if (ordre instanceof SoutienDefensif){
+			SoutienDefensif ordreCourant = (SoutienDefensif) ordre;
+			ordreJSON.put("id_armee",ordreCourant.id_armee);
+			ordreJSON.put("ordre",ordreCourant.ordre);
+			ordreJSON.put("id_case",ordreCourant.id_case);
+		}
+		if (ordre instanceof SoutienOffensif){
+			SoutienOffensif ordreCourant = (SoutienOffensif) ordre;
+			ordreJSON.put("id_armee",ordreCourant.id_armee);
+			ordreJSON.put("ordre",ordreCourant.ordre);
+			ordreJSON.put("id_case",ordreCourant.id_case);
+		}
+		if (ordre instanceof Tenir){
+			Tenir ordreCourant = (Tenir) ordre;
+			ordreJSON.put("ordre",ordreCourant.ordre);
+			ordreJSON.put("id_armee",ordreCourant.id_armee);
+		}
+		return ordreJSON;
+	}
 	public Jeu rejoindrePartie(int partieID) throws RuntimeException, PartieIntrouvableException, PartiePleineException{
 		Jeu jeuCourant=null;
 		String reponse="";
 		try{
 			reponse = postRequete("parties/"+partieID+"/rejoindre","");
-			System.out.println(reponse);
 			jeuCourant = parserJSONRejoindre(reponse);
 		}
 		catch(PartieHTTPSException e){
@@ -192,7 +222,6 @@ public class CommunicationServeur{
 		try{
 			reponse = getRequete("parties/"+partieID+"/joueurs");
 			liste = parserJSONInfosJoueurs(reponse);
-
 		}
 		catch(PartieHTTPSException e){
 			if (e.error == 404){
@@ -210,7 +239,6 @@ public class CommunicationServeur{
 		try{
 			reponse = getRequete("parties/"+partieID+"/statut");
 			etat = parserJSONInfosPartie(reponse);
-
 		}
 		catch(PartieHTTPSException e){
 			if (e.error == 404){
@@ -228,13 +256,17 @@ public class CommunicationServeur{
 		try{
 			reponse =getRequete("parties/"+partieID+"/phase");
 			phaseCourante = parserJSONInfosPhase(reponse);
-			
 		}
 		catch(PartieHTTPSException e){
 			if (e.error == 404){
 				JSONObject erreur = new JSONObject(e.mess);
 				String message = erreur.getString("erreur");
 				throw new PartieIntrouvableException(message);
+			}
+			else{
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieInvalideException(message);
 			}
 		}
 		return phaseCourante;
@@ -255,5 +287,23 @@ public class CommunicationServeur{
 			}
 		}
 		return carte;
+	}
+
+	public Boolean posterOrdre(int partieID, Ordre ordre)throws OrdreInvalideException{
+		Boolean execution = false;
+		String reponse ="";
+		try{
+			reponse = postRequete("parties/"+partieID+"/ordre", ordreToJSON(ordre).toString());
+			if (reponse.equals(""));
+			execution = true;
+		}
+		catch(PartieHTTPSException e){
+			if (e.error == 404){
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new OrdreInvalideException(message);
+			}
+		}
+		return execution;
 	}
 }
