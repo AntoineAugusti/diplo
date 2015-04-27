@@ -19,6 +19,34 @@ import java.io.IOException;
 
 public class ComTests{
 
+	public static String requeteGet(){
+		String line ="";
+		String reponse="";
+		try{
+			URL url = new URL("https://api.diplo-lejeu.fr/parties/1/joueurs");
+			HttpsURLConnection httpsConnection = (HttpsURLConnection) url.openConnection();
+			httpsConnection.setRequestMethod("GET");
+			httpsConnection.setRequestProperty("User-Agent", "Diplo/1.0");
+			httpsConnection.setRequestProperty("Content-Type","application/json");
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader((httpsConnection.getInputStream())));
+			while ((line=br.readLine()) != null){
+			reponse +=line;
+			}
+			httpsConnection.disconnect();
+
+		}
+		catch(MalformedURLException e){
+			System.out.println(" L URL du serveur est invalide :"+e.getMessage());
+		}
+		catch(ProtocolException e){
+			System.out.println(" Le protocole utilisé est invalide :"+e.getMessage());
+		}
+		catch(IOException e){
+			System.out.println(" Problème d'E/S :"+e.getMessage());
+		}
+		return reponse;
+	}
 	public static String postHttpsContent(String urlString) throws IOException {
 	  String response="";
 	  URL url=new URL(urlString);
@@ -27,28 +55,31 @@ public class ComTests{
 	  httpsConnection.setDoInput(true);
 	  httpsConnection.setDoOutput(true);
 	  httpsConnection.setUseCaches(false);
-	  httpsConnection.setRequestProperty("Host","api.diplo-lejeu.fr");
-	  //httpsConnection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
-	  // String postData="";
-	  // DataOutputStream postOut=new DataOutputStream(httpsConnection.getOutputStream());
-	  // postOut.writeBytes(postData);
-	  // postOut.flush();
-	  // postOut.close();
+	  httpsConnection.setRequestProperty("User-Agent", "Diplo/1.0");
+	  httpsConnection.setRequestProperty("Content-Type","application/json");
+	  String postData="";
+	  DataOutputStream postOut=new DataOutputStream(httpsConnection.getOutputStream());
+	  postOut.writeBytes(postData);
+	  postOut.flush();
+	  postOut.close();
 	  int responseCode=httpsConnection.getResponseCode();
 	  System.out.println(responseCode);
-	  if (responseCode == HttpsURLConnection.HTTP_OK) {
+	  if (responseCode == 201) {
 	    String line;
 	    BufferedReader br=new BufferedReader(new InputStreamReader(httpsConnection.getInputStream()));
 	    while ((line=br.readLine()) != null) {
+	    	System.out.println("new line");
 	      response+=line;
+	      System.out.println(line);
 	    }
 	  }
 	  return response;
 	}
 	public static void main(String[] args) throws Throwable {
 		CommunicationServeur current = new CommunicationServeur("https://api.diplo-lejeu.fr/");
-		//current.recupererInfosJoueurs(1);
-		// Jeu nouveau = current.rejoindrePartie(1);
-		//System.out.println(postHttpsContent("https://api.diplo-lejeu.fr/parties/1/rejoindre"));
+		Jeu jeu = current.rejoindrePartie(1);
+		assert jeu.getID()==1 : "id du jeu";
+		assert jeu.getRequis()==5 : "requis";
+
 	}
 }
