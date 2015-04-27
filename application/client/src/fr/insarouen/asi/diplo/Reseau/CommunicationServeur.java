@@ -194,6 +194,70 @@ public class CommunicationServeur{
 		}
 		return ordreJSON;
 	}
+
+	private Conversation parserJSONInfosConversation(String fichier){
+			JSONObject conv = new JSONObject(fichier);
+			ArrayList<Integer> joueurs = new ArrayList<Integer>();
+			ArrayList<Message> messages = new ArrayList<Message>();
+			JSONArray joueursJSON = conv.getJSONArray("joueurs");
+			for(int i=0; i< joueursJSON.length();i++){
+				joueurs.add(joueursJSON.getInt(i));
+			}
+			JSONArray messagesJSON = conv.getJSONArray("messages");
+			for(int i=0; i< messagesJSON.length();i++){
+				messages.add(new Message(messagesJSON.getJSONObject(i).getInt("id"),messagesJSON.getJSONObject(i).getInt("joueur"),messagesJSON.getJSONObject(i).getString("texte"),new Date(messagesJSON.getJSONObject(i).getString("created_at"))));
+			}
+			return new Conversation(conv.getInt("id"),joueurs,messages);
+	}
+
+	private ArrayList<Conversation> parserJSONInfosConversationSelonJoueur(String fichier){
+		JSONObject conv = new JSONObject(fichier);
+		JSONArray liste = conv.getJSONArray("conversations");
+		ArrayList<Conversation> result = new ArrayList<Conversation>();
+		for(int i=0; i<liste.length();i++){
+			ArrayList<Integer> joueurs = new ArrayList<Integer>();
+			JSONArray joueursJSON = liste.getJSONObject(i).getJSONArray("joueurs");
+			for(int j=0; j< joueursJSON.length();j++){
+				joueurs.add(joueursJSON.getInt(j));
+			}
+			result.add(new Conversation(liste.getJSONObject(i).getInt("id"),joueurs,null));
+		}
+		return result;
+	}
+
+	private JSONObject conversationToJSON(ArrayList<Integer> destinataires){
+		JSONObject convJSON = new JSONObject();
+		JSONArray destJSON = new JSONArray(destinataires);
+		convJSON.put("joueurs",destJSON);
+		return convJSON; 
+	}
+
+	private Conversation parserJSONCreerConversation(String fichier){
+			Conversation current;
+			JSONObject obj = new JSONObject(fichier);
+			ArrayList<Integer> joueurs = new ArrayList<Integer>();
+			JSONArray joueursJSON = obj.getJSONArray("joueurs");
+			for(int j=0; j< joueursJSON.length();j++){
+				joueurs.add(joueursJSON.getInt(j));
+			}
+			ArrayList<Message> messages = new ArrayList<Message>();
+			return new Conversation(obj.getInt("id"),joueurs,messages);
+
+	}
+
+	private JSONObject smsToJSON(int auteur, String texte){
+		JSONObject sms = new JSONObject();
+		sms.put("id_joueur",auteur);
+		sms.put("texte",texte);
+		return sms;
+	}
+
+	private Message parserJSONsms(String fichier){
+		JSONObject sms = new JSONObject(fichier);
+		return new Message(sms.getInt("id"),sms.getInt("id_joueur"),sms.getString("texte"),new Date(sms.getString("created_at")));
+	}
+
+
 	public Jeu rejoindrePartie(int partieID) throws RuntimeException, PartieIntrouvableException, PartiePleineException{
 		Jeu jeuCourant=null;
 		String reponse="";
@@ -305,5 +369,73 @@ public class CommunicationServeur{
 			}
 		}
 		return execution;
+	}
+
+	public Conversation recupererInfosConversation(int conversationID) throws PartieIntrouvableException, RuntimeException{
+		Conversation current = null;
+		String reponse = "";
+		try{
+			reponse = getRequete("conversations/"+conversationID);
+			current = parserJSONInfosConversation(reponse);
+		}
+		catch(PartieHTTPSException e){
+			if (e.error == 404){
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieIntrouvableException(message);
+			}
+		}
+		return current;
+	}
+
+	public ArrayList<Conversation> recupererInfosConversationSelonJoueur(int joueurID) throws PartieIntrouvableException{
+		ArrayList<Conversation> liste = null;
+		String reponse = "";
+		try{
+			reponse = getRequete("conversations/joueurs/"+joueurID);
+			liste = parserJSONInfosConversationSelonJoueur(reponse);
+		}
+		catch(PartieHTTPSException e){
+			if (e.error == 404){
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieIntrouvableException(message);
+			}
+		}
+		return liste;
+	}
+
+	public Conversation creerConversation(ArrayList<Integer> destinataires) throws PartieInvalideException{
+		Conversation conv = null;
+		String reponse = "";
+		try{
+			reponse = postRequete("conversations",conversationToJSON(destinataires).toString());
+			conv = parserJSONCreerConversation(reponse);
+		}
+		catch(PartieHTTPSException e){
+			if (e.error == 404){
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieInvalideException(message);
+			}
+		}
+		return conv;
+	}
+
+	public Message posterMessage(int conversationID, int auteur, String texte) throws PartieInvalideException{
+		Message sms = null;
+		String reponse = "";
+		try{
+			reponse = postRequete("conversations"+conversationID+"/messages",smsToJSON(auteur, texte).toString());
+			sms = parserJSONsms(reponse);
+		}
+		catch(PartieHTTPSException e){
+			if (e.error == 404){
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieInvalideException(message);
+			}
+		}
+		return sms;
 	}
 }
