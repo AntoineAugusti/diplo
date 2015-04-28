@@ -1,1 +1,1 @@
-java -classpath ./classes fr.insarouen.asi.prog.asiaventure.Main
+java -cp classes/ fr.insarouen.asi.diplo.Main
