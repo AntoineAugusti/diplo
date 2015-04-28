@@ -41,7 +41,7 @@ public class AffichageCarte {
 		String limiteHaute = "\u2594";
 		String limiteHBasse = "\u2581";
 		List<Case> listeDeCases = new ArrayList<Case>(carte.getCases());
-		Comparator comparator = new CaseComparator();
+		CaseComparator comparator = new CaseComparator();
 		Collections.sort(listeDeCases, comparator);
 
 		for (Case c : listeDeCases) {

@@ -2,7 +2,7 @@ echo '----- Compilation du Jeu -----'
 echo 'Compilation du Reseau';
 javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/Reseau/*.java
 echo 'Compilation de l Affichage';
-javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/Affichage/*.java
+javac -sourcepath src -d classes -cp lib/json-20140107.jar -Xlint:unchecked src/fr/insarouen/asi/diplo/Affichage/*.java
 echo 'Compilation des Exceptions';
 javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/Exception/ReseauException/*.java
 javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/Exception/OrdresException/*.java
