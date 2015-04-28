@@ -26,7 +26,7 @@ public class CarteTests{
 		joueur4.setCouleur(couleurs[3]);
 		joueur5.setCouleur(couleurs[4]);
 
-		for (int i=0; i < 50; i++) {
+		for (int i=0; i < 100; i++) {
 			boolean est_libre = false;
 			boolean est_occupee = false;
 			int idJoueur = rand.nextInt(6);
@@ -52,7 +52,7 @@ public class CarteTests{
 		jeu.miseAJourJoueur(joueur4);
 		jeu.miseAJourJoueur(joueur5);
 		AffichageCarte afficheCarte = new AffichageCarte(jeu);
-		afficheCarte.saveToMap(10);
-		afficheCarte.readMap("map.txt");
+		afficheCarte.saveToMap(20);
+		afficheCarte.readMap("carte.sh");
 	}
 }

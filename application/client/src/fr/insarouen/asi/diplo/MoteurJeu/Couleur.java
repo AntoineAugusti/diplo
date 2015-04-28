@@ -23,6 +23,7 @@ public class Couleur {
 			max = max - 1;
 			indice++;
 		}
+		
 		resultat[indice] = tableau[max];
 		return resultat;
 	}

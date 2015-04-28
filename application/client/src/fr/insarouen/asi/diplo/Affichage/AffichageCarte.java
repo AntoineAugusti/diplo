@@ -7,7 +7,7 @@ import java.util.*;
 
 public class AffichageCarte {
 	private Carte carte;
-	private static final int LARGEUR_CASE = 17;
+	private static final int LARGEUR_CASE = 18;
 	public Jeu jeu;
 
 	public AffichageCarte() {
@@ -51,17 +51,21 @@ public class AffichageCarte {
 				couleur = joueur.couleur_joueur;
 			}
 
-			l1.append("\\e["+couleur+"m"+limiteGauche+limiteHaute+limiteHaute+limiteHaute+limiteHaute+limiteDroite+"\\e[0m");
+			l1.append("\\e["+couleur+"m"+limiteGauche+limiteHaute+limiteHaute+limiteHaute+limiteHaute+limiteHaute+limiteDroite+"\\e[0m");
 
 			if (c.id < 10) {
-				l2.append("\\e["+couleur+"m"+limiteGauche+" "+" "+c.id+" "+limiteDroite+"\\e[0m");
+				l2.append("\\e["+couleur+"m"+limiteGauche+"  "+" "+c.id+" "+limiteDroite+"\\e[0m");
 			}
 			else {
-				l2.append("\\e["+couleur+"m"+limiteGauche+" "+c.id+" "+limiteDroite+"\\e[0m");
+				if (c.id >= 10 && c.id < 100)
+					l2.append("\\e["+couleur+"m"+limiteGauche+" "+" "+c.id+" "+limiteDroite+"\\e[0m");
+				else 
+					l2.append("\\e["+couleur+"m"+limiteGauche+" "+c.id+" "+limiteDroite+"\\e[0m");
+
 			}
 
-			l3.append("\\e["+couleur+"m"+limiteGauche+"  "+pionArmee(idArmee)+" "+limiteDroite+"\\e[0m");
-			l4.append("\\e["+couleur+"m"+limiteGauche+limiteHBasse+limiteHBasse+limiteHBasse+limiteHBasse+limiteDroite+"\\e[0m");
+			l3.append("\\e["+couleur+"m"+limiteGauche+" "+" "+" "+pionArmee(idArmee)+" "+limiteDroite+"\\e[0m");
+			l4.append("\\e["+couleur+"m"+limiteGauche+limiteHBasse+limiteHBasse+limiteHBasse+limiteHBasse+limiteHBasse+limiteDroite+"\\e[0m");
 		}
 	}
 
@@ -77,7 +81,7 @@ public class AffichageCarte {
 	}
 
 	public void saveToMap(int nbColonnes){
-        String fileName = "map.txt";
+        String fileName = "carte.sh";
         String ligneHaute = "";
         String ligneDuMilieu1 = "";
         String ligneDuMilieu2 = "";
@@ -86,6 +90,8 @@ public class AffichageCarte {
         StringBuilder l2 = new StringBuilder();
         StringBuilder l3 = new StringBuilder();
         StringBuilder l4 = new StringBuilder();
+
+        String echo = "echo -e '";
 
         try {
         	// On ouvre notre fichier en écriture
@@ -101,9 +107,10 @@ public class AffichageCarte {
             List<String> ligneDuMilieu1Coupe = partitionner(ligneDuMilieu1, nbColonnes*LARGEUR_CASE);
             List<String> ligneDuMilieu2Coupe = partitionner(ligneDuMilieu2, nbColonnes*LARGEUR_CASE);
             List<String> ligneBasseCoupe = partitionner(ligneBasse, nbColonnes*LARGEUR_CASE);
-
+            bufferedWriter.write("#! /bin/bash");
+	        bufferedWriter.newLine();
             for(int i = 0; i < ligneHauteCoupe.size(); i++){
-	            String ligneDeCases = ligneHauteCoupe.get(i) + "\n" + ligneDuMilieu1Coupe.get(i) + "\n" + ligneDuMilieu2Coupe.get(i) + "\n" + ligneBasseCoupe.get(i);
+	            String ligneDeCases = echo + ligneHauteCoupe.get(i) + "'" + "\n" + echo + ligneDuMilieu1Coupe.get(i) + "'" + "\n" + echo + ligneDuMilieu2Coupe.get(i) + "'" + "\n" + echo + ligneBasseCoupe.get(i) + "'";
 	            bufferedWriter.write(ligneDeCases);
 	            bufferedWriter.newLine();
 	        }
@@ -117,27 +124,8 @@ public class AffichageCarte {
 	}
 
 	public void readMap(String fileName) {
-	    // Référence sur la ligne
-	    String line = null;
-
-	    try {
-	        // On ouvre notre fichier en lecture
-	        FileReader fileReader = new FileReader(fileName);
-	        BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-	        while((line = bufferedReader.readLine()) != null) {
-	            System.out.print(executerCommande("echo -e "+line));
-	        }    
-
-	        // On ferme notre fichier
-	        bufferedReader.close();            
-	    }
-	    catch(FileNotFoundException ex) {
-	        System.out.println("Impossible d'ouvrir le fichier '" + fileName + "'");                
-	    }
-	    catch(IOException ex) {
-	        System.out.println("Erreur de lecture du fichier '" + fileName + "'");                   
-	    }
+        System.out.print(executerCommande("chmod +x "+fileName));
+        System.out.print(executerCommande("./"+fileName));
 	}
 
 	// Exécution d'une commande bash en java (http://www.mkyong.com/java/how-to-execute-shell-command-from-java/)
