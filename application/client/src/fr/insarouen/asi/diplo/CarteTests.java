@@ -52,7 +52,7 @@ public class CarteTests{
 		jeu.miseAJourJoueur(joueur4);
 		jeu.miseAJourJoueur(joueur5);
 		AffichageCarte afficheCarte = new AffichageCarte(jeu);
-		afficheCarte.saveToMap(20);
+		afficheCarte.saveToMap(10);
 		afficheCarte.readMap("carte.sh");
 	}
 }
