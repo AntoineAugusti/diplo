@@ -2,14 +2,17 @@
 
 namespace Diplo\Armees;
 
+use Diplo\Cartes\CaseInterface;
+use Diplo\Ordres\Ordre;
 use Eloquent;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Armee extends Eloquent
 {
     /**
      * Récupère le joueur propriétaire d'une armée.
      *
-     * @return Illuminate\Database\Eloquent\Relations\Relation
+     * @return Relation
      */
     public function proprietaire()
     {
@@ -19,7 +22,7 @@ class Armee extends Eloquent
     /**
      * Récupère la case sur laquelle se trouve une armée.
      *
-     * @return Illuminate\Database\Eloquent\Relations\Relation
+     * @return Relation
      */
     public function caseOccupee()
     {
@@ -39,7 +42,7 @@ class Armee extends Eloquent
     /**
      * La case occupée par une armée.
      *
-     * @return null|Diplo\Cartes\CaseInterface
+     * @return null | CaseInterface
      */
     public function getCase()
     {
@@ -49,7 +52,7 @@ class Armee extends Eloquent
     /**
      * L'ordre donné à l'armée.
      *
-     * @return \Diplo\Ordres\Ordre
+     * @return Ordre
      */
     public function getOrdre()
     {

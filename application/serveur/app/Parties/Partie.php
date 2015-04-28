@@ -2,10 +2,12 @@
 
 namespace Diplo\Parties;
 
+use Diplo\Cartes\Carte;
 use InvalidArgumentException;
 use Eloquent;
 use Diplo\Phases\PhaseInterface;
 use Diplo\Joueurs\Joueur;
+use Diplo\Cartes\CaseClass;
 
 class Partie extends Eloquent implements PhaseInterface
 {
@@ -43,6 +45,16 @@ class Partie extends Eloquent implements PhaseInterface
     public function joueurs()
     {
         return $this->hasMany(Joueur::class, 'id_partie', 'id');
+    }
+
+    /**
+     * Récupère les cases de la carte.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     */
+    public function carte()
+    {
+        return $this->hasOne(Carte::class);
     }
 
     /**
@@ -179,5 +191,15 @@ class Partie extends Eloquent implements PhaseInterface
     public function estCombat()
     {
         return $this->phase == self::COMBAT;
+    }
+
+    /**
+     * Récupère les joueurs d'une partie.
+     *
+     * @return Joueur[]
+     */
+    public function getJoueurs()
+    {
+        return $this->joueurs;
     }
 }
