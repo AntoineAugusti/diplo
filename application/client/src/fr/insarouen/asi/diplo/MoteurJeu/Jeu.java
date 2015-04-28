@@ -24,23 +24,41 @@ public class Jeu{
 
 	public int getID(){
 		return id;
-	}	
+	}
+
 	public int getRequis(){
 		return nb_joueurs_requis;
-	}	
+	}
+
 	public int getInscrits(){
 		return nb_joueurs_inscrits;
 	}
+
 	public HashMap<String,Joueur> getJoueurs(){
 	 	return listeDesJoueurs;
 	}
+
 	public boolean miseAJourJoueur(Joueur nouveau){
 		listeDesJoueurs.put(nouveau.pseudo,nouveau);
 		return true;
 	}
+
+	public Joueur getJoueur(int idJoueur){
+		Joueur resultat = null;
+
+		for (Joueur joueur : getJoueurs().values()) {
+			if (joueur.id == idJoueur) {
+				resultat = joueur;
+			}
+		}
+
+		return resultat;
+	}
+	
 	public Carte getCarte(){
 		return carte;
 	}
+	
 	public boolean setCarte(Carte nouvelleCarte){
 		this.carte = nouvelleCarte;
 		return true;
