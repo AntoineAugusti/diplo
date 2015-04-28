@@ -3,23 +3,38 @@
 namespace Diplo\Cartes;
 
 use Diplo\Armees\Armee;
+use Diplo\Joueurs\Joueur;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 
-class CaseClass implements CaseInterface
+class CaseClass extends Model implements CaseInterface
 {
-    /**
-     * Récupère les identifiants des cases voisines.
-     *
-     * @return array
-     */
-    public function getCasesVoisinesIds()
-    {
-        return $this->casesVoisines()->lists('id');
-    }
-
     /**
      * Récupère les cases voisines.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
+     */
+    public function getCasesVoisines()
+    {
+        return $this->casesVoisines;
+    }
+
+    /**
+     * Récupère les identifiants des cases voisines.
+     *
+     * @return int[]
+     */
+    public function getCasesVoisinesIds()
+    {
+        return $this->getCasesVoisines()->lists('id');
+    }
+
+    /**
+     * Définit la relation avec les cases voisines.
+     *
+     * @return BelongsToMany
      */
     public function casesVoisines()
     {
@@ -27,9 +42,9 @@ class CaseClass implements CaseInterface
     }
 
     /**
-     * Récupère la case sur laquelle se trouve une armée.
+     * Définit la relation avec une armée.
      *
-     * @return Illuminate\Database\Eloquent\Relations\Relation
+     * @return HasOne
      */
     public function armee()
     {
@@ -39,11 +54,11 @@ class CaseClass implements CaseInterface
     /**
      * Récupère le joueur sur la case.
      *
-     * @return \Diplo\Joueurs\Joueur
+     * @return Joueur
      */
     public function joueur()
     {
-        $armee = $this->armee();
+        $armee = $this->armee;
 
         // La case n'est occupée par aucune armée
         if (is_null($armee)) {

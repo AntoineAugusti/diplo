@@ -2,10 +2,12 @@
 
 namespace Diplo\Joueurs;
 
+use Diplo\Armees\Armee;
 use Eloquent;
 use Diplo\Messages\Conversation;
 use Diplo\Messages\Message;
 use Diplo\Parties\Partie;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Joueur extends Eloquent
 {
@@ -68,6 +70,16 @@ class Joueur extends Eloquent
     public function messages()
     {
         return $this->hasMany(Message::class, 'id_joueur', 'id');
+    }
+
+    /**
+     * Récupère les armées d'un joueur.
+     *
+     * @return HasMany
+     */
+    public function armees()
+    {
+        return $this->hasMany(Armee::class, 'id_joueur', 'id');
     }
 
     /**
