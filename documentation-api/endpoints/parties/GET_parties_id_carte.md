@@ -23,7 +23,7 @@ Renvoie une réponse avec un code HTTP **200**.
             "id_joueur":1,
             "est_occupee":false,
             "id_armee":null,
-            "id_cases_voisines" : [
+            "id_cases_voisines": [
                2 
             ]
         },
@@ -33,7 +33,7 @@ Renvoie une réponse avec un code HTTP **200**.
             "id_joueur":null,
             "est_occupee":true,
             "id_armee":1,
-            "id_cases_voisines" : [
+            "id_cases_voisines": [
                1 
             ]
         }

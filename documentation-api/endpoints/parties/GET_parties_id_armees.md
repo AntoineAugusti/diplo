@@ -2,7 +2,7 @@
 
 Méthode | URI | Description
 ------------- | ------------- | -------------
-`GET`  | parties/`:id`/armees| Donne des informations sur les armees de la partie `:id`
+`GET`  | parties/`:id`/armees| Donne des informations sur les armées de la partie `:id`
 
 ## Paramètres de la requête
 Variable | Type | Description
@@ -18,14 +18,14 @@ Renvoie une réponse avec un code HTTP **200**.
 {
     "armees": [
         {
-            "id_armee": 1,
-            "id_joueur": 3,
-            "id_case_courante": 6
+            "id_armee":1,
+            "id_joueur":3,
+            "id_case_courante":6
         },
         {
-            "id_armee": 2,
-            "id_joueur": 3,
-            "id_case_courante": 5
+            "id_armee":2,
+            "id_joueur":3,
+            "id_case_courante":5
         }
     ],
     "nb_armees":2
