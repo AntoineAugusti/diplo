@@ -37,4 +37,8 @@ public class Message {
 	public Date getDateCreation(){
 		return this.date_creation;
 	}
+
+	public String toString(){
+		return "Message " + this.id + " par " + this.id_joueur + " (" + date_creation.toString() + ") : " + texte;
+	}
 }

@@ -37,4 +37,18 @@ public class Conversation {
 	public void addMessage(Message message){
 		this.messages.add(message);
 	}
+
+	public String toString(){
+		String res = "Conversation " + this.id_conversation + "\nJoueurs :";
+
+		for(Integer it_joueurs : id_joueurs) {
+			res = res + " " + it_joueurs;
+ 		}
+
+ 		res = res + "\n-------------\n \n";
+ 		for(Message it_messages : messages) {
+			res = res + " " + it_messages + "\n \n";
+ 		}
+ 		return res;
+	}
 }
