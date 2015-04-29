@@ -1,4 +1,3 @@
-
 # Module Parties
 
 Méthode | URI | Description
@@ -24,6 +23,9 @@ Renvoie une réponse avec un code HTTP **200**.
             "id_joueur":1,
             "est_occupee":false,
             "id_armee":null
+            "id_cases_voisines" : [
+               2 
+            ]
         },
         {
             "id":2,
@@ -31,6 +33,9 @@ Renvoie une réponse avec un code HTTP **200**.
             "id_joueur":null,
             "est_occupee":true,
             "id_armee":1
+            "id_cases_voisines" : [
+               1 
+            ]
         }
     ],
     "nb_cases":2
@@ -45,6 +50,7 @@ Variable | Type | Description
 *cases*.`id_joueur`  | Entier naturel non nul | L'identifiant du joueur si `est_libre` vaut faux, null sinon
 *cases*.`est_occupee`  | Booléen | Vrai si une armée est sur la case, faux sinon
 *cases*.`id_armee`  | Entier naturel non nul | L'identifiant de l'armée si `est_occupee` vaut vrai, null sinon
+*cases*.`id_cases_voisines`  | Tableau d'entiers naturels | Les identifiants des cases voisines
 
 ### Erreurs
 #### Exemple de réponse
