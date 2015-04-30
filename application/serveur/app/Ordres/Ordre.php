@@ -7,6 +7,8 @@ use Diplo\Joueurs\Joueur;
 
 abstract class Ordre
 {
+    public static $typeAcceptes = ['Attaquer', 'SoutienOffensif', 'SoutienDefensif', 'Tenir'];
+
     private $joueur;
 
     private $armee;

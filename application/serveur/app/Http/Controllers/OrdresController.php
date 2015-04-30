@@ -5,8 +5,10 @@ namespace Diplo\Http\Controllers;
 use Diplo\Armees\ArmeeRepository;
 use Diplo\Cartes\CaseRepository;
 use Diplo\Http\Requests\Request;
+use Diplo\Ordres\Ordre;
 use Diplo\Ordres\OrdreRepository;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class OrdresController extends Controller
 {
@@ -47,12 +49,34 @@ class OrdresController extends Controller
         $idArmee = $request->get('id_armee');
         $typeOrdre = $request->get('ordre', 'Tenir');
 
+        if (!in_array($typeOrdre, Ordre::$typeAcceptes)) {
+            return $this->responseFactory->json([
+                'statut' => 'ordre_inconnu',
+                'erreur' => "L'ordre $typeOrdre n'existe pas. Valeurs possibles : Tenir, Attaquer, SoutienDefensif ou SoutienOffensif",
+            ], 404);
+        }
+
         if ($request->has('id_case')) {
-            $case = $this->caseRepository->trouverParId($request->get('id_case'));
+            try {
+                $case = $this->caseRepository->trouverParId($request->get('id_case'));
+            } catch (ModelNotFoundException $e) {
+                return $this->responseFactory->json([
+                    'statut' => 'case_non_trouvee',
+                    'erreur' => 'La case '.$request->get('id_case')." n'existe pas",
+                ], 404);
+            }
         } else {
             $case = null;
         }
-        $armee = $this->armeeRepository->trouverParId($idArmee);
+
+        try {
+            $armee = $this->armeeRepository->trouverParId($idArmee);
+        } catch (ModelNotFoundException $e) {
+            return $this->responseFactory->json([
+                'statut' => 'armee_non_trouvee',
+                'erreur' => "L'armée $idArmee n'existe pas",
+            ], 404);
+        }
 
         $this->ordreRepository->passerOrdre($armee, $typeOrdre, $case);
 
