@@ -20,7 +20,7 @@ class CarteFactory
     ];
 
     /**
-     * Crée une partie
+     * Crée une partie.
      *
      * @param Partie $partie
      */

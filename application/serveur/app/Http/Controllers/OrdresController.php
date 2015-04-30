@@ -1,12 +1,12 @@
-<?php namespace Diplo\Http\Controllers;
+<?php
+
+namespace Diplo\Http\Controllers;
 
 use Diplo\Armees\ArmeeRepository;
 use Diplo\Cartes\CaseRepository;
 use Diplo\Http\Requests\Request;
 use Diplo\Ordres\OrdreRepository;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Response;
 
 class OrdresController extends Controller
 {
@@ -30,10 +30,10 @@ class OrdresController extends Controller
     /**
      * @param ResponseFactory $responseFactory
      * @param ArmeeRepository $armeeRepository
-     * @param CaseRepository $caseRepository
+     * @param CaseRepository  $caseRepository
      * @param OrdreRepository $ordreRepository
      */
-    function __construct(ResponseFactory $responseFactory, ArmeeRepository $armeeRepository, CaseRepository $caseRepository, OrdreRepository $ordreRepository)
+    public function __construct(ResponseFactory $responseFactory, ArmeeRepository $armeeRepository, CaseRepository $caseRepository, OrdreRepository $ordreRepository)
     {
         $this->ordreRepository = $ordreRepository;
         $this->armeeRepository = $armeeRepository;
