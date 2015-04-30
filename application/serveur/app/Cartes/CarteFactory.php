@@ -1,10 +1,9 @@
 <?php
 
-namespace Diplo\Parties;
+namespace Diplo\Cartes;
 
 use Diplo\Armees\Armee;
-use Diplo\Cartes\CaseClass;
-use Diplo\Cartes\CaseInterface;
+use Diplo\Parties\Partie;
 
 class CarteFactory
 {
@@ -20,12 +19,17 @@ class CarteFactory
         [[13,13], [13,15], [15,13], [15,15]],
     ];
 
+    /**
+     * Crée une partie
+     *
+     * @param Partie $partie
+     */
     public function creer(Partie $partie)
     {
         // Create a $this->nbCases x $this->nbCases map
         for ($i = 1; $i < $this->nbCases + 1; $i++) {
             for ($j = 1; $j < $this->nbCases + 1; $j++) {
-                $this->cases[$i][$j] = new CaseClass();
+                $this->cases[$i][$j] = CaseClass::create([]);
             }
         }
 

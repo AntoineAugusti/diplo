@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class OrdreModel extends Model
 {
+    protected $fillable = ['type', 'id_armee', 'id_case'];
+
     /**
      * @var Ordre
      */
