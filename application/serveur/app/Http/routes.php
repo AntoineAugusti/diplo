@@ -15,6 +15,9 @@ Route::get('parties/{partie}/joueurs', 'PartiesController@getJoueurs');
 Route::get('parties/{partie}/phase', 'PartiesController@getPhase');
 Route::post('parties/{partie}/rejoindre', 'PartiesController@postRejoindre');
 
+// Ordres
+Route::post('ordres', 'OrdresController@postOrdre');
+
 // Queues
 Route::post('queue/receive', function () {
     return Queue::marshal();

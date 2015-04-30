@@ -43,7 +43,7 @@ class OrdresController extends Controller
         $this->responseFactory = $responseFactory;
     }
 
-    public function postOrdres(Request $request)
+    public function postOrdre(Request $request)
     {
         // Récupération des données
         $idArmee = $request->get('id_armee');
