@@ -7,7 +7,6 @@ use InvalidArgumentException;
 use Eloquent;
 use Diplo\Phases\PhaseInterface;
 use Diplo\Joueurs\Joueur;
-use Diplo\Cartes\CaseClass;
 
 class Partie extends Eloquent implements PhaseInterface
 {

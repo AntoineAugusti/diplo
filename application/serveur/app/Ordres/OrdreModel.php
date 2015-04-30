@@ -1,8 +1,9 @@
-<?php namespace Diplo\Ordres;
+<?php
+
+namespace Diplo\Ordres;
 
 use Diplo\Armees\Armee;
 use Diplo\Cartes\CaseClass;
-use Diplo\Joueurs\Joueur;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -38,8 +39,9 @@ class OrdreModel extends Model
      */
     public function getOrdre()
     {
-        if (is_null($this->ordre))
+        if (is_null($this->ordre)) {
             $this->recreerOrdre();
+        }
 
         return $this->ordre;
     }
@@ -54,19 +56,17 @@ class OrdreModel extends Model
 
     /**
      * Recrée l'ordre d'après les informations de la base de données.
-     *
-     * @return void
      */
     protected function recreerOrdre()
     {
         switch ($this->type) {
-            case "Attaquer":
+            case 'Attaquer':
                 $ordre = new Attaquer();
                 break;
-            case "SoutienOffensif":
+            case 'SoutienOffensif':
                 $ordre = new SoutienOffensif();
                 break;
-            case "SoutienDefensif":
+            case 'SoutienDefensif':
                 $ordre = new SoutienDefensif();
                 break;
             default:

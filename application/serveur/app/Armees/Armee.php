@@ -2,7 +2,6 @@
 
 namespace Diplo\Armees;
 
-use Diplo\Cartes\CaseInterface;
 use Diplo\Ordres\Ordre;
 use Eloquent;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -41,8 +40,6 @@ class Armee extends Eloquent
 
     /**
      * La case occupée par une armée.
-     *
-     * @return null | CaseInterface
      */
     public function getCase()
     {

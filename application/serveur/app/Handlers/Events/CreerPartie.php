@@ -5,7 +5,7 @@ namespace Diplo\Handlers\Events;
 use Diplo\Parties\CarteFactory;
 use Diplo\Events\PartiePreteACommencer;
 
-class CreerCarte
+class CreerPartie
 {
     /**
      * @var CarteFactory
@@ -14,6 +14,7 @@ class CreerCarte
 
     /**
      * Create the event handler.
+     *
      * @param CarteFactory $factory
      */
     public function __construct(CarteFactory $factory)
