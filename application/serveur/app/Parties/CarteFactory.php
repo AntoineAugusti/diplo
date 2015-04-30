@@ -4,7 +4,7 @@ use Diplo\Armees\Armee;
 use Diplo\Cartes\CaseClass;
 use Diplo\Cartes\CaseInterface;
 
-class PartieFactory
+class CarteFactory
 {
     protected $cases = [];
 
@@ -18,7 +18,7 @@ class PartieFactory
         [[13,13], [13,15], [15,13], [15,15]]
     ];
 
-    public function create(Partie $partie)
+    public function creer(Partie $partie)
     {
         // Create a $this->nbCases x $this->nbCases map
         for($i = 1; $i < $this->nbCases + 1; $i++)
