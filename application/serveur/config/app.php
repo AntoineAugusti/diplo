@@ -145,7 +145,7 @@ return [
 		'Diplo\Providers\EventServiceProvider',
 		'Diplo\Providers\RouteServiceProvider',
 		'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
-
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 	],
 
 	/*
