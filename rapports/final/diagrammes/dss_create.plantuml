@@ -1,0 +1,16 @@
+@startuml
+participant Client
+participant Server
+title Creation of a game
+
+
+activate Client
+activate Server
+Client -> Server : rejoindrePartie()
+Server -> Server : ajouterJoueur()
+
+group while (players<nbJoueursMin)
+   Server -> Server : creerPartie()
+end
+   Server --> Client : lancerPartie()
+@enduml

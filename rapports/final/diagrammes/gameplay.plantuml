@@ -1,0 +1,21 @@
+@startuml
+participant Client
+participant Server
+title Gameplay
+
+
+activate Client
+activate Server
+alt (tour < nbTours) && (getNbPointsDInteretsParJoueur() < getNbPointsDInterets()) && (getArmees().size != 0)
+
+  alt phaseEstCombat()
+    Client -> Server : donnerOrdre()
+  else phaseEstNegociation()
+    Client -> Server : envoyerMessages()
+  end
+
+else Défaite
+  Client -> Server : quitterPartie()
+  Server -> Server : supprimerJoueur()
+end
+@enduml
