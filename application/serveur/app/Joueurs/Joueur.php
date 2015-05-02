@@ -109,8 +109,7 @@ class Joueur extends Eloquent
      */
     public function getArmeesRestantesAttribute()
     {
-        // TODO
-        return 0;
+        return $this->armees()->count();
     }
 
     /**
