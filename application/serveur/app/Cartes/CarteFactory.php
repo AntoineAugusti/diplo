@@ -90,7 +90,7 @@ class CarteFactory
      */
     private function definirPositionsArmeesPourJoueur(Joueur $joueur, $id)
     {
-        foreach ($this->positions[$i] as $positions) {
+        foreach ($this->positions[$id] as $positions) {
             $armee = new Armee();
             $joueur->armees()->save($armee);
 

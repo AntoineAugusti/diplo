@@ -12,6 +12,13 @@ use Illuminate\Support\Collection;
 class CaseClass extends Model implements CaseInterface
 {
     /**
+     * Le nom de la table pour le modèle.
+     *
+     * @var string
+     */
+    protected $table = 'cases';
+
+    /**
      * Récupère les cases voisines.
      *
      * @return Collection
@@ -48,7 +55,7 @@ class CaseClass extends Model implements CaseInterface
      */
     public function armee()
     {
-        return $this->hasOne(Armee::class, 'id_armee', 'id');
+        return $this->hasOne(Armee::class, 'id_case', 'id');
     }
 
     /**

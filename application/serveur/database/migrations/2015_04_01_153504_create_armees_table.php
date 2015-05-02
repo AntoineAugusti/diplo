@@ -13,7 +13,13 @@ class CreateArmeesTable extends Migration
         Schema::create('armees', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_joueur')->unsigned()->references('id')->on('joueurs')->onDelete('cascade');
-            $table->integer('id_case')->unsigned()->references('id')->on('cases')->onDelete('cascade');
+            $table->integer('id_case')
+                ->nullable()
+                ->default(null)
+                ->unsigned()
+                ->references('id')
+                ->on('cases')
+                ->onDelete('cascade');
             $table->timestamps();
 
             $table->index('id_joueur');

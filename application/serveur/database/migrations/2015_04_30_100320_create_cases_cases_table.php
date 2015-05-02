@@ -17,7 +17,6 @@ class CreateCasesCasesTable extends Migration {
 			$table->increments('id');
             $table->integer('case_parente')->unsigned()->references('id')->on('cases')->onDelete('cascade');
             $table->integer('case_voisine')->unsigned()->references('id')->on('cases')->onDelete('cascade');
-            $table->timestamps();
 		});
 	}
 
