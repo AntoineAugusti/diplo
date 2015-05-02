@@ -2,10 +2,11 @@
 
 namespace Diplo\Providers;
 
-use Diplo\Events\PartiePreteACommencer;
 use Diplo\Events\PartieEstTerminee;
-use Diplo\Handlers\Events\DemarragePartie;
+use Diplo\Events\PartiePreteACommencer;
 use Diplo\Handlers\Events\CloturerPartie;
+use Diplo\Handlers\Events\CreerCarte;
+use Diplo\Handlers\Events\DemarragePartie;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -19,10 +20,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         PartiePreteACommencer::class => [
             DemarragePartie::class,
+            CreerCarte::class
         ],
         PartieEstTerminee::class => [
             CloturerPartie::class,
         ],
+
     ];
 
     /**

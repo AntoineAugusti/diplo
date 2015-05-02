@@ -2,10 +2,10 @@
 
 namespace Diplo\Handlers\Events;
 
-use Diplo\Parties\CarteFactory;
+use Diplo\Cartes\CarteFactory;
 use Diplo\Events\PartiePreteACommencer;
 
-class CreerPartie
+class CreerCarte
 {
     /**
      * @var CarteFactory
