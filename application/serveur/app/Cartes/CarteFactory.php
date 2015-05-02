@@ -3,14 +3,30 @@
 namespace Diplo\Cartes;
 
 use Diplo\Armees\Armee;
+use Diplo\Joueurs\Joueur;
 use Diplo\Parties\Partie;
 
 class CarteFactory
 {
+    /**
+     * Les cases de la carte.
+     *
+     * @var array
+     */
     protected $cases = [];
 
-    protected $nbCases = 15;
+    /**
+     * La taille du carré de la carte.
+     *
+     * @var int
+     */
+    protected $tailleCarre = 15;
 
+    /**
+     * Les positions des armées initiales sur les cases.
+     *
+     * @var array
+     */
     protected $positions = [
         [[1,1], [1,3], [3,1], [3,3]],
         [[1,13], [1,15], [3,13], [3,15]],
@@ -26,23 +42,23 @@ class CarteFactory
      */
     public function creer(Partie $partie)
     {
-        // Create a $this->nbCases x $this->nbCases map
-        for ($i = 1; $i < $this->nbCases + 1; $i++) {
-            for ($j = 1; $j < $this->nbCases + 1; $j++) {
+        // Crée une carte de $this->tailleCarre x $this->tailleCarre
+        for ($i = 1; $i < $this->tailleCarre + 1; $i++) {
+            for ($j = 1; $j < $this->tailleCarre + 1; $j++) {
                 $this->cases[$i][$j] = CaseClass::create([]);
             }
         }
 
-        // Bind neighbor
-        for ($i = 1; $i < $this->nbCases + 1; $i++) {
-            for ($j = 1; $j < $this->nbCases + 1; $j++) {
+        // On définit les cases voisines
+        for ($i = 1; $i < $this->tailleCarre + 1; $i++) {
+            for ($j = 1; $j < $this->tailleCarre + 1; $j++) {
                 $ids = [];
 
                 if ($i != 1) {
                     $ids[] = $this->cases[$i - 1][$j]->id;
                 }
 
-                if ($i != $this->nbCases) {
+                if ($i != $this->tailleCarre) {
                     $ids[] = $this->cases[$i + 1][$j]->id;
                 }
 
@@ -50,7 +66,7 @@ class CarteFactory
                     $ids[] = $this->cases[$i][$j - 1]->id;
                 }
 
-                if ($j != $this->nbCases) {
+                if ($j != $this->tailleCarre) {
                     $ids[] = $this->cases[$i][$j + 1]->id;
                 }
 
@@ -58,21 +74,36 @@ class CarteFactory
             }
         }
 
-        // Add armee
-        $i = 0;
+        // On ajoute les armées sur les cases
+        $idJoueurDansPartie = 0;
         foreach ($partie->getJoueurs() as $joueur) {
-            foreach ($this->positions[$i] as $positions) {
-                $armee = new Armee();
-                $joueur->armees()->save($armee);
-
-                $this->getCase($positions[0], $positions[1])->armee()->save($armee);
-            }
-
-            $i++;
+            $this->definirPositionsArmeesPourJoueur($joueur, $idJoueurDansPartie);
+            $idJoueurDansPartie++;
         }
     }
 
     /**
+     * Définit les emplacements initiaux des armées pour un jour.
+     *
+     * @param Joueur $joueur
+     * @param int    $id     Le numéro du joueur au sein de la partie, de 0 à (nbJoueursMax - 1)
+     */
+    private function definirPositionsArmeesPourJoueur(Joueur $joueur, $id)
+    {
+        foreach ($this->positions[$i] as $positions) {
+            $armee = new Armee();
+            $joueur->armees()->save($armee);
+
+            $this->getCase($positions[0], $positions[1])->armee()->save($armee);
+        }
+    }
+
+    /**
+     * Accède à la case à la position demandée.
+     *
+     * @param int $i
+     * @param int $j
+     *
      * @return CaseInterface
      */
     protected function getCase($i, $j)
