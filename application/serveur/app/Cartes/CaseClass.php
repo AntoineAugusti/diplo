@@ -33,7 +33,8 @@ class CaseClass extends Model implements CaseInterface
      *
      * @return BelongsTo
      */
-    public function carte() {
+    public function carte()
+    {
         return $this->belongsTo(Carte::class, 'id_carte', 'id');
     }
 
@@ -42,7 +43,8 @@ class CaseClass extends Model implements CaseInterface
      *
      * @return Carte
      */
-    public function getCarte() {
+    public function getCarte()
+    {
         return $this->carte;
     }
 

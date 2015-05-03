@@ -43,14 +43,14 @@ class CarteFactory
     public function creer(Partie $partie)
     {
         $carte = Carte::create([
-            'id_partie' => $partie->getId()
+            'id_partie' => $partie->getId(),
         ]);
 
         // Crée une carte de $this->tailleCarre x $this->tailleCarre
         for ($i = 1; $i < $this->tailleCarre + 1; $i++) {
             for ($j = 1; $j < $this->tailleCarre + 1; $j++) {
                 $this->cases[$i][$j] = CaseClass::create([
-                    'id_carte' => $carte->getId()
+                    'id_carte' => $carte->getId(),
                 ]);
             }
         }

@@ -42,7 +42,8 @@ class Partie extends Model implements PhaseInterface
      *
      * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -71,7 +72,8 @@ class Partie extends Model implements PhaseInterface
      *
      * @return Carte
      */
-    public function getCarte() {
+    public function getCarte()
+    {
         return $this->carte;
     }
 

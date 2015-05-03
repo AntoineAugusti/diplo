@@ -16,7 +16,8 @@ class Carte extends Model
      *
      * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -25,7 +26,8 @@ class Carte extends Model
      *
      * @return BelongsTo
      */
-    public function partie() {
+    public function partie()
+    {
         return $this->belongsTo(Partie::class, 'id_partie', 'id');
     }
 
@@ -34,7 +36,8 @@ class Carte extends Model
      *
      * @return Partie
      */
-    public function getPartie() {
+    public function getPartie()
+    {
         return $this->partie;
     }
 
@@ -43,7 +46,8 @@ class Carte extends Model
      *
      * @return HasMany
      */
-    public function cases() {
+    public function cases()
+    {
         return $this->hasMany(CaseClass::class, 'id_carte', 'id');
     }
 
@@ -52,7 +56,8 @@ class Carte extends Model
      *
      * @return CaseClass[]
      */
-    public function getCases() {
+    public function getCases()
+    {
         return $this->cases;
     }
 }
