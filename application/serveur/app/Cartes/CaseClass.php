@@ -19,6 +19,73 @@ class CaseClass extends Model implements CaseInterface
     protected $table = 'cases';
 
     /**
+     * Les attributs à rajouter au modèle.
+     *
+     * @var array
+     */
+    protected $appends = ['est_libre', 'id_joueur', 'est_occupee', 'id_armee', 'id_cases_voisines'];
+
+    /**
+     * Indique si une case est possédée par un joueur.
+     *
+     * @return bool
+     */
+    public function getEstLibreAttribute()
+    {
+        return !is_null($this->joueur());
+    }
+
+    /**
+     * Retourne l'identifiant du joueur possédant la case ou null si elle n'est pas possédée.
+     *
+     * @return int|null
+     */
+    public function getIdJoueurAttribute()
+    {
+        $joueur = $this->joueur;
+        if (is_null($joueur)) {
+            return;
+        }
+
+        return $joueur->id;
+    }
+
+    /**
+     * Indique si une case est occupée par une armée.
+     *
+     * @return bool
+     */
+    public function getEstOccupeeAttribute()
+    {
+        return !is_null($this->armee);
+    }
+
+    /**
+     * Retourne l'identifiant de l'armée si la case est occupée ou null sinon.
+     *
+     * @return int|null
+     */
+    public function getIdArmeeAttribute()
+    {
+        $armee = $this->armee;
+        if (is_null($armee)) {
+            return;
+        }
+
+        return $armee->id;
+    }
+
+    /**
+     * Récupère les identifiants des cases voisines.
+     *
+     * @return int[]
+     */
+    public function getIdCasesVoisinesAttribute()
+    {
+        return $this->getCasesVoisinesIds();
+    }
+
+    /**
      * Récupère les cases voisines.
      *
      * @return Collection

@@ -81,6 +81,18 @@ class PartiesController extends Controller
     }
 
     /**
+     * Affiche la carte d'une partie.
+     *
+     * @param Partie $partie
+     *
+     * @return Response
+     */
+    public function getCarte(Partie $partie)
+    {
+        // TODO
+    }
+
+    /**
      * Prépare la réponse pour rejoindre une partie.
      *
      * @param Partie $partie
