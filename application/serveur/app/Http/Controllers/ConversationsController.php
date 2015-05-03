@@ -23,10 +23,10 @@ class ConversationsController extends Controller
     /**
      * Créer une conversation entre joueurs.
      *
-     * @throws PasAssezDeJoueursException            Une conversation doit être créée au moins entre 2 joueurs
-     * @throws JoueurInexistantConversationException Un des joueurs n'existe pas
-     * @throws ConversationExistanteException        Une conversation entre ces joueurs existait déjà
-     * @throws JoueurDupliqueException               Un joueur ne peut être plus d'une fois dans la même conversation
+     * @throws \Diplo\Exceptions\PasAssezDeJoueursException            Une conversation doit être créée au moins entre 2 joueurs
+     * @throws \Diplo\Exceptions\JoueurInexistantConversationException Un des joueurs n'existe pas
+     * @throws \Diplo\Exceptions\ConversationExistanteException        Une conversation entre ces joueurs existait déjà
+     * @throws \Diplo\Exceptions\JoueurDupliqueException               Un joueur ne peut être plus d'une fois dans la même conversation
      *
      * @return Response
      */
@@ -92,7 +92,7 @@ class ConversationsController extends Controller
      *
      * @return Response
      *
-     * @throws JoueurAbsentConversationException L'auteur du message n'est pas présent dans la conversation
+     * @throws \Diplo\Exceptions\JoueurAbsentConversationException L'auteur du message n'est pas présent dans la conversation
      */
     public function postConversationMessages(Conversation $conversation)
     {

@@ -20,7 +20,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         PartiePreteACommencer::class => [
             DemarragePartie::class,
-            CreerCarte::class
+            CreerCarte::class,
         ],
         PartieEstTerminee::class => [
             CloturerPartie::class,

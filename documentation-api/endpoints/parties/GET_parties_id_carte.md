@@ -24,7 +24,7 @@ Renvoie une réponse avec un code HTTP **200**.
             "est_occupee":false,
             "id_armee":null,
             "id_cases_voisines": [
-               2 
+               2
             ]
         },
         {
@@ -34,7 +34,7 @@ Renvoie une réponse avec un code HTTP **200**.
             "est_occupee":true,
             "id_armee":1,
             "id_cases_voisines": [
-               1 
+               1
             ]
         }
     ],
@@ -46,7 +46,7 @@ Variable | Type | Description
 ------------- | ------------- | -------------
 `nb_cases` | Entier naturel non nul | Le nombre de cases de le carte
 *cases*.`id`  | Entier naturel non nul | L'identifiant de la case
-*cases*.`est_libre`  | Booléen | Vrai si la case est possédée par un joueur, faux sinon
+*cases*.`est_libre`  | Booléen | Faux si la case est possédée par un joueur, vrai sinon
 *cases*.`id_joueur`  | Entier naturel non nul | L'identifiant du joueur si `est_libre` vaut faux, null sinon
 *cases*.`est_occupee`  | Booléen | Vrai si une armée est sur la case, faux sinon
 *cases*.`id_armee`  | Entier naturel non nul | L'identifiant de l'armée si `est_occupee` vaut vrai, null sinon
