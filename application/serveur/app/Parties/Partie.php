@@ -64,7 +64,7 @@ class Partie extends Model implements PhaseInterface
      */
     public function carte()
     {
-        return $this->hasOne(Carte::class);
+        return $this->hasOne(Carte::class, 'id_partie', 'id');
     }
 
     /**

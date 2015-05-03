@@ -89,7 +89,7 @@ class PartiesController extends Controller
      */
     public function getCarte(Partie $partie)
     {
-        // TODO
+        return $partie->getCarte();
     }
 
     /**

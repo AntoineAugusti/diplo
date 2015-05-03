@@ -2,11 +2,13 @@
 
 namespace Diplo\Armees;
 
+use Diplo\Cartes\CaseClass;
+use Diplo\Joueurs\Joueur;
 use Diplo\Ordres\Ordre;
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
-class Armee extends Eloquent
+class Armee extends Model
 {
     /**
      * Récupère le joueur propriétaire d'une armée.
