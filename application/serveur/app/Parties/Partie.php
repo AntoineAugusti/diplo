@@ -3,12 +3,13 @@
 namespace Diplo\Parties;
 
 use Diplo\Cartes\Carte;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use InvalidArgumentException;
-use Eloquent;
 use Diplo\Phases\PhaseInterface;
 use Diplo\Joueurs\Joueur;
 
-class Partie extends Eloquent implements PhaseInterface
+class Partie extends Model implements PhaseInterface
 {
     const NEGOCIATION = 'negociation';
     const COMBAT = 'combat';
@@ -37,9 +38,18 @@ class Partie extends Eloquent implements PhaseInterface
     ];
 
     /**
+     * Récupère l'ID de la partie.
+     *
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
      * Récupère les joueurs d'une partie.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * @return Relation
      */
     public function joueurs()
     {
@@ -47,13 +57,22 @@ class Partie extends Eloquent implements PhaseInterface
     }
 
     /**
-     * Récupère les cases de la carte.
+     * Définit la relation avec une carte.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * @return Relation
      */
     public function carte()
     {
         return $this->hasOne(Carte::class);
+    }
+
+    /**
+     * Récupère la carte de la partie.
+     *
+     * @return Carte
+     */
+    public function getCarte() {
+        return $this->carte;
     }
 
     /**

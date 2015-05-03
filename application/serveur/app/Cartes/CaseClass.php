@@ -5,12 +5,15 @@ namespace Diplo\Cartes;
 use Diplo\Armees\Armee;
 use Diplo\Joueurs\Joueur;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 
 class CaseClass extends Model implements CaseInterface
 {
+    protected $fillable = ['id_carte'];
+
     /**
      * Le nom de la table pour le modèle.
      *
@@ -24,6 +27,24 @@ class CaseClass extends Model implements CaseInterface
      * @var array
      */
     protected $appends = ['est_libre', 'id_joueur', 'est_occupee', 'id_armee', 'id_cases_voisines'];
+
+    /**
+     * Définit la relation avec une carte.
+     *
+     * @return BelongsTo
+     */
+    public function carte() {
+        return $this->belongsTo(Carte::class, 'id_carte', 'id');
+    }
+
+    /**
+     * Récupère la carte d'une case.
+     *
+     * @return Carte
+     */
+    public function getCarte() {
+        return $this->carte;
+    }
 
     /**
      * Indique si une case est possédée par un joueur.
