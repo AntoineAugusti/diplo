@@ -74,7 +74,7 @@ class Partie extends Model implements PhaseInterface
      */
     public function getCarte()
     {
-        return $this->carte;
+        return $this->carte->load('cases');
     }
 
     /**

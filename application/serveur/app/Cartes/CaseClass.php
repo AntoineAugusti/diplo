@@ -26,7 +26,23 @@ class CaseClass extends Model implements CaseInterface
      *
      * @var array
      */
-    protected $appends = ['est_libre', 'id_joueur', 'est_occupee', 'id_armee', 'id_cases_voisines'];
+    protected $appends = ['est_libre', 'id_joueur', 'est_occupee', 'id_armee'];
+
+    /**
+     * Les attributs cachés lors de la conversion en array ou JSON.
+     *
+     * @var array
+     */
+    protected $hidden = ['id_carte', 'armee', 'created_at', 'updated_at'];
+
+    /**
+     * Les attributs du modèle qui doivent être castés vers des types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+    ];
 
     /**
      * Définit la relation avec une carte.
@@ -55,7 +71,7 @@ class CaseClass extends Model implements CaseInterface
      */
     public function getEstLibreAttribute()
     {
-        return !is_null($this->joueur());
+        return is_null($this->joueur());
     }
 
     /**
@@ -65,7 +81,7 @@ class CaseClass extends Model implements CaseInterface
      */
     public function getIdJoueurAttribute()
     {
-        $joueur = $this->joueur;
+        $joueur = $this->joueur();
         if (is_null($joueur)) {
             return;
         }
@@ -95,7 +111,7 @@ class CaseClass extends Model implements CaseInterface
             return;
         }
 
-        return $armee->id;
+        return (int) $armee->id;
     }
 
     /**

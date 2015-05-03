@@ -11,6 +11,13 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 class Armee extends Model
 {
     /**
+     * Les attributs cachés lors de la conversion en array ou JSON.
+     *
+     * @var array
+     */
+    protected $hidden = ['created_at', 'updated_at'];
+
+    /**
      * Récupère le joueur propriétaire d'une armée.
      *
      * @return Relation

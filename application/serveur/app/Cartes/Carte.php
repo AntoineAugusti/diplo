@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Carte extends Model
 {
+    /**
+     * Les attributs que l'on peut définir lors de l'appel au constructeur.
+     *
+     * @var array
+     */
     protected $fillable = ['id_partie'];
 
     /**
