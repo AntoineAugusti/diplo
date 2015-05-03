@@ -15,13 +15,6 @@ class CreateCasesTable extends Migration {
 		Schema::create('cases', function(Blueprint $table)
 		{
 			$table->increments('id');
-            $table->integer('id_armee')
-            	->nullable()
-            	->default(null)
-            	->unsigned()
-            	->references('id')
-            	->on('armees')
-            	->onDelete('cascade');
             $table->timestamps();
 		});
 	}

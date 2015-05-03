@@ -92,9 +92,8 @@ class CarteFactory
     {
         foreach ($this->positions[$id] as $positions) {
             $armee = new Armee();
+            $armee->id_case = $this->getCase($positions[0], $positions[1])->id;
             $joueur->armees()->save($armee);
-
-            $this->getCase($positions[0], $positions[1])->armee()->save($armee);
         }
     }
 

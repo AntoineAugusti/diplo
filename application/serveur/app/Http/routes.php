@@ -1,7 +1,16 @@
 <?php
 
 // Accueil
+use Diplo\Cartes\CarteFactory;
+use Diplo\Parties\Partie;
+
 Route::get('/', 'WelcomeController@showWelcome');
+Route::get('/testCreerPartie', function() {
+    $factory = App::make(CarteFactory::class);
+    $factory->creer(Partie::first());
+
+    return 'Done!';
+});
 
 // Conversations
 Route::get('conversations/{conversation}', 'ConversationsController@getConversation');
