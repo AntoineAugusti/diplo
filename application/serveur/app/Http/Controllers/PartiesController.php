@@ -89,7 +89,10 @@ class PartiesController extends Controller
      */
     public function getCarte(Partie $partie)
     {
-        return $partie->getCarte();
+        $cases = $partie->getCarte()->cases;
+        $nb_cases = $cases->count();
+
+        return Response::json(compact('cases', 'nb_cases'), 200);
     }
 
     /**
