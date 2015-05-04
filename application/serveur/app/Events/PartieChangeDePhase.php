@@ -5,6 +5,12 @@ namespace Diplo\Events;
 use Illuminate\Queue\SerializesModels;
 use Diplo\Parties\Partie;
 
+/**
+ * Événement lancé quand une partie change de phase.
+ * Si on était en phase de négociation, que celle-ci vient de se terminer
+ * et que l'on passe en phase de combat, cet événement va être lancé avec
+ * la phase "COMBAT"
+ */
 class PartieChangeDePhase extends Event
 {
     use SerializesModels;

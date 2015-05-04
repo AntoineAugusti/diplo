@@ -5,6 +5,13 @@ namespace Diplo\Events;
 use Illuminate\Queue\SerializesModels;
 use Diplo\Parties\Partie;
 
+/**
+ * Événement lancé quand une partie change de tour.
+ * À la fin du tour 1 (en phase de combat), on va passer
+ * en phase de négociation mais dans le tour 2. Cet événement
+ * est lancé quand la partie passe au tour numéro, avec le numéro
+ * de tour valant 2.
+ */
 class PartieChangeDeTour extends Event
 {
     use SerializesModels;
