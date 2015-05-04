@@ -50,7 +50,7 @@ public class JSONTests {
 					else{
 						joueur_val=listeCase.getJSONObject(i).getInt("id_joueur");
 					}
-					carte.ajouterCase(new Case(listeCase.getJSONObject(i).getInt("id"),listeCase.getJSONObject(i).getBoolean("est_libre"),joueur_val,listeCase.getJSONObject(i).getBoolean("est_occupee"),armee_val));
+					carte.ajouterCase(new Case(listeCase.getJSONObject(i).getInt("id"),listeCase.getJSONObject(i).getBoolean("est_libre"),joueur_val,listeCase.getJSONObject(i).getBoolean("est_occupee"),armee_val,null));
 				}
 		return carte;
 	}
