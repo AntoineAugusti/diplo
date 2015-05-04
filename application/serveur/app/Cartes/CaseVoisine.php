@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CaseVoisine extends Model
 {
     /**
-     * La table associée avec le model.
+     * La table associée avec le modèle.
      *
      * @var string
      */
