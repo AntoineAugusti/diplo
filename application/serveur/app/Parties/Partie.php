@@ -2,9 +2,11 @@
 
 namespace Diplo\Parties;
 
+use Diplo\Armees\Armee;
 use Diplo\Cartes\Carte;
 use Diplo\Exceptions\PartieNonEnJeuException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use InvalidArgumentException;
 use Diplo\Phases\PhaseInterface;
@@ -49,6 +51,16 @@ class Partie extends Model implements PhaseInterface
     }
 
     /**
+     * Les attributs qui doivent être traités comme des dates.
+     *
+     * @return array
+     */
+    public function getDates()
+    {
+        return ['created_at', 'updated_at', 'date_prochaine_phase'];
+    }
+
+    /**
      * Récupère les joueurs d'une partie.
      *
      * @return Relation
@@ -87,13 +99,23 @@ class Partie extends Model implements PhaseInterface
     }
 
     /**
-     * Les attributs qui doivent être traités comme des dates.
+     * Définit la relation entre une partie et les armées à travers les joueurs.
      *
-     * @return array
+     * @return HasManyThrough
      */
-    public function getDates()
+    public function armees()
     {
-        return ['created_at', 'updated_at', 'date_prochaine_phase'];
+        return $this->hasManyThrough(Armee::class, Joueur::class, 'id_partie', 'id_joueur');
+    }
+
+    /**
+     * Récupère les armées de la partie.
+     *
+     * @return Armee[]
+     */
+    public function getArmees()
+    {
+        return $this->armees->load('ordres');
     }
 
     /**

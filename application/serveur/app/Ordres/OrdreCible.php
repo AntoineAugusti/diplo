@@ -4,32 +4,29 @@ namespace Diplo\Ordres;
 
 use Diplo\Cartes\CaseInterface;
 
+/**
+ * Class OrdreCible.
+ */
 abstract class OrdreCible extends Ordre
 {
-    private $caseCible;
+    /**
+     * @var CaseInterface
+     */
+    protected $caseCible;
 
+    /**
+     * @return CaseInterface
+     */
     public function getCase()
     {
         return $this->caseCible;
     }
 
-    public function setCase(CaseInterface $c)
+    /**
+     * @param CaseInterface $case
+     */
+    public function setCase(CaseInterface $case)
     {
-        $this->caseCible = $c;
-    }
-
-    public function estAttaque()
-    {
-        return false;
-    }
-
-    public function estSoutienDefensif()
-    {
-        return false;
-    }
-
-    public function estSoutienOffensif()
-    {
-        return false;
+        $this->caseCible = $case;
     }
 }

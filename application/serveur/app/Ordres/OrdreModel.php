@@ -5,11 +5,28 @@ namespace Diplo\Ordres;
 use Diplo\Armees\Armee;
 use Diplo\Cartes\CaseClass;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrdreModel extends Model
 {
+    /**
+     * La table associée avec le modèle.
+     *
+     * @var string
+     */
+    protected $table = 'ordres';
+
     protected $fillable = ['type', 'id_armee', 'id_case'];
+
+    /**
+     * Les attributs du modèle qui doivent être castés vers des types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'execute' => 'boolean',
+    ];
 
     /**
      * @var Ordre
@@ -19,21 +36,21 @@ class OrdreModel extends Model
     /**
      * Définit la relation avec une armée.
      *
-     * @return HasOne
+     * @return BelongsTo
      */
     public function armee()
     {
-        return $this->hasOne(Armee::class, 'id_armee', 'id');
+        return $this->belongsTo(Armee::class, 'id_armee', 'id');
     }
 
     /**
      * Définit la relation avec une case cible.
      *
-     * @return HasOne
+     * @return BelongsTo
      */
     public function caseCible()
     {
-        return $this->hasOne(CaseClass::class, 'id_case', 'id');
+        return $this->belongsTo(CaseClass::class, 'id_case', 'id');
     }
 
     /**
@@ -84,5 +101,14 @@ class OrdreModel extends Model
         }
 
         $this->setOrdre($ordre);
+    }
+
+    /**
+     * Marque l'ordre modèle comme exécuté.
+     */
+    public function executer()
+    {
+        $this->execute = true;
+        $this->save();
     }
 }

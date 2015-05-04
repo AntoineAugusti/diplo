@@ -5,7 +5,11 @@ namespace Diplo\Armees;
 use Diplo\Cartes\CaseClass;
 use Diplo\Joueurs\Joueur;
 use Diplo\Ordres\Ordre;
+use Diplo\Ordres\OrdreModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Armee extends Model
@@ -20,7 +24,7 @@ class Armee extends Model
     /**
      * Récupère le joueur propriétaire d'une armée.
      *
-     * @return Relation
+     * @return BelongsTo
      */
     public function proprietaire()
     {
@@ -30,7 +34,7 @@ class Armee extends Model
     /**
      * Récupère la case sur laquelle se trouve une armée.
      *
-     * @return Relation
+     * @return HasOne
      */
     public function caseOccupee()
     {
@@ -40,7 +44,7 @@ class Armee extends Model
     /**
      * Le propriétaire de l'armée.
      *
-     * @return \Diplo\Joueurs\Joueur
+     * @return Joueur
      */
     public function getProprietaire()
     {
@@ -49,6 +53,8 @@ class Armee extends Model
 
     /**
      * La case occupée par une armée.
+     *
+     * @return CaseClass
      */
     public function getCase()
     {
@@ -56,9 +62,41 @@ class Armee extends Model
     }
 
     /**
-     * L'ordre donné à l'armée.
+     * Définit la relation avec les ordres passés.
      *
-     * @return Ordre
+     * @return HasMany
+     */
+    public function ordres()
+    {
+        return $this->hasMany(OrdreModel::class, 'id_armee', 'id');
+    }
+
+    /**
+     * Récupère tous les ordres passés à une armée.
+     *
+     * @return OrdreModel[]
+     */
+    public function getOrdres()
+    {
+        return $this->ordres;
+    }
+
+    /**
+     * Définit la relation avec le dernier ordre passé.
+     *
+     * @return HasOne
+     */
+    public function ordre()
+    {
+        return $this->hasOne(OrdreModel::class, 'id_armee', 'id')
+            ->where('execute', false)
+            ->latest();
+    }
+
+    /**
+     * Récupère le dernier ordre passé à l'armée.
+     *
+     * @return OrdreModel
      */
     public function getOrdre()
     {

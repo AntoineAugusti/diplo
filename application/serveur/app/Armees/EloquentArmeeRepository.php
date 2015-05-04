@@ -19,4 +19,26 @@ class EloquentArmeeRepository implements ArmeeRepository
     {
         return Armee::findOrFail($id);
     }
+
+    /**
+     * Déplace une armée sur une case.
+     *
+     * @param Armee $armee
+     * @param int   $caseId
+     */
+    public function deplacerArmee(Armee $armee, $caseId)
+    {
+        $armee->id_case = $caseId;
+        $armee->save();
+    }
+
+    /**
+     * Détruit une armée.
+     *
+     * @param Armee $armee
+     */
+    public function detruireArmee(Armee $armee)
+    {
+        $armee->delete();
+    }
 }

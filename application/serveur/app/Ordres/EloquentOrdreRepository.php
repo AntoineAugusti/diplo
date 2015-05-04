@@ -4,6 +4,7 @@ namespace Diplo\Ordres;
 
 use Diplo\Armees\Armee;
 use Diplo\Cartes\CaseClass;
+use Diplo\Parties\Partie;
 
 class EloquentOrdreRepository implements OrdreRepository
 {
@@ -21,7 +22,21 @@ class EloquentOrdreRepository implements OrdreRepository
         return OrdreModel::create([
             'type' => $type,
             'id_armee' => $armee->id,
-            'id_case' => $case->id,
+            'id_case' => is_null($case) ? null : $case->id,
+        ]);
+    }
+
+    /**
+     * Marquer tous les ordres d'une partie comme exécutés
+     *
+     * @param Partie $partie
+     */
+    public function marquerTousLesOrdresCommeExecutes(Partie $partie)
+    {
+        $idsArmees = $partie->getArmees()->lists('id');
+
+        OrdreModel::whereIn('id_armee', $idsArmees)->update([
+            'execute' => true
         ]);
     }
 }

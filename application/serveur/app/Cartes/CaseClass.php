@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Collection;
 
 class CaseClass extends Model implements CaseInterface
 {
@@ -43,6 +42,16 @@ class CaseClass extends Model implements CaseInterface
     protected $casts = [
         'id' => 'integer',
     ];
+
+    /**
+     * Récupère l'ID de la case.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Définit la relation avec une carte.
@@ -127,7 +136,7 @@ class CaseClass extends Model implements CaseInterface
     /**
      * Récupère les cases voisines.
      *
-     * @return Collection
+     * @return CaseInterface[]
      */
     public function getCasesVoisines()
     {
@@ -167,6 +176,16 @@ class CaseClass extends Model implements CaseInterface
     public function armee()
     {
         return $this->hasOne(Armee::class, 'id_case', 'id');
+    }
+
+    /**
+     * Récupère l'armée sur la case.
+     *
+     * @return Armee
+     */
+    public function getArmee()
+    {
+        return $this->armee;
     }
 
     /**

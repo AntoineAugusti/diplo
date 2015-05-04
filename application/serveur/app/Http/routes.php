@@ -12,6 +12,10 @@ Route::get('/testCreerPartie', function () {
     return 'Done!';
 });
 
+Route::get('/testArmees', function () {
+    return Partie::first()->getArmees()->first()->getOrdre();
+});
+
 // Conversations
 Route::get('conversations/{conversation}', 'ConversationsController@getConversation');
 Route::get('conversations/joueurs/{joueur}', 'ConversationsController@getConversationJoueur');
