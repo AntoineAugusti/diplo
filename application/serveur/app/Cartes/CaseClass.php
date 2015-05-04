@@ -141,7 +141,12 @@ class CaseClass extends Model implements CaseInterface
      */
     public function getCasesVoisinesIds()
     {
-        return CaseVoisine::where('case_parente', $this->id)->lists('case_voisine');
+        $casesVoisines = CaseVoisine::where('case_parente', $this->id)
+            ->lists('case_voisine');
+
+        return array_map(function ($x) {
+            return intval($x);
+        }, $casesVoisines);
     }
 
     /**
