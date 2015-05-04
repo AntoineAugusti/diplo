@@ -93,6 +93,7 @@ public class CommunicationServeur{
 			  while ((line=br.readLine()) != null) {
 			  	      response+=line;
 			  }
+			  System.out.println(response);
 		   }
 		   catch(MalformedURLException e){
 		    	System.out.println(" L URL du serveur est invalide :"+e.getMessage());
@@ -422,11 +423,13 @@ public class CommunicationServeur{
 		Conversation conv = null;
 		String reponse = "";
 		try{
+			System.out.println(conversationToJSON(destinataires));
 			reponse = postRequete("conversations",conversationToJSON(destinataires).toString());
+			System.out.println(reponse);
 			conv = parserJSONCreerConversation(reponse);
 		}
 		catch(PartieHTTPSException e){
-			if (e.error == 404){
+			if (e.error == 400 || e.error == 403){
 				JSONObject erreur = new JSONObject(e.mess);
 				String message = erreur.getString("erreur");
 				throw new PartieInvalideException(message);
@@ -439,7 +442,7 @@ public class CommunicationServeur{
 		Message sms = null;
 		String reponse = "";
 		try{
-			reponse = postRequete("conversations"+conversationID+"/messages",smsToJSON(auteur, texte).toString());
+			reponse = postRequete("conversations/"+conversationID+"/messages",smsToJSON(auteur, texte).toString());
 			sms = parserJSONsms(reponse);
 		}
 		catch(PartieHTTPSException e){
@@ -456,7 +459,7 @@ public class CommunicationServeur{
 		ArrayList<Armee> retour = null;
 		String reponse = "";
 		try{
-			reponse = getRequete("parties"+partieID+"/armees");
+			reponse = getRequete("parties/"+partieID+"/armees");
 			retour = parserJSONInfosArmee(reponse);
 		}
 		catch(PartieHTTPSException e){
