@@ -162,7 +162,12 @@ public class CommunicationServeur{
 			else{
 				joueur_val=listeCase.getJSONObject(i).getInt("id_joueur");
 			}
-			carteCourante.ajouterCase(new Case(listeCase.getJSONObject(i).getInt("id"),listeCase.getJSONObject(i).getBoolean("est_libre"),joueur_val,listeCase.getJSONObject(i).getBoolean("est_occupee"),armee_val));
+			JSONArray voisines = listeCase.getJSONObject(i).getJSONArray("id_cases_voisines");
+			ArrayList<Integer> cases_voisines = new ArrayList<Integer>();
+			for(int j=0; j<voisines.length();j++){
+				cases_voisines.add(voisines.getInt(i));
+			}
+			carteCourante.ajouterCase(new Case(listeCase.getJSONObject(i).getInt("id"),listeCase.getJSONObject(i).getBoolean("est_libre"),joueur_val,listeCase.getJSONObject(i).getBoolean("est_occupee"),armee_val,cases_voisines));
 		}
 		return carteCourante;
 	}
