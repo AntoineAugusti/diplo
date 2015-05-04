@@ -370,7 +370,7 @@ public class CommunicationServeur{
 		Boolean execution = false;
 		String reponse ="";
 		try{
-			reponse = postRequete("parties/"+partieID+"/ordre", ordreToJSON(ordre).toString());
+			reponse = postRequete("ordres", ordreToJSON(ordre).toString());
 			if (reponse.equals(""));
 			execution = true;
 		}
