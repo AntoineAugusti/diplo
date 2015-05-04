@@ -375,7 +375,7 @@ public class CommunicationServeur{
 			execution = true;
 		}
 		catch(PartieHTTPSException e){
-			if (e.error == 404){
+			if (e.error == 400){
 				JSONObject erreur = new JSONObject(e.mess);
 				String message = erreur.getString("erreur");
 				throw new OrdreInvalideException(message);
@@ -392,7 +392,7 @@ public class CommunicationServeur{
 			current = parserJSONInfosConversation(reponse);
 		}
 		catch(PartieHTTPSException e){
-			if (e.error == 404){
+			if (e.error == 404 || e.error == 400){
 				JSONObject erreur = new JSONObject(e.mess);
 				String message = erreur.getString("erreur");
 				throw new PartieIntrouvableException(message);
