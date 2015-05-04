@@ -4,11 +4,14 @@ namespace Diplo\Http\Controllers;
 
 use Diplo\Armees\ArmeeRepository;
 use Diplo\Cartes\CaseRepository;
-use Diplo\Http\Requests\Request;
+use Diplo\Exceptions\ArmeeNonExistanteException;
+use Diplo\Exceptions\CaseNonExistanteException;
+use Diplo\Exceptions\OrdreNonExistantException;
 use Diplo\Ordres\Ordre;
 use Diplo\Ordres\OrdreRepository;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class OrdresController extends Controller
 {
@@ -16,14 +19,17 @@ class OrdresController extends Controller
      * @var OrdreRepository
      */
     private $ordreRepository;
+
     /**
      * @var ArmeeRepository
      */
     private $armeeRepository;
+
     /**
      * @var CaseRepository
      */
     private $caseRepository;
+
     /**
      * @var ResponseFactory
      */
@@ -43,43 +49,80 @@ class OrdresController extends Controller
         $this->responseFactory = $responseFactory;
     }
 
+    /**
+     * Donne un ordre à exécuter à une armée.
+     *
+     * @param Request $request La requête HTTP
+     *
+     * @throws OrdreNonExistantException  Le type d'ordre donné n'est pas supporté
+     * @throws CaseNonExistanteException  La case ciblée n'existe pas
+     * @throws ArmeeNonExistanteException L'armée ciblée n'existe pas
+     *
+     * @return ResponseFactory
+     */
     public function postOrdre(Request $request)
     {
         // Récupération des données
-        $idArmee = $request->get('id_armee');
         $typeOrdre = $request->get('ordre', 'Tenir');
 
+        // Vérifie que l'ordre est supporté
         if (!in_array($typeOrdre, Ordre::$typeAcceptes)) {
-            return $this->responseFactory->json([
-                'statut' => 'ordre_inconnu',
-                'erreur' => "L'ordre $typeOrdre n'existe pas. Valeurs possibles : Tenir, Attaquer, SoutienDefensif ou SoutienOffensif",
-            ], 404);
+            throw new OrdreNonExistantException($typeOrdre);
         }
 
-        if ($request->has('id_case')) {
-            try {
-                $case = $this->caseRepository->trouverParId($request->get('id_case'));
-            } catch (ModelNotFoundException $e) {
-                return $this->responseFactory->json([
-                    'statut' => 'case_non_trouvee',
-                    'erreur' => 'La case '.$request->get('id_case')." n'existe pas",
-                ], 404);
-            }
-        } else {
-            $case = null;
-        }
+        // Si l'ordre a une case cible
+        $case = $this->recupererCase($request);
 
-        try {
-            $armee = $this->armeeRepository->trouverParId($idArmee);
-        } catch (ModelNotFoundException $e) {
-            return $this->responseFactory->json([
-                'statut' => 'armee_non_trouvee',
-                'erreur' => "L'armée $idArmee n'existe pas",
-            ], 404);
-        }
+        // On récupère l'armée
+        $armee = $this->recupererArmee($request);
 
         $this->ordreRepository->passerOrdre($armee, $typeOrdre, $case);
 
         return $this->responseFactory->json([], 202);
+    }
+
+    /**
+     * Récupère la case cible dans une requête si celle-ci est présente.
+     *
+     * @param Request $request
+     *
+     * @throws CaseNonExistanteException La case ciblée n'existe pas
+     *
+     * @return null|\Diplo\Cases\CaseInterface
+     */
+    private function recupererCase(Request $request)
+    {
+        $case = null;
+        if ($request->has('id_case')) {
+            try {
+                $case = $this->caseRepository->trouverParId($request->get('id_case'));
+            } catch (ModelNotFoundException $e) {
+                throw new CaseNonExistanteException($request->get('id_case'));
+            }
+        }
+
+        return $case;
+    }
+
+    /**
+     * Récupère l'armée passée dans une requête.
+     *
+     * @param Request $request
+     *
+     * @throws ArmeeNonExistanteException L'armée n'existe pas
+     *
+     * @return null|\Diplo\Armees\Armee
+     */
+    private function recupererArmee(Request $request)
+    {
+        $idArmee = $request->get('id_armee');
+
+        try {
+            $armee = $this->armeeRepository->trouverParId($idArmee);
+        } catch (ModelNotFoundException $e) {
+            throw new ArmeeNonExistanteException($idArmee);
+        }
+
+        return $armee;
     }
 }

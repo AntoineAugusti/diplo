@@ -5,6 +5,7 @@ namespace Diplo\Exceptions;
 use Exception;
 use Response;
 use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
+use Diplo\Ordres\Attaquer;
 
 class Handler extends ExceptionHandler
 {
@@ -15,18 +16,21 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         'Symfony\Component\HttpKernel\Exception\HttpException',
-        'Diplo\Exceptions\PartieIntrouvableException',
-        'Diplo\Exceptions\PartiePleineException',
-        'Diplo\Exceptions\PasAssezDeJoueursException',
+        'Diplo\Exceptions\ArmeeNonExistanteException',
+        'Diplo\Exceptions\CaseNonExistanteException',
+        'Diplo\Exceptions\ConversationExistanteException',
+        'Diplo\Exceptions\ConversationIntrouvableException',
+        'Diplo\Exceptions\JoueurAbsentConversationException',
+        'Diplo\Exceptions\JoueurDupliqueException',
         'Diplo\Exceptions\JoueurInexistantConversationException',
         'Diplo\Exceptions\JoueurInexistantException',
-        'Diplo\Exceptions\ConversationExistanteException',
-        'Diplo\Exceptions\PartiesDifferentesException',
-        'Diplo\Exceptions\PartieNonEnJeuException',
+        'Diplo\Exceptions\OrdreNonExistantException',
         'Diplo\Exceptions\PartieEnPhasedeCombatException',
-        'Diplo\Exceptions\JoueurDupliqueException',
-        'Diplo\Exceptions\JoueurAbsentConversationException',
-        'Diplo\Exceptions\ConversationIntrouvableException',
+        'Diplo\Exceptions\PartieIntrouvableException',
+        'Diplo\Exceptions\PartieNonEnJeuException',
+        'Diplo\Exceptions\PartiePleineException',
+        'Diplo\Exceptions\PartiesDifferentesException',
+        'Diplo\Exceptions\PasAssezDeJoueursException',
     ];
 
     /**
@@ -51,7 +55,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        $modules = ['conversations', 'parties', 'joueurs'];
+        $modules = ['conversations', 'parties', 'joueurs', 'ordres', 'armees', 'cases'];
         foreach ($modules as $module) {
             $method = 'handle'.ucfirst($module).'Exceptions';
             $response = $this->$method($e);
@@ -115,6 +119,64 @@ class Handler extends ExceptionHandler
         if ($e instanceof JoueurInexistantException) {
             $statut = 'joueur_inexistant';
             $erreur = 'Le joueur '.$e->getMessage()." n'existe pas";
+
+            return Response::json(compact('statut', 'erreur'), 404);
+        }
+
+        return;
+    }
+
+    /**
+     * Gère les exceptions pour les ordres.
+     *
+     * @param Exception $e
+     *
+     * @return Response|null
+     */
+    private function handleOrdresExceptions(Exception $e)
+    {
+        if ($e instanceof OrdreNonExistantException) {
+            $statut = 'ordre_inconnu';
+            $valeursPossibles = Attaquer::presenteOrdresPossibles();
+            $erreur = "L'ordre ".$e->getMessage()." n'existe pas. Valeurs possibles : ".$valeursPossibles;
+
+            return Response::json(compact('statut', 'erreur'), 400);
+        }
+
+        return;
+    }
+
+    /**
+     * Gère les exceptions pour les armées.
+     *
+     * @param Exception $e
+     *
+     * @return Response|null
+     */
+    private function handleArmeesExceptions(Exception $e)
+    {
+        if ($e instanceof ArmeeNonExistanteException) {
+            $statut = 'armee_non_trouvee';
+            $erreur = "L'armée ".$e->getMessage()." n'existe pas";
+
+            return Response::json(compact('statut', 'erreur'), 404);
+        }
+
+        return;
+    }
+
+    /**
+     * Gère les exceptions pour les cases.
+     *
+     * @param Exception $e
+     *
+     * @return Response|null
+     */
+    private function handleCasesExceptions(Exception $e)
+    {
+        if ($e instanceof CaseNonExistanteException) {
+            $statut = 'case_non_trouvee';
+            $erreur = 'La case '.$e->getMessage()." n'existe pas";
 
             return Response::json(compact('statut', 'erreur'), 404);
         }

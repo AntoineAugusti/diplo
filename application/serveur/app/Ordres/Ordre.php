@@ -10,7 +10,7 @@ abstract class Ordre
     /**
      * @var array
      */
-    public static $typeAcceptes = ['Attaquer', 'SoutienOffensif', 'SoutienDefensif', 'Tenir'];
+    public static $typeAcceptes = ['Tenir', 'Attaquer', 'SoutienDefensif', 'SoutienOffensif'];
 
     /**
      * @var Joueur
@@ -60,5 +60,15 @@ abstract class Ordre
     public function getJoueur()
     {
         return $this->joueur;
+    }
+
+    /**
+     * Présente les ordres qu'il est possible de donner.
+     *
+     * @return string
+     */
+    public static function presenteOrdresPossibles()
+    {
+        return implode(', ', self::$typeAcceptes);
     }
 }
