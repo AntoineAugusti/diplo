@@ -39,7 +39,7 @@ public class CarteTests{
 				est_occupee = true;
 			}
 
-			Case c = new Case(i+1, est_libre, idJoueur, est_occupee, idArmee);
+			Case c = new Case(i+1, est_libre, idJoueur, est_occupee, idArmee,null);
 
 			carte.ajouterCase(c);
 		}
