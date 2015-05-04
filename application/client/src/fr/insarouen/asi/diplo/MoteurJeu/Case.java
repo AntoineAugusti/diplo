@@ -1,14 +1,16 @@
 package fr.insarouen.asi.diplo.MoteurJeu;
 
+import java.util.*;
+
 public class Case{
 	public int id;
 	public boolean est_libre;
 	public int id_joueur;
 	public boolean est_occupee;
 	public int id_armee;
-	public ArrayList<Case> cases_voisines;
+	public ArrayList<Integer> cases_voisines;
 
-	public Case(int id, boolean est_libre, int id_joueur, boolean est_occupee, int id_armee, ArrayList<Case> voisines){
+	public Case(int id, boolean est_libre, int id_joueur, boolean est_occupee, int id_armee, ArrayList<Integer> voisines){
 		this.id = id;
 		this.est_libre = est_libre;
 		this.id_joueur = id_joueur;
