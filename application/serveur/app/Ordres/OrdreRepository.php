@@ -20,7 +20,7 @@ interface OrdreRepository
     public function passerOrdre(Armee $armee, $type, CaseClass $case = null);
 
     /**
-     * Marquer tous les ordres d'une partie comme exécutés
+     * Marquer tous les ordres d'une partie comme exécutés.
      *
      * @param Partie $partie
      */

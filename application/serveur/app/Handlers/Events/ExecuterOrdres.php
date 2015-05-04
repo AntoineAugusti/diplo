@@ -24,7 +24,7 @@ class ExecuterOrdres
     private $ordreRepository;
 
     /**
-     * @param Application $application
+     * @param Application     $application
      * @param OrdreRepository $ordreRepository
      */
     public function __construct(Application $application, OrdreRepository $ordreRepository)

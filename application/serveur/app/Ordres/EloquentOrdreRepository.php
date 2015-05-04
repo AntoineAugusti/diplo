@@ -27,7 +27,7 @@ class EloquentOrdreRepository implements OrdreRepository
     }
 
     /**
-     * Marquer tous les ordres d'une partie comme exécutés
+     * Marquer tous les ordres d'une partie comme exécutés.
      *
      * @param Partie $partie
      */
@@ -36,7 +36,7 @@ class EloquentOrdreRepository implements OrdreRepository
         $idsArmees = $partie->getArmees()->lists('id');
 
         OrdreModel::whereIn('id_armee', $idsArmees)->update([
-            'execute' => true
+            'execute' => true,
         ]);
     }
 }
