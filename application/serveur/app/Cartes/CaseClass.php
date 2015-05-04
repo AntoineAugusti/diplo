@@ -26,7 +26,7 @@ class CaseClass extends Model implements CaseInterface
      *
      * @var array
      */
-    protected $appends = ['est_libre', 'id_joueur', 'est_occupee', 'id_armee'];
+    protected $appends = ['est_libre', 'id_joueur', 'est_occupee', 'id_armee', 'id_cases_voisines'];
 
     /**
      * Les attributs cachés lors de la conversion en array ou JSON.
@@ -141,7 +141,7 @@ class CaseClass extends Model implements CaseInterface
      */
     public function getCasesVoisinesIds()
     {
-        return $this->getCasesVoisines()->lists('id');
+        return CaseVoisine::where('case_parente', $this->id)->lists('case_voisine');
     }
 
     /**

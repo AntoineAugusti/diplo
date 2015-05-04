@@ -3,6 +3,7 @@
 namespace Diplo\Parties;
 
 use Diplo\Cartes\Carte;
+use Diplo\Exceptions\PartieNonEnJeuException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use InvalidArgumentException;
@@ -71,9 +72,17 @@ class Partie extends Model implements PhaseInterface
      * Récupère la carte de la partie.
      *
      * @return Carte
+     *
+     * @throws PartieNonEnJeuException
      */
     public function getCarte()
     {
+        $carte = $this->carte;
+
+        if (is_null($carte)) {
+            throw new PartieNonEnJeuException();
+        }
+
         return $this->carte->load('cases');
     }
 
