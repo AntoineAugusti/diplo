@@ -36,13 +36,17 @@ class AttaquerExecuteur extends OrdreCibleExecuteur
 
         $caseId = $ordre->getCase()->getId();
 
-        if (is_null($ordre->getCase()->getArmee())) {
+        // La case n'est occupée par personne, on peut se déplacer immédiatement
+        if (!$ordre->getCase()->est_occupee) {
             $this->armeeRepository->deplacerArmee($ordre->getArmee(), $caseId);
+        // Regardons si on peut se déplacer sur la case qui est occupée
         } else {
-            $soutiensOffensifs = $this->calculerSoutiensOffensifs($caseId, $autresOrdres);
-            $soutiensDefensifs = $this->calculerSoutiensDefensifs($caseId, $autresOrdres);
+            // On compte le nombre de soutiens offensifs et défensifs
+            $nbSoutiensOffensifs = $this->calculerSoutiensOffensifs($caseId, $autresOrdres);
+            $nbSoutiensDefensifs = $this->calculerSoutiensDefensifs($caseId, $autresOrdres);
 
-            if ($soutiensOffensifs > $soutiensDefensifs) {
+            // Si il y a eu plus de soutiens offensifs, on peut exécuter l'ordre
+            if ($nbSoutiensOffensifs > $nbSoutiensDefensifs) {
                 $this->deplacerArmeeAleatoirementOuDetruire($ordre->getCase()->getArmee());
                 $this->armeeRepository->deplacerArmee($ordre->getArmee(), $caseId);
             }
@@ -125,20 +129,23 @@ class AttaquerExecuteur extends OrdreCibleExecuteur
     protected function deplacerArmeeAleatoirementOuDetruire(Armee $armee)
     {
         $casesVoisines = $armee->getCase()->getCasesVoisines();
-        $idCasesVoisinesLibres = [];
+        $idCasesVoisinesNonOccupees = [];
 
+        // On ne conserve que les cases voisines non occupées
         foreach ($casesVoisines as $caseVoisine) {
-            if (is_null($caseVoisine->getArmee())) {
-                $idCasesVoisinesLibres[] = $caseVoisine->getId();
+            if (!$caseVoisine->est_occupee) {
+                $idCasesVoisinesNonOccupees[] = $caseVoisine->getId();
             }
         }
 
-        if (empty($idCasesVoisinesLibres)) {
+        // On ne peut se déplacer sur aucune case voisine, on détruit l'armée
+        if (empty($idCasesVoisinesNonOccupees)) {
             $this->armeeRepository->detruireArmee($armee);
+        // Sinon, on se déplace aléatoirement sur une des cases voisines
         } else {
             $this->armeeRepository->deplacerArmee(
                 $armee,
-                array_rand($idCasesVoisinesLibres)
+                array_rand($idCasesVoisinesNonOccupees)
             );
         }
     }

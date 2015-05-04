@@ -10,6 +10,9 @@ use Illuminate\Contracts\Foundation\Application;
 
 class ExecuterOrdres
 {
+    /**
+     * @var OrdreExecuteur[] Les exécuteurs pour chaque type d'ordre
+     */
     protected $executeurs = [];
 
     /**
@@ -18,6 +21,7 @@ class ExecuterOrdres
      * @var Application
      */
     protected $application;
+
     /**
      * @var OrdreRepository
      */
@@ -33,6 +37,11 @@ class ExecuterOrdres
         $this->ordreRepository = $ordreRepository;
     }
 
+    /**
+     * Exécute les ordres donnés lors de la phase de combat précédente.
+     *
+     * @param PartieChangeDeTour $event
+     */
     public function handle(PartieChangeDeTour $event)
     {
         $partie = $event->partie;
@@ -44,6 +53,7 @@ class ExecuterOrdres
             // Récupère le modèle d'ordre puis l'objet métier ordre.
             $ordre = $armee->getOrdre()->getOrdre();
 
+            // On vérifie que l'ordre donné est valide
             if ($this->verifierOrdre($ordre)) {
                 $ordres[] = $ordre;
             }
@@ -53,12 +63,13 @@ class ExecuterOrdres
             $this->executer($ordre, $ordres);
         }
 
-        // On marque tous les ordres de la partie passés ce tour comme exécuté afin de ne pas les compter au prochain tour.
+        // On marque tous les ordres de la partie passés ce tour comme exécutés
+        // afin de ne pas les compter au prochain tour.
         $this->ordreRepository->marquerTousLesOrdresCommeExecutes($partie);
     }
 
     /**
-     * Vérifie qu'un ordre est correct via l'exécuteur.
+     * Vérifie qu'un ordre est correct via son exécuteur.
      *
      * @param Ordre $ordre
      *
@@ -93,6 +104,8 @@ class ExecuterOrdres
     {
         $nomExecuteur = get_class($ordre).'Executeur';
 
+        // Si l'exécuteur n'a pas déjà été instancié, on demande à Laravel
+        // de le créer à l'aide de l'IoC container
         if (is_null($this->executeurs[$nomExecuteur])) {
             $this->executeurs[$nomExecuteur] = $this->application->make($nomExecuteur);
         }

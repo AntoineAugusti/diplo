@@ -16,6 +16,11 @@ class OrdreModel extends Model
      */
     protected $table = 'ordres';
 
+    /**
+     * Les attributs que l'on peut définir lors de l'appel au constructeur.
+     *
+     * @var array
+     */
     protected $fillable = ['type', 'id_armee', 'id_case'];
 
     /**
@@ -24,7 +29,7 @@ class OrdreModel extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id'      => 'integer',
         'execute' => 'boolean',
     ];
 

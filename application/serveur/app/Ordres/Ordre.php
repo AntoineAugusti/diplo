@@ -5,9 +5,6 @@ namespace Diplo\Ordres;
 use Diplo\Armees\Armee;
 use Diplo\Joueurs\Joueur;
 
-/**
- * Class Ordre.
- */
 abstract class Ordre
 {
     /**

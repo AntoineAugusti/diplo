@@ -4,9 +4,6 @@ namespace Diplo\Ordres;
 
 use Diplo\Cartes\CaseInterface;
 
-/**
- * Class OrdreCible.
- */
 abstract class OrdreCible extends Ordre
 {
     /**

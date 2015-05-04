@@ -12,7 +12,7 @@ interface OrdreRepository
      * Passe un ordre à une armée.
      *
      * @param Armee     $armee
-     * @param $type 'Attaquer', 'SoutienOffensif', 'SoutienDefensif' ou 'Tenir'
+     * @param string    $type  'Attaquer', 'SoutienOffensif', 'SoutienDefensif' ou 'Tenir'
      * @param CaseClass $case
      *
      * @return OrdreModel
