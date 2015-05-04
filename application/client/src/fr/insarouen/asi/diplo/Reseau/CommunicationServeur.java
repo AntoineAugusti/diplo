@@ -262,7 +262,15 @@ public class CommunicationServeur{
 		return new Message(sms.getInt("id"),sms.getInt("id_joueur"),sms.getString("texte"),new Date(sms.getString("created_at")));
 	}
 
-
+	private ArrayList<Armee> parserJSONInfosArmee(String fichier){
+		JSONObject file = new JSONObject(fichier);
+		JSONArray armees = file.getJSONArray("armees");
+		ArrayList<Armee> resultat = new ArrayList<Armee>();
+		for(int i=0; i < armees.length();i++){
+			resultat.add(new Armee(armees.getJSONObject(i).getInt("id_armee"),armees.getJSONObject(i).getInt("id_joueur"),armees.getJSONObject(i).getInt("id_case_courante")));
+		}
+		return resultat;
+	}
 	public Jeu rejoindrePartie(int partieID) throws RuntimeException, PartieIntrouvableException, PartiePleineException{
 		Jeu jeuCourant=null;
 		String reponse="";
@@ -442,5 +450,22 @@ public class CommunicationServeur{
 			}
 		}
 		return sms;
+	}
+
+	public ArrayList<Armee> recupererInfosArmees(int partieID) throws PartieIntrouvableException{
+		ArrayList<Armee> retour = null;
+		String reponse = "";
+		try{
+			reponse = getRequete("parties"+partieID+"/armees");
+			retour = parserJSONInfosArmee(reponse);
+		}
+		catch(PartieHTTPSException e){
+			if (e.error == 404){
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieIntrouvableException(message);
+			}
+		}
+		return retour;
 	}
 }
