@@ -18,14 +18,14 @@ Renvoie une réponse avec un code HTTP **200**.
 {
     "armees": [
         {
-            "id_armee":1,
+            "id":1,
             "id_joueur":3,
-            "id_case_courante":6
+            "id_case":6
         },
         {
-            "id_armee":2,
+            "id":2,
             "id_joueur":3,
-            "id_case_courante":5
+            "id_case":5
         }
     ],
     "nb_armees":2
@@ -35,9 +35,9 @@ Renvoie une réponse avec un code HTTP **200**.
 Variable | Type | Description
 ------------- | ------------- | -------------
 `nb_armees` | Entier naturel non nul | Le nombre d'armées de la partie  
-*armees*.`id_armee` | Entier naturel non nul | L'identifiant de l'armee
+*armees*.`id` | Entier naturel non nul | L'identifiant de l'armee
 *armees*.`id_joueur` | Entier naturel non nul | L'identifiant du joueur
-*armees*.`id_case_courante` | Entier naturel non nul | L'identifiant de la case courante
+*armees*.`id_case` | Entier naturel non nul | L'identifiant de la case courante
 
 ### Erreurs
 #### Exemple de réponse
