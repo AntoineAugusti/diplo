@@ -1,3 +1,43 @@
 \section{Côté serveur}
 
+	\subsection{Sécurité de l'application} % (fold)
+	\label{sub:securite_de_l_application}
+
+		À l'heure actuelle, l'application n'implémente aucune solution de sécurité. Il est donc impossible de garantir l'authenticité d'une requête. Cela pose de graves problèmes en jeu : un joueur pourrait récupérer les conversations d'autres joueurs, ou encore, envoyer des ordres aux armées adverses. De nombreuses solutions de sécurité existent, plus ou moins rapides à mettre en place et plus ou moins fiables.
+
+		\paragraph{Sécurité par l'IP} % (fold)
+		\label{par:securite_par_l_ip}
+		
+			Une solution très basique et très rapide à mettre en place serait de sauvegarder l'adresse IP du client créant un joueur et de n'autoriser que cette adresse IP à envoyer des ordres aux armées du joueur ou accèder à ses conversations. L'avantage de cette solution est qu'elle ne nécessite aucune modification au niveau du client car l'adresse IP est un identifiant unique géré de façon transparente par le réseau. Le désavantage est le problème du NAT (plusieurs clients avec des adresses IP privées derrière une adresse IP publique), il serait donc impossible de jouer en famille derrière une \enquote{box} par exemple. Cette solution n'est donc pas optimale.
+
+		% paragraph securite_par_l_ip (end)
+
+		\paragraph{Session} % (fold)
+		\label{par:session}
+		
+			PHP gère nativement les \texttt{SESSION}. À chaque connexion d'un utilisateur, le serveur va lui attribuer un identifiant de session choisi aléatoirement. Pendant tout le déroulement d'une partie, le serveur va pouvoir enregistrer des informations associées à cet identifiant et y accèder facilement. Le client va envoyer dans les en-tête HTTP son identifiant de session à chaque requête afin d'être identifié. L'avantage de cette solution est la possibilité d'avoir plusieurs joueurs avec la même adresse IP ainsi qu'une relative simplicité. Les sessions sont gérées nativement pas les navigateur web mais nécessite quelques modifications au niveau d'autres types de clients. Le principal désavantage des sessions est leur aspect temporaire, en effet, une session (tout comme les cookies en web par exemple) ont une date d'expiration. Même si cette dernière peut-être allongée, une session sera automatiquement terminée à la fermeture du navigateur par exemple.
+
+		% paragraph session (end) 
+
+		\paragraph{Jeton d'authentification} % (fold)
+		\label{par:jeton_d_authentification}
+		
+			Le jeton d'authentification fonctionne de la même manière que les sessions. Il est cependant géré par l'application et non par le langage. Lors de la création d'un utilisateur, un jeton unique est généré et envoyé à l'utilisateur qui l'utilisera par la suite pour effectuer ses requêtes. Cette solution présente les avantages de la session sans la temporalité (car géré côté application serveur et côté application cliente). Le désavantage est une complexité plus élevée lors de la mise en place.
+
+		% paragraph jeton_d_authentification (end)
+
+		\paragraph{Authentification par compte utilisateur} % (fold)
+		\label{par:authentification_par_compte_utilisateur}
+		
+			La solution de sécurité optimale est l'inscription de l'utilisateur via un nom d'utilisateur et un mot de passe. Cette procédure est plus lourde pour l'expérience utilisateur qui devra s'inscrire avant de pouvoir jouer. La communication des accès et des droits entre les différents acteurs du système (utilisateur, client et serveur) peut être gérée par le protocole OAuth2 (protocole relativement simple à mettre en place car de nombreuses implémentations existent pour tous les langages). Cette solution est la plus lourde à mettre en place à cause de la création des comptes utilisateurs au niveau client et serveur mais apporte la plus grande sécurité. C'est la solution retenu par la grande majorité des API disponibles sur Internet (Dropbox, Facebook, Google\dots).
+
+		% paragraph authentification_par_compte_utilisateur (end)
+
+	% subsection securite_de_l_application (end)
+
+	\subsection{Performances} % (fold)
+	\label{sub:performances}
+
+	% subsection performances (end)
+
 \section{Côté client}
