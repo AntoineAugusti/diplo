@@ -13,8 +13,8 @@ class JoueurGenerator implements JoueurGeneratorInterface
      */
     public function generate($idDansPartie)
     {
-        $pays = $this->generatePays($this->idToIndex($idDansPartie));
-        $pseudo = $this->generatePseudo($this->idToIndex($idDansPartie));
+        $pays = $this->genererPays($this->idToIndex($idDansPartie));
+        $pseudo = $this->genererPseudo($this->idToIndex($idDansPartie));
 
         return new Joueur(compact('pays', 'pseudo'));
     }
@@ -38,7 +38,7 @@ class JoueurGenerator implements JoueurGeneratorInterface
      *
      * @return string
      */
-    private function generatePseudo($index)
+    private function genererPseudo($index)
     {
         $pseudos = [
             'Bob',
@@ -64,7 +64,7 @@ class JoueurGenerator implements JoueurGeneratorInterface
      *
      * @return string Le code du pays au format ISO 3166-1 alpha-3
      */
-    private function generatePays($index)
+    private function genererPays($index)
     {
         $pays = [
             'FRA',

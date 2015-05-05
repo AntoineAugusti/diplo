@@ -17,7 +17,7 @@ class CloturerPartie implements ShouldBeQueued
     }
 
     /**
-     * Handle the event.
+     * Clôt une partie.
      *
      * @param PartieEstTerminee $event
      */

@@ -24,7 +24,7 @@ class DemarragePartie implements ShouldBeQueued
     }
 
     /**
-     * Handle the event.
+     * Démarre une partie.
      *
      * @param PartiePreteACommencer $event
      */

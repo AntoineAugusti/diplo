@@ -23,7 +23,7 @@ class CreerCarte
     }
 
     /**
-     * Handle the event.
+     * Crée la carte et place les armées aux positions initiales.
      *
      * @param PartiePreteACommencer $event
      */
