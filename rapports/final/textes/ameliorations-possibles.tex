@@ -38,6 +38,31 @@
 	\subsection{Performances} % (fold)
 	\label{sub:performances}
 
+		Les performances actuelles de l'application sont plutôt bonnes. Le langage PHP est un langage léger et rapide. Le framework Laravel ajoute une certaine lourdeur au profit d'une simplicité de développement mais reste très rapide à l'exécution.\\
+
+		Malgré tout, il est possible d'améliorer certaines requêtes SQL. En effet, dans un objectif de rapidité du développement, un ORM a été utilisé. Les performances de l'ORM Eloquent sont très bonnes concernant les requêtes classiques mais il est possible d'optimiser les requêtes pour des traitements plus lourds. Par exemple, la création d'une carte est très longue (plus de 30 secondes de traitement) car il est nécessaire de créer toutes les cases afin de générer des identifiants uniques avec l'incrémentation automatique de la base de données puis d'ajouter dans une table pivot les relations de voisinage entre toutes les cases. Plusieurs améliorations sont ici possibles.
+
+		\paragraph{Traitement de la requête en SQL} % (fold)
+		\label{par:traitement_de_la_requete_en_sql}
+			
+			Nos connaissances en SQL sont limitées mais il devrait être possible d'optimiser ces nombreuses insertions en les exécutant d'une seule fois en SQL.
+
+		% paragraph traitement_de_la_requete_en_sql (end)
+
+		\paragraph{Amélioration de la conception} % (fold)
+		\label{par:amelioration_de_la_conception}
+		
+			L'amélioration possible au niveau de la conception concerne les liaisons doubles entre les cases. En effet, il n'est pas forcément nécessaire de sauvegarder les deux liens entre les cases car les liaisons sont obligatoirement bidirectionnelles. Nous pourrions uniquement sauvegarder les liaisons par ordre croissant (lien de 1 vers 2 mais pas de 2 vers 1).
+
+		% paragraph amelioration_de_la_conception (end)
+
+		\paragraph{Type de base de données} % (fold)
+		\label{par:type_de_base_de_donnees}
+		
+			Il est possible d'améliorer les performances de la base de données en traitant les cases dans une base de données NoSQL orientée graphe par exemple. Le schéma serait dans ce cas plus adapté. Si le choix d'une base de données NoSQL peut sembler extrémiste, il est aussi possible de se renseigner au niveau des types spécifiques aux données géographiques dans les bases de données relationnelles (comme par exemple PostGIS).
+
+		% paragraph type_de_base_de_donnees (end)
+
 	% subsection performances (end)
 
 \section{Côté client}
