@@ -10,6 +10,7 @@
 - **[<code>POST</code> ordres](endpoints/ordres/POST_ordres.md)** Donne un ordre à une armée
 
 ### Parties
+- **[<code>GET</code> parties/:id/carte](endpoints/parties/GET_parties_id_armees.md)** Donne des informations sur les armées d'une partie
 - **[<code>GET</code> parties/:id/carte](endpoints/parties/GET_parties_id_carte.md)** Donne des informations sur la carte d'une partie
 - **[<code>GET</code> parties/:id/joueurs](endpoints/parties/GET_parties_id_joueurs.md)** Donne des informations sur les joueurs d'une partie
 - **[<code>GET</code> parties/:id/phase](endpoints/parties/GET_parties_id_phase.md)** Donne des informations sur la phase en cours d'une partie
