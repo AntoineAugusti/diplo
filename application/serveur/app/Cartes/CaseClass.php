@@ -11,6 +11,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CaseClass extends Model implements CaseInterface
 {
+    /**
+     * Les attributs que l'on peut définir lors de l'appel au constructeur.
+     *
+     * @var array
+     */
     protected $fillable = ['id_carte'];
 
     /**
