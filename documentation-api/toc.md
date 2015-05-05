@@ -10,7 +10,7 @@
 	- [<code>POST</code> ordres](endpoints/ordres/POST_ordres.md)
 
 - Parties
-	- [<code>GET</code> parties/:id/carte](endpoints/parties/GET_parties_id_armees.md)
+	- [<code>GET</code> parties/:id/armees](endpoints/parties/GET_parties_id_armees.md)
 	- [<code>GET</code> parties/:id/carte](endpoints/parties/GET_parties_id_carte.md)
 	- [<code>GET</code> parties/:id/joueurs](endpoints/parties/GET_parties_id_joueurs.md)
 	- [<code>GET</code> parties/:id/phase](endpoints/parties/GET_parties_id_phase.md)
