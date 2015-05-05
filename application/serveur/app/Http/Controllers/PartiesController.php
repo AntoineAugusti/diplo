@@ -81,6 +81,21 @@ class PartiesController extends Controller
     }
 
     /**
+     * Affiche la carte d'une partie.
+     *
+     * @param Partie $partie
+     *
+     * @return Response
+     */
+    public function getCarte(Partie $partie)
+    {
+        $cases = $partie->getCarte()->cases;
+        $nb_cases = $cases->count();
+
+        return Response::json(compact('cases', 'nb_cases'), 200);
+    }
+
+    /**
      * Prépare la réponse pour rejoindre une partie.
      *
      * @param Partie $partie

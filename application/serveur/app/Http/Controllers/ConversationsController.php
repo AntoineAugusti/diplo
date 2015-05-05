@@ -2,11 +2,11 @@
 
 namespace Diplo\Http\Controllers;
 
-use Input;
-use Response;
 use Diplo\Joueurs\Joueur;
 use Diplo\Messages\Conversation;
 use Diplo\Messages\ConversationsRepository;
+use Illuminate\Http\Request;
+use Response;
 
 class ConversationsController extends Controller
 {
@@ -23,17 +23,19 @@ class ConversationsController extends Controller
     /**
      * Créer une conversation entre joueurs.
      *
-     * @throws PasAssezDeJoueursException            Une conversation doit être créée au moins entre 2 joueurs
-     * @throws JoueurInexistantConversationException Un des joueurs n'existe pas
-     * @throws ConversationExistanteException        Une conversation entre ces joueurs existait déjà
-     * @throws JoueurDupliqueException               Un joueur ne peut être plus d'une fois dans la même conversation
+     * @param Request $request La requête HTTP
+     *
+     * @throws \Diplo\Exceptions\PasAssezDeJoueursException            Une conversation doit être créée au moins entre 2 joueurs
+     * @throws \Diplo\Exceptions\JoueurInexistantConversationException Un des joueurs n'existe pas
+     * @throws \Diplo\Exceptions\ConversationExistanteException        Une conversation entre ces joueurs existait déjà
+     * @throws \Diplo\Exceptions\JoueurDupliqueException               Un joueur ne peut être plus d'une fois dans la même conversation
      *
      * @return Response
      */
-    public function postConversations()
+    public function postConversations(Request $request)
     {
         // Récupération des données
-        $joueurs = json_decode(Input::get('joueurs'), true);
+        $joueurs = $request->json('joueurs');
 
         // On s'assure d'avoir un tableau
         if (empty($joueurs)) {
@@ -88,16 +90,17 @@ class ConversationsController extends Controller
     /**
      * Ajoute un message à une conversation.
      *
+     * @param Request      $request      La requête HTTP
      * @param Conversation $conversation La conversation
      *
      * @return Response
      *
-     * @throws JoueurAbsentConversationException L'auteur du message n'est pas présent dans la conversation
+     * @throws \Diplo\Exceptions\JoueurAbsentConversationException L'auteur du message n'est pas présent dans la conversation
      */
-    public function postConversationMessages(Conversation $conversation)
+    public function postConversationMessages(Conversation $conversation, Request $request)
     {
-        $idJoueur = Input::get('id_joueur');
-        $texte = Input::get('texte');
+        $idJoueur = $request->get('id_joueur');
+        $texte = $request->get('texte');
 
         $message = $this->conversationsRepo->posterMessage($conversation, $idJoueur, $texte);
 

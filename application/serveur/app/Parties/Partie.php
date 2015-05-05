@@ -2,13 +2,17 @@
 
 namespace Diplo\Parties;
 
+use Diplo\Armees\Armee;
 use Diplo\Cartes\Carte;
+use Diplo\Exceptions\PartieNonEnJeuException;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use InvalidArgumentException;
-use Eloquent;
 use Diplo\Phases\PhaseInterface;
 use Diplo\Joueurs\Joueur;
 
-class Partie extends Eloquent implements PhaseInterface
+class Partie extends Model implements PhaseInterface
 {
     const NEGOCIATION = 'negociation';
     const COMBAT = 'combat';
@@ -37,23 +41,13 @@ class Partie extends Eloquent implements PhaseInterface
     ];
 
     /**
-     * Récupère les joueurs d'une partie.
+     * Récupère l'ID de la partie.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * @return int
      */
-    public function joueurs()
+    public function getId()
     {
-        return $this->hasMany(Joueur::class, 'id_partie', 'id');
-    }
-
-    /**
-     * Récupère les cases de la carte.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function carte()
-    {
-        return $this->hasOne(Carte::class);
+        return $this->id;
     }
 
     /**
@@ -64,6 +58,64 @@ class Partie extends Eloquent implements PhaseInterface
     public function getDates()
     {
         return ['created_at', 'updated_at', 'date_prochaine_phase'];
+    }
+
+    /**
+     * Récupère les joueurs d'une partie.
+     *
+     * @return Relation
+     */
+    public function joueurs()
+    {
+        return $this->hasMany(Joueur::class, 'id_partie', 'id');
+    }
+
+    /**
+     * Définit la relation avec une carte.
+     *
+     * @return Relation
+     */
+    public function carte()
+    {
+        return $this->hasOne(Carte::class, 'id_partie', 'id');
+    }
+
+    /**
+     * Récupère la carte de la partie.
+     *
+     * @return Carte
+     *
+     * @throws PartieNonEnJeuException
+     */
+    public function getCarte()
+    {
+        $carte = $this->carte;
+
+        if (is_null($carte)) {
+            throw new PartieNonEnJeuException();
+        }
+
+        return $this->carte->load('cases');
+    }
+
+    /**
+     * Définit la relation entre une partie et les armées à travers les joueurs.
+     *
+     * @return HasManyThrough
+     */
+    public function armees()
+    {
+        return $this->hasManyThrough(Armee::class, Joueur::class, 'id_partie', 'id_joueur');
+    }
+
+    /**
+     * Récupère les armées de la partie.
+     *
+     * @return Armee[]
+     */
+    public function getArmees()
+    {
+        return $this->armees->load('ordres');
     }
 
     /**

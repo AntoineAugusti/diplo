@@ -12,7 +12,11 @@ class CreateArmeesTable extends Migration
     {
         Schema::create('armees', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_joueur')->unsigned()->references('id')->on('joueurs')->onDelete('cascade');
+            $table->integer('id_joueur')
+                ->unsigned()
+                ->references('id')
+                ->on('joueurs')
+                ->onDelete('cascade');
             $table->integer('id_case')
                 ->nullable()
                 ->default(null)

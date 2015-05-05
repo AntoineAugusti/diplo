@@ -2,17 +2,36 @@
 
 namespace Diplo\Cartes;
 
+use Diplo\Armees\Armee;
 use Diplo\Joueurs\Joueur;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Collection;
 
 interface CaseInterface
 {
     /**
+     * Récupère l'ID de la case.
+     *
+     * @return int
+     */
+    public function getId();
+
+    /**
+     * Récupère l'armée sur la case.
+     *
+     * @return Armee
+     */
+    public function getArmee();
+
+    /**
+     * Pose une armée sur une case.
+     *
+     * @param Armee $armee
+     */
+    public function setArmee(Armee $armee);
+
+    /**
      * Récupère les cases voisines.
      *
-     * @return Collection
+     * @return CaseInterface[]
      */
     public function getCasesVoisines();
 
@@ -24,23 +43,16 @@ interface CaseInterface
     public function getCasesVoisinesIds();
 
     /**
-     * Définit la relation avec les cases voisines..
-     *
-     * @return BelongsToMany
-     */
-    public function casesVoisines();
-
-    /**
-     * Définit la relation avec une armée.
-     *
-     * @return HasOne
-     */
-    public function armee();
-
-    /**
      * Récupère le joueur sur la case.
      *
-     * @return Joueur
+     * @return Joueur | null
      */
-    public function joueur();
+    public function getJoueur();
+
+    /**
+     * La case est-elle occupée par une armée ?
+     *
+     * @return bool
+     */
+    public function estOccupee();
 }

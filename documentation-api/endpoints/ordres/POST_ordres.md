@@ -64,7 +64,7 @@ Une erreur renvoie automatiquement un code HTTP de la famille des 400 et un obje
 ```json
 {
    "statut":"ordre_inconnu",
-   "erreur":"L'ordre Blah n'existe pas. Valeurs possibles : Tenir, Attaquer, SoutienDefensif ou SoutienOffensif"
+   "erreur":"L'ordre Blah n'existe pas. Valeurs possibles : Tenir, Attaquer, SoutienDefensif, SoutienOffensif"
 }
 ```
 
@@ -78,6 +78,6 @@ Une erreur renvoie automatiquement un code HTTP de la famille des 400 et un obje
 #### Réponses possibles
 Code HTTP | Valeur de `statut` | Valeur de `erreur`
 ------------- | ------------- | -------------
+400  | `ordre_inconnu` | `L'ordre :ordre n'existe pas. Valeurs possibles : Tenir, Attaquer, SoutienDefensif, SoutienOffensif`
 404  | `armee_non_trouvee` | `L'armée :id_armee n'existe pas`
-404  | `ordre_inconnu` | `L'ordre :ordre n'existe pas. Valeurs possibles : Tenir, Attaquer, SoutienDefensif ou SoutienOffensif`
 404  | `case_non_trouvee` | `La case :id_case n'existe pas`

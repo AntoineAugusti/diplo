@@ -4,17 +4,20 @@ namespace Diplo\Ordres;
 
 abstract class OrdreExecuteur
 {
-    private $ordre;
+    /**
+     * Exécute l'ordre.
+     *
+     * @param Ordre   $ordre
+     * @param Ordre[] $autresOrdres
+     */
+    abstract public function executer(Ordre $ordre, array $autresOrdres);
 
-    public function getOrdre()
-    {
-        return $this->ordre;
-    }
-
-    public function setOrdre(Ordre $o)
-    {
-        return $this->ordre = $o;
-    }
-
-    abstract public function executer();
+    /**
+     * Vérifie si l'ordre est possible.
+     *
+     * @param Ordre $ordre
+     *
+     * @return bool
+     */
+    abstract public function verifierOrdre(Ordre $ordre);
 }

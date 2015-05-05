@@ -7,29 +7,68 @@ use Diplo\Joueurs\Joueur;
 
 abstract class Ordre
 {
-    public static $typeAcceptes = ['Attaquer', 'SoutienOffensif', 'SoutienDefensif', 'Tenir'];
+    /**
+     * @var array
+     */
+    public static $typeAcceptes = ['Tenir', 'Attaquer', 'SoutienDefensif', 'SoutienOffensif'];
 
-    private $joueur;
+    /**
+     * @var Joueur
+     */
+    protected $joueur;
 
-    private $armee;
+    /**
+     * @var Armee
+     */
+    protected $armee;
 
-    public function setJoueur(Joueur $j)
+    /**
+     * Définit le joueur passant l'ordre.
+     *
+     * @param Joueur $joueur
+     */
+    public function setJoueur(Joueur $joueur)
     {
-        $this->joueur = $j;
+        $this->joueur = $joueur;
     }
 
-    public function setArmee(Armee $a)
+    /**
+     * Définit l'armée concernée par l'ordre.
+     *
+     * @param Armee $armee
+     */
+    public function setArmee(Armee $armee)
     {
-        $this->armee = $a;
+        $this->armee = $armee;
     }
 
+    /**
+     * Récupère l'armée concernée par l'ordre.
+     *
+     * @return Armee
+     */
     public function getArmee()
     {
         return $this->armee;
     }
 
+    /**
+     * Récupère le joueur passant l'ordre.
+     *
+     * @return Joueur
+     */
     public function getJoueur()
     {
         return $this->joueur;
+    }
+
+    /**
+     * Présente les ordres qu'il est possible de donner.
+     *
+     * @return string
+     */
+    public static function presenteOrdresPossibles()
+    {
+        return implode(', ', self::$typeAcceptes);
     }
 }

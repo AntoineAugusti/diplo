@@ -93,6 +93,7 @@ public class CommunicationServeur{
 			  while ((line=br.readLine()) != null) {
 			  	      response+=line;
 			  }
+			  System.out.println(response);
 		   }
 		   catch(MalformedURLException e){
 		    	System.out.println(" L URL du serveur est invalide :"+e.getMessage());
@@ -162,7 +163,12 @@ public class CommunicationServeur{
 			else{
 				joueur_val=listeCase.getJSONObject(i).getInt("id_joueur");
 			}
-			carteCourante.ajouterCase(new Case(listeCase.getJSONObject(i).getInt("id"),listeCase.getJSONObject(i).getBoolean("est_libre"),joueur_val,listeCase.getJSONObject(i).getBoolean("est_occupee"),armee_val));
+			JSONArray voisines = listeCase.getJSONObject(i).getJSONArray("id_cases_voisines");
+			ArrayList<Integer> cases_voisines = new ArrayList<Integer>();
+			for(int j=0; j<voisines.length();j++){
+				cases_voisines.add(voisines.getInt(i));
+			}
+			carteCourante.ajouterCase(new Case(listeCase.getJSONObject(i).getInt("id"),listeCase.getJSONObject(i).getBoolean("est_libre"),joueur_val,listeCase.getJSONObject(i).getBoolean("est_occupee"),armee_val,cases_voisines));
 		}
 		return carteCourante;
 	}
@@ -257,7 +263,15 @@ public class CommunicationServeur{
 		return new Message(sms.getInt("id"),sms.getInt("id_joueur"),sms.getString("texte"),new Date(sms.getString("created_at")));
 	}
 
-
+	private ArrayList<Armee> parserJSONInfosArmee(String fichier){
+		JSONObject file = new JSONObject(fichier);
+		JSONArray armees = file.getJSONArray("armees");
+		ArrayList<Armee> resultat = new ArrayList<Armee>();
+		for(int i=0; i < armees.length();i++){
+			resultat.add(new Armee(armees.getJSONObject(i).getInt("id_armee"),armees.getJSONObject(i).getInt("id_joueur"),armees.getJSONObject(i).getInt("id_case_courante")));
+		}
+		return resultat;
+	}
 	public Jeu rejoindrePartie(int partieID) throws RuntimeException, PartieIntrouvableException, PartiePleineException{
 		Jeu jeuCourant=null;
 		String reponse="";
@@ -357,12 +371,12 @@ public class CommunicationServeur{
 		Boolean execution = false;
 		String reponse ="";
 		try{
-			reponse = postRequete("parties/"+partieID+"/ordre", ordreToJSON(ordre).toString());
+			reponse = postRequete("ordres", ordreToJSON(ordre).toString());
 			if (reponse.equals(""));
 			execution = true;
 		}
 		catch(PartieHTTPSException e){
-			if (e.error == 404){
+			if (e.error == 400){
 				JSONObject erreur = new JSONObject(e.mess);
 				String message = erreur.getString("erreur");
 				throw new OrdreInvalideException(message);
@@ -379,7 +393,7 @@ public class CommunicationServeur{
 			current = parserJSONInfosConversation(reponse);
 		}
 		catch(PartieHTTPSException e){
-			if (e.error == 404){
+			if (e.error == 404 || e.error == 400){
 				JSONObject erreur = new JSONObject(e.mess);
 				String message = erreur.getString("erreur");
 				throw new PartieIntrouvableException(message);
@@ -409,11 +423,13 @@ public class CommunicationServeur{
 		Conversation conv = null;
 		String reponse = "";
 		try{
+			System.out.println(conversationToJSON(destinataires));
 			reponse = postRequete("conversations",conversationToJSON(destinataires).toString());
+			System.out.println(reponse);
 			conv = parserJSONCreerConversation(reponse);
 		}
 		catch(PartieHTTPSException e){
-			if (e.error == 404){
+			if (e.error == 400 || e.error == 403){
 				JSONObject erreur = new JSONObject(e.mess);
 				String message = erreur.getString("erreur");
 				throw new PartieInvalideException(message);
@@ -426,7 +442,7 @@ public class CommunicationServeur{
 		Message sms = null;
 		String reponse = "";
 		try{
-			reponse = postRequete("conversations"+conversationID+"/messages",smsToJSON(auteur, texte).toString());
+			reponse = postRequete("conversations/"+conversationID+"/messages",smsToJSON(auteur, texte).toString());
 			sms = parserJSONsms(reponse);
 		}
 		catch(PartieHTTPSException e){
@@ -437,5 +453,22 @@ public class CommunicationServeur{
 			}
 		}
 		return sms;
+	}
+
+	public ArrayList<Armee> recupererInfosArmees(int partieID) throws PartieIntrouvableException{
+		ArrayList<Armee> retour = null;
+		String reponse = "";
+		try{
+			reponse = getRequete("parties/"+partieID+"/armees");
+			retour = parserJSONInfosArmee(reponse);
+		}
+		catch(PartieHTTPSException e){
+			if (e.error == 404){
+				JSONObject erreur = new JSONObject(e.mess);
+				String message = erreur.getString("erreur");
+				throw new PartieIntrouvableException(message);
+			}
+		}
+		return retour;
 	}
 }

@@ -2,10 +2,31 @@
 
 namespace Diplo\Ordres;
 
-class SoutienDefensifExecuteur extends OrdreExecuteur
+class SoutienDefensifExecuteur extends OrdreCibleExecuteur
 {
-    public function executer()
+    /**
+     * Exécute l'ordre.
+     *
+     * @param Ordre   $ordre
+     * @param Ordre[] $autresOrdres
+     */
+    public function executer(Ordre $ordre, array $autresOrdres)
     {
-        // TODO
+    }
+
+    /**
+     * Vérifie si l'ordre est possible.
+     *
+     * @param Ordre $ordre
+     *
+     * @return bool
+     */
+    public function verifierOrdre(Ordre $ordre)
+    {
+        if (!($ordre instanceof SoutienDefensif)) {
+            return false;
+        }
+
+        return $this->verifierSiCaseCibleEstCaseVoisine($ordre);
     }
 }

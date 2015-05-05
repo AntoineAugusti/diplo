@@ -42,10 +42,16 @@ class CarteFactory
      */
     public function creer(Partie $partie)
     {
+        $carte = Carte::create([
+            'id_partie' => $partie->getId(),
+        ]);
+
         // Crée une carte de $this->tailleCarre x $this->tailleCarre
         for ($i = 1; $i < $this->tailleCarre + 1; $i++) {
             for ($j = 1; $j < $this->tailleCarre + 1; $j++) {
-                $this->cases[$i][$j] = CaseClass::create([]);
+                $this->cases[$i][$j] = CaseClass::create([
+                    'id_carte' => $carte->getId(),
+                ]);
             }
         }
 
@@ -92,9 +98,8 @@ class CarteFactory
     {
         foreach ($this->positions[$id] as $positions) {
             $armee = new Armee();
-            $joueur->armees()->save($armee);
-
-            $this->getCase($positions[0], $positions[1])->armee()->save($armee);
+            $armee = $joueur->armees()->save($armee);
+            $this->getCase($positions[0], $positions[1])->setArmee($armee);
         }
     }
 

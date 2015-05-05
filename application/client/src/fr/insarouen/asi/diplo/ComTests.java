@@ -3,6 +3,7 @@ package fr.insarouen.asi.diplo;
 import fr.insarouen.asi.diplo.Reseau.CommunicationServeur;
 import fr.insarouen.asi.diplo.MoteurJeu.Jeu;
 import fr.insarouen.asi.diplo.MoteurJeu.Ordres.*;
+import fr.insarouen.asi.diplo.MoteurJeu.Negociation.*;
 import fr.insarouen.asi.diplo.Exception.ReseauException.*;
 import fr.insarouen.asi.diplo.MoteurJeu.*;
 import org.json.*;
@@ -27,6 +28,7 @@ public class ComTests{
 		assert jeu.getID()==1 : "ID du jeu vaut 1";
 		assert jeu.getRequis()==5 : "5 joueurs requis";
 		assert jeu.getInscrits()>=3 : "Au moins 3 joueurs inscrits";
+		System.out.println(jeu.getJoueurs());
 
 		Joueur local = (Joueur) jeu.getJoueurs().values().toArray()[0];
 		assert local.pseudo != null : "Le nom est non null";
@@ -70,7 +72,8 @@ public class ComTests{
 		// dest.add(7);
 		// dest.add(8);
 		// System.out.println(current.conversationToJSON(dest).toString());
-
-
+		//ArrayList<Integer> dest = new ArrayList<Integer>();
+		//dest.add(jeu.getJoueurs().get("Manon").id);
+		//current.creerConversation(dest);
 	}
 }

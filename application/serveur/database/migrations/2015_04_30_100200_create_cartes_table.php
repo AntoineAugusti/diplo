@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCasesTable extends Migration {
+class CreateCartesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,21 +12,14 @@ class CreateCasesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('cases', function(Blueprint $table)
+		Schema::create('cartes', function(Blueprint $table)
 		{
 			$table->increments('id');
-            $table->integer('id_carte')
+            $table->integer('id_partie')
             	->unsigned()
             	->references('id')
-            	->on('cartes')
+            	->on('parties')
             	->onDelete('cascade');
-            $table->integer('id_joueur')
-                ->nullable()
-                ->default(null)
-                ->unsigned()
-                ->references('id')
-                ->on('joueurs')
-                ->onDelete('cascade');
             $table->timestamps();
 		});
 	}
@@ -38,7 +31,7 @@ class CreateCasesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('cases');
+		Schema::drop('cartes');
 	}
 
 }
