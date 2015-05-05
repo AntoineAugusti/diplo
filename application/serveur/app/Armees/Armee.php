@@ -28,7 +28,7 @@ class Armee extends Model
      */
     public function getId()
     {
-        return $this->id;J
+        return $this->id;
     }
 
     /**

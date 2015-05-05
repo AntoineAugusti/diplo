@@ -92,7 +92,7 @@ class CaseClass extends Model implements CaseInterface
     {
         $joueur = $this->getJoueur();
         if (is_null($joueur)) {
-            return null;
+            return;
         }
 
         return $joueur->getId();
@@ -117,7 +117,7 @@ class CaseClass extends Model implements CaseInterface
     {
         $armee = $this->getArmee();
         if (is_null($armee)) {
-            return null;
+            return;
         }
 
         return (int) $armee->getId();
@@ -196,11 +196,11 @@ class CaseClass extends Model implements CaseInterface
     public function setArmee(Armee $armee)
     {
         $this->update([
-            'id_joueur' => $armee->getJoueur()->getId()
+            'id_joueur' => $armee->getJoueur()->getId(),
         ]);
 
         $armee->update([
-            'id_case' => $this->getId()
+            'id_case' => $this->getId(),
         ]);
     }
 
