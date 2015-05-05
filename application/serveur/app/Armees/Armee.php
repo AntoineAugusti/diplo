@@ -32,23 +32,13 @@ class Armee extends Model
     }
 
     /**
-     * Récupère le joueur propriétaire d'une armée.
+     * Définit la relation avec le propriétaire d'une armée.
      *
      * @return BelongsTo
      */
     public function proprietaire()
     {
         return $this->belongsTo(Joueur::class, 'id_joueur', 'id');
-    }
-
-    /**
-     * Récupère la case sur laquelle se trouve une armée.
-     *
-     * @return HasOne
-     */
-    public function caseOccupee()
-    {
-        return $this->hasOne(CaseClass::class, 'id_case', 'id');
     }
 
     /**
@@ -72,7 +62,17 @@ class Armee extends Model
     }
 
     /**
-     * La case occupée par une armée.
+     * Définit la relation avec la case qu'occupe l'armée.
+     *
+     * @return HasOne
+     */
+    public function caseOccupee()
+    {
+        return $this->hasOne(CaseClass::class, 'id_case', 'id');
+    }
+
+    /**
+     * Récupère la case sur laquelle se trouve une armée.
      *
      * @return CaseClass
      */

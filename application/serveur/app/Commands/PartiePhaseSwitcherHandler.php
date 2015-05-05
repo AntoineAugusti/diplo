@@ -57,7 +57,7 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
         if ($phase == 'FIN') {
             $event->fire(new PartieEstTerminee($partie));
 
-            return;
+            return null;
         }
 
         if ($partie->estPremierTour() and $phase == 'DEBUT') {

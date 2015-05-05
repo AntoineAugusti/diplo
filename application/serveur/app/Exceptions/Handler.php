@@ -104,7 +104,7 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 403);
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -123,7 +123,7 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 404);
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -143,7 +143,7 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 400);
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -162,7 +162,7 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 404);
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -181,7 +181,7 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 404);
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -242,6 +242,6 @@ class Handler extends ExceptionHandler
             return Response::json(compact('statut', 'erreur'), 403);
         }
 
-        return;
+        return null;
     }
 }

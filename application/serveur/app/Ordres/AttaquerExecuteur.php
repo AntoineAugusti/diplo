@@ -30,25 +30,23 @@ class AttaquerExecuteur extends OrdreCibleExecuteur
     public function executer(Ordre $ordre, array $autresOrdres)
     {
         // Nécessaire pour avoir l'autocompletion de l'IDE.
-        if (!($ordre instanceof Attaquer)) {
-            return;
-        }
+        if ($ordre instanceof Attaquer) {
+            $caseId = $ordre->getCase()->getId();
 
-        $caseId = $ordre->getCase()->getId();
-
-        // La case n'est occupée par personne, on peut se déplacer immédiatement
-        if (!$ordre->getCase()->est_occupee) {
-            $this->armeeRepository->deplacerArmee($ordre->getArmee(), $caseId);
-        // Regardons si on peut se déplacer sur la case qui est occupée
-        } else {
-            // On compte le nombre de soutiens offensifs et défensifs
-            $nbSoutiensOffensifs = $this->calculerSoutiensOffensifs($caseId, $autresOrdres);
-            $nbSoutiensDefensifs = $this->calculerSoutiensDefensifs($caseId, $autresOrdres);
-
-            // Si il y a eu plus de soutiens offensifs, on peut exécuter l'ordre
-            if ($nbSoutiensOffensifs > $nbSoutiensDefensifs) {
-                $this->deplacerArmeeAleatoirementOuDetruire($ordre->getCase()->getArmee());
+            // La case n'est occupée par personne, on peut se déplacer immédiatement
+            if (!$ordre->getCase()->estOccupee()) {
                 $this->armeeRepository->deplacerArmee($ordre->getArmee(), $caseId);
+                // Regardons si on peut se déplacer sur la case qui est occupée
+            } else {
+                // On compte le nombre de soutiens offensifs et défensifs
+                $nbSoutiensOffensifs = $this->calculerSoutiensOffensifs($caseId, $autresOrdres);
+                $nbSoutiensDefensifs = $this->calculerSoutiensDefensifs($caseId, $autresOrdres);
+
+                // Si il y a eu plus de soutiens offensifs, on peut exécuter l'ordre
+                if ($nbSoutiensOffensifs > $nbSoutiensDefensifs) {
+                    $this->deplacerArmeeAleatoirementOuDetruire($ordre->getCase()->getArmee());
+                    $this->armeeRepository->deplacerArmee($ordre->getArmee(), $caseId);
+                }
             }
         }
     }
@@ -133,7 +131,7 @@ class AttaquerExecuteur extends OrdreCibleExecuteur
 
         // On ne conserve que les cases voisines non occupées
         foreach ($casesVoisines as $caseVoisine) {
-            if (!$caseVoisine->est_occupee) {
+            if (!$caseVoisine->estOccupee()) {
                 $idCasesVoisinesNonOccupees[] = $caseVoisine->getId();
             }
         }

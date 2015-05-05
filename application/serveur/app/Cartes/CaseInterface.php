@@ -48,4 +48,11 @@ interface CaseInterface
      * @return Joueur | null
      */
     public function getJoueur();
+
+    /**
+     * La case est-elle occupée par une armée ?
+     *
+     * @return bool
+     */
+    public function estOccupee();
 }

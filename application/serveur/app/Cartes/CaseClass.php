@@ -223,4 +223,14 @@ class CaseClass extends Model implements CaseInterface
     {
         return $this->belongsTo(Joueur::class, 'id_joueur', 'id');
     }
+
+    /**
+     * La case est-elle occupée par une armée ?
+     *
+     * @return bool
+     */
+    public function estOccupee()
+    {
+        return $this->est_occupee;
+    }
 }
