@@ -3,6 +3,8 @@
 namespace Diplo\Joueurs;
 
 use Diplo\Armees\Armee;
+use Diplo\Cartes\CaseClass;
+use Diplo\Cartes\CaseInterface;
 use Diplo\Messages\Conversation;
 use Diplo\Messages\Message;
 use Diplo\Parties\Partie;
@@ -165,13 +167,32 @@ class Joueur extends Model
     }
 
     /**
+     * Définit la relation avec les cases contrôlées.
+     *
+     * @return HasMany
+     */
+    public function cases()
+    {
+        return $this->hasMany(CaseClass::class, 'id_joueur', 'id');
+    }
+
+    /**
+     * Récupère les cases contrôlées par le joueur.
+     *
+     * @return CaseInterface[]
+     */
+    public function getCases()
+    {
+        return $this->cases;
+    }
+
+    /**
      * Retourne le nombre de cases contrôlées par le joueur.
      *
      * @return int
      */
     public function getCasesControleesAttribute()
     {
-        // TODO
-        return 0;
+        return count($this->getCases());
     }
 }
