@@ -22,6 +22,16 @@ class Armee extends Model
     protected $hidden = ['created_at', 'updated_at'];
 
     /**
+     * Récupère l'ID de l'armée.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;J
+    }
+
+    /**
      * Récupère le joueur propriétaire d'une armée.
      *
      * @return BelongsTo
@@ -42,13 +52,23 @@ class Armee extends Model
     }
 
     /**
-     * Le propriétaire de l'armée.
+     * Récupère le propriétaire de l'armée.
      *
      * @return Joueur
      */
     public function getProprietaire()
     {
         return $this->proprietaire;
+    }
+
+    /**
+     * Récupère le propriétaire de l'armée (alias).
+     *
+     * @return Joueur
+     */
+    public function getJoueur()
+    {
+        return $this->getProprietaire();
     }
 
     /**

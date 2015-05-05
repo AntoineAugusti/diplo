@@ -80,22 +80,22 @@ class CaseClass extends Model implements CaseInterface
      */
     public function getEstLibreAttribute()
     {
-        return is_null($this->joueur());
+        return is_null($this->getJoueur());
     }
 
     /**
      * Retourne l'identifiant du joueur possédant la case ou null si elle n'est pas possédée.
      *
-     * @return int|null
+     * @return int | null
      */
     public function getIdJoueurAttribute()
     {
-        $joueur = $this->joueur();
+        $joueur = $this->getJoueur();
         if (is_null($joueur)) {
-            return;
+            return null;
         }
 
-        return $joueur->id;
+        return $joueur->getId();
     }
 
     /**
@@ -105,7 +105,7 @@ class CaseClass extends Model implements CaseInterface
      */
     public function getEstOccupeeAttribute()
     {
-        return !is_null($this->armee);
+        return !is_null($this->getArmee());
     }
 
     /**
@@ -115,12 +115,12 @@ class CaseClass extends Model implements CaseInterface
      */
     public function getIdArmeeAttribute()
     {
-        $armee = $this->armee;
+        $armee = $this->getArmee();
         if (is_null($armee)) {
-            return;
+            return null;
         }
 
-        return (int) $armee->id;
+        return (int) $armee->getId();
     }
 
     /**
@@ -189,19 +189,38 @@ class CaseClass extends Model implements CaseInterface
     }
 
     /**
+     * Pose une armée sur une case.
+     *
+     * @param Armee $armee
+     */
+    public function setArmee(Armee $armee)
+    {
+        $this->update([
+            'id_joueur' => $armee->getJoueur()->getId()
+        ]);
+
+        $armee->update([
+            'id_case' => $this->getId()
+        ]);
+    }
+
+    /**
      * Récupère le joueur sur la case.
+     *
+     * @return Joueur | null
+     */
+    public function getJoueur()
+    {
+        return $this->joueur;
+    }
+
+    /**
+     * Définit la relation avec le joueur sur la case.
      *
      * @return Joueur
      */
     public function joueur()
     {
-        $armee = $this->armee;
-
-        // La case n'est occupée par aucune armée
-        if (is_null($armee)) {
-            return;
-        }
-
-        return $armee->proprietaire;
+        return $this->belongsTo(Joueur::class, 'id_joueur', 'id');
     }
 }

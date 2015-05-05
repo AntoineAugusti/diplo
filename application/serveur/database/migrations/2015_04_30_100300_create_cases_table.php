@@ -20,6 +20,13 @@ class CreateCasesTable extends Migration {
             	->references('id')
             	->on('cartes')
             	->onDelete('cascade');
+            $table->integer('id_joueur')
+                ->nullable()
+                ->default(null)
+                ->unsigned()
+                ->references('id')
+                ->on('joueurs')
+                ->onDelete('cascade');
             $table->timestamps();
 		});
 	}

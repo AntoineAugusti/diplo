@@ -2,6 +2,7 @@
 
 namespace Diplo\Armees;
 
+use Diplo\Cartes\CaseInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EloquentArmeeRepository implements ArmeeRepository
@@ -23,13 +24,12 @@ class EloquentArmeeRepository implements ArmeeRepository
     /**
      * Déplace une armée sur une case.
      *
-     * @param Armee $armee
-     * @param int   $caseId
+     * @param Armee         $armee
+     * @param CaseInterface $case
      */
-    public function deplacerArmee(Armee $armee, $caseId)
+    public function deplacerArmee(Armee $armee, CaseInterface $case)
     {
-        $armee->id_case = $caseId;
-        $armee->save();
+        $case->setArmee($case);
     }
 
     /**

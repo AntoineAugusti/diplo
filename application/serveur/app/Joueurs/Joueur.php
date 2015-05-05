@@ -3,13 +3,15 @@
 namespace Diplo\Joueurs;
 
 use Diplo\Armees\Armee;
-use Eloquent;
 use Diplo\Messages\Conversation;
 use Diplo\Messages\Message;
 use Diplo\Parties\Partie;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Joueur extends Eloquent
+class Joueur extends Model
 {
     /**
      * Les attributs que l'on peut définir lors de l'appel au constructeur.
@@ -43,9 +45,19 @@ class Joueur extends Eloquent
     ];
 
     /**
-     * Récupère la partie d'un joueur.
+     * Récupère l'ID du joueur.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Définit la relation avec la partie.
+     *
+     * @return BelongsTo
      */
     public function partie()
     {
@@ -53,9 +65,19 @@ class Joueur extends Eloquent
     }
 
     /**
-     * Récupère les conversations d'un joueur.
+     * Récupère la partie du joueur.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * @return Partie
+     */
+    public function getPartie()
+    {
+        return $this->partie;
+    }
+
+    /**
+     * Définit la relation avec les conversations.
+     *
+     * @return BelongsToMany
      */
     public function conversations()
     {
@@ -63,9 +85,19 @@ class Joueur extends Eloquent
     }
 
     /**
-     * Récupère les messages d'un joueur.
+     * Récupère les conversations du joueur.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * @return Conversation[]
+     */
+    public function getConversations()
+    {
+        return $this->conversations;
+    }
+
+    /**
+     * Définit la relation avec les messages.
+     *
+     * @return HasMany
      */
     public function messages()
     {
@@ -73,13 +105,33 @@ class Joueur extends Eloquent
     }
 
     /**
-     * Récupère les armées d'un joueur.
+     * Récupère tous les messages du joueur.
+     *
+     * @return Message[]
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * Définit la relation avec les armées.
      *
      * @return HasMany
      */
     public function armees()
     {
         return $this->hasMany(Armee::class, 'id_joueur', 'id');
+    }
+
+    /**
+     * Récupère les armées du joueur.
+     *
+     * @return Armee[]
+     */
+    public function getArmees()
+    {
+        return $this->armees;
     }
 
     /**
