@@ -2,10 +2,10 @@
 
 namespace Diplo\Messages;
 
-use Eloquent;
 use Diplo\Joueurs\Joueur;
+use Illuminate\Database\Eloquent\Model;
 
-class Message extends Eloquent
+class Message extends Model
 {
     /**
      * Les attributs que l'on peut définir lors de l'appel au constructeur.

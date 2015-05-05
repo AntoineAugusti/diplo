@@ -2,10 +2,10 @@
 
 namespace Diplo\Messages;
 
-use Eloquent;
 use Diplo\Joueurs\Joueur;
+use Illuminate\Database\Eloquent\Model;
 
-class Conversation extends Eloquent
+class Conversation extends Model
 {
     /**
      * Les attributs du modèle qui doivent être castés vers des types.
