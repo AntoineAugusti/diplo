@@ -1,20 +1,7 @@
 <?php
 
 // Accueil
-use Diplo\Cartes\CarteFactory;
-use Diplo\Parties\Partie;
-
 Route::get('/', 'WelcomeController@showWelcome');
-Route::get('/testCreerPartie', function () {
-    $factory = App::make(CarteFactory::class);
-    $factory->creer(Partie::first());
-
-    return 'Done!';
-});
-
-Route::get('/testArmees', function () {
-    return Partie::first()->getArmees()->first()->getOrdre();
-});
 
 // Conversations
 Route::get('conversations/{conversation}', 'ConversationsController@getConversation');
@@ -23,6 +10,7 @@ Route::post('conversations', 'ConversationsController@postConversations');
 Route::post('conversations/{conversation}/messages', 'ConversationsController@postConversationMessages');
 
 // Parties
+Route::get('parties/{partie}/armees', 'PartiesController@getArmees');
 Route::get('parties/{partie}/carte', 'PartiesController@getCarte');
 Route::get('parties/{partie}/joueurs', 'PartiesController@getJoueurs');
 Route::get('parties/{partie}/phase', 'PartiesController@getPhase');
@@ -35,4 +23,19 @@ Route::post('ordres', 'OrdresController@postOrdre');
 // Queues
 Route::post('queue/receive', function () {
     return Queue::marshal();
+});
+
+// Tests
+use Diplo\Cartes\CarteFactory;
+use Diplo\Parties\Partie;
+
+Route::get('/testCreerPartie', function () {
+    $factory = App::make(CarteFactory::class);
+    $factory->creer(Partie::first());
+
+    return 'Done!';
+});
+
+Route::get('/testArmees', function () {
+    return Partie::first()->getArmees()->first()->getOrdre();
 });

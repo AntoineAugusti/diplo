@@ -96,6 +96,21 @@ class PartiesController extends Controller
     }
 
     /**
+     * Affiche les armées d'une partie.
+     *
+     * @param Partie $partie
+     *
+     * @return Response
+     */
+    public function getArmees(Partie $partie)
+    {
+        $armees = $partie->armees;
+        $nb_armees = $armees->count();
+
+        return Response::json(compact('armees', 'nb_armees'), 200);
+    }
+
+    /**
      * Prépare la réponse pour rejoindre une partie.
      *
      * @param Partie $partie

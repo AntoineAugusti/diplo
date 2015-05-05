@@ -26,7 +26,18 @@ class Armee extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at', 'id_partie'];
+
+    /**
+     * Les attributs du modèle qui doivent être castés vers des types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id'        => 'integer',
+        'id_case'   => 'integer',
+        'id_joueur' => 'integer',
+    ];
 
     /**
      * Récupère l'ID de l'armée.
