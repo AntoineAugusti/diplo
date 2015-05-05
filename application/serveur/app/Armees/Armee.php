@@ -15,6 +15,13 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 class Armee extends Model
 {
     /**
+     * Les attributs que l'on peut définir lors de l'appel au constructeur.
+     *
+     * @var array
+     */
+    protected $fillable = ['id_case'];
+
+    /**
      * Les attributs cachés lors de la conversion en array ou JSON.
      *
      * @var array
