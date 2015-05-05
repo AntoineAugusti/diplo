@@ -6,5 +6,5 @@ App::bind('foo', function($app)
     return new FooBar;
 });
 
-// $value sera un objet de type Foo
+// $value sera un objet de type FooBar
 $value = App::make('foo');

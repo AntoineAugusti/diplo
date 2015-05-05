@@ -2,10 +2,11 @@
 
 namespace Diplo\Http\Controllers;
 
-use Input;
-use Response;
+use Diplo\Joueurs\Joueur;
 use Diplo\Messages\Conversation;
 use Diplo\Messages\ConversationsRepository;
+use Illuminate\Http\Request;
+use Response;
 
 class ConversationsController extends Controller
 {
@@ -24,6 +25,8 @@ class ConversationsController extends Controller
     /**
      * Créer une conversation entre joueurs.
      *
+     * @param Request $request La requête HTTP
+     *
      * @throws PasAssezDeJoueursException            Une conversation doit être créée au moins entre 2 joueurs
      * @throws JoueurInexistantConversationException Un des joueurs n'existe pas
      * @throws ConversationExistanteException        Une conversation entre ces joueurs existait déjà
@@ -31,17 +34,16 @@ class ConversationsController extends Controller
      *
      * @return Response
      */
-    public function postConversations()
+    public function postConversations(Request $request)
     {
         // Récupération des données
-        $joueurs = json_decode(Input::get('joueurs'), true);
+        $joueurs = $request->json('joueurs');
 
         // On s'assure d'avoir un tableau
         if (empty($joueurs)) {
             $joueurs = [];
         }
 
-        // Délégation au repository
         $conversation = $this->conversationsRepo->creerConversation($joueurs);
 
         // Préparation des valeurs de retour
