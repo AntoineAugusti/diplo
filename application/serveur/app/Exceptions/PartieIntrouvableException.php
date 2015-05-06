@@ -2,6 +2,6 @@
 
 namespace Diplo\Exceptions;
 
-class PartieIntrouvableException extends DiploException
+class PartieIntrouvableException extends PartieException
 {
 }

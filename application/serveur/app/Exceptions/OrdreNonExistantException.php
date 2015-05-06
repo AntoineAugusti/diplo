@@ -2,6 +2,6 @@
 
 namespace Diplo\Exceptions;
 
-class OrdreNonExistantException extends DiploException
+class OrdreNonExistantException extends OrdreException
 {
 }

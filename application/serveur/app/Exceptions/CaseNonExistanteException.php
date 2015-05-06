@@ -2,6 +2,6 @@
 
 namespace Diplo\Exceptions;
 
-class CaseNonExistanteException extends DiploException
+class CaseNonExistanteException extends CaseException
 {
 }

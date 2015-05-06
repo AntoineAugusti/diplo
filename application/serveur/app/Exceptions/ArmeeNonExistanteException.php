@@ -2,6 +2,6 @@
 
 namespace Diplo\Exceptions;
 
-class ArmeeNonExistanteException extends DiploException
+class ArmeeNonExistanteException extends ArmeeException
 {
 }

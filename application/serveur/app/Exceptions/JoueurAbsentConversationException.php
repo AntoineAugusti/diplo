@@ -2,6 +2,6 @@
 
 namespace Diplo\Exceptions;
 
-class JoueurAbsentConversationException extends DiploException
+class JoueurAbsentConversationException extends JoueurException
 {
 }

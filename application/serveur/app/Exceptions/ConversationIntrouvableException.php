@@ -2,6 +2,6 @@
 
 namespace Diplo\Exceptions;
 
-class ConversationIntrouvableException extends DiploException
+class ConversationIntrouvableException extends ConversationException
 {
 }

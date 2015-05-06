@@ -2,6 +2,6 @@
 
 namespace Diplo\Exceptions;
 
-class PartieNonEnJeuException extends DiploException
+class PartieNonEnJeuException extends PartieException
 {
 }

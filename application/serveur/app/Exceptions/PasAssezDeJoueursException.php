@@ -2,6 +2,6 @@
 
 namespace Diplo\Exceptions;
 
-class PasAssezDeJoueursException extends DiploException
+class PasAssezDeJoueursException extends PartieException
 {
 }
