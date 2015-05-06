@@ -7,7 +7,16 @@
 		Nous avons réussi à récupérer gratuitement le domaine \texttt{diplo-lejeu.fr} grâce à une offre de Gandi (\url{https://www.gandi.net}). Nous avons acheté également un VPS Sandbox chez RunAbove (\url{https://www.runabove.com/instances/sandbox.xml}), filiale du groupe OVH, ayant 2 GB de RAM, 1 processeur et 20 GB de SSD.
 
 	\subsection{Certificat HTTPS}
-		Nous utilisons CloudFlare (\url{https://www.cloudflare.com}) pour gérer nos DNS et proposer un certificat HTTPS valide gratuitement, sur tous nos sous-domaines. Le trafic est chiffré entre le client et un des serveurs de CloudFlare en utilisant un certificat émis par Comodo, puis est chiffré à l'aide d'un certificat auto signé généré par nous-même entre CloudFlare et notre serveur RunAbove se trouvant à Roubaix en France.
+		Nous utilisons CloudFlare (\url{https://www.cloudflare.com}) pour gérer nos DNS et proposer un certificat HTTPS valide gratuitement, sur tous nos sous-domaines. Le trafic est chiffré entre le client et un des serveurs de CloudFlare en utilisant un certificat émis par Comodo, puis est chiffré à l'aide d'un certificat auto signé généré par nous-même entre CloudFlare et notre serveur RunAbove se trouvant à Roubaix en France.\\
+
+		Un rapport de la qualité de notre configuration est montré dans la figure~\ref{fig:qualite-ssl}.
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1\textwidth]{images/qualite-ssl.png}
+			\caption{Rapport de qualité de notre certificat SSL et de la configuration du serveur web pour l'API. Test disponible sur \url{https://www.ssllabs.com/ssltest/analyze.html?d=api.diplo-lejeu.fr}}
+			\label{fig:qualite-ssl}
+		\end{figure}
 
 	\subsection{Documentation de l'API REST}
 		\subsubsection{Écriture en Markdown}
