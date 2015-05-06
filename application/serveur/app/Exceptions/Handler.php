@@ -13,27 +13,18 @@ class Handler extends ExceptionHandler
     use NextHandlerTrait;
 
     /**
-     * A list of the exception types that should not be reported.
+     * Une liste des exceptions qui ne doivent pas être loggés.
      *
      * @var string[]
      */
     protected $dontReport = [
+        'Diplo\Exceptions\ArmeeException',
+        'Diplo\Exceptions\CaseException',
+        'Diplo\Exceptions\ConversationException',
+        'Diplo\Exceptions\JoueurException',
+        'Diplo\Exceptions\OrdreException',
+        'Diplo\Exceptions\PartieException',
         'Symfony\Component\HttpKernel\Exception\HttpException',
-        'Diplo\Exceptions\ArmeeNonExistanteException',
-        'Diplo\Exceptions\CaseNonExistanteException',
-        'Diplo\Exceptions\ConversationExistanteException',
-        'Diplo\Exceptions\ConversationIntrouvableException',
-        'Diplo\Exceptions\JoueurAbsentConversationException',
-        'Diplo\Exceptions\JoueurDupliqueException',
-        'Diplo\Exceptions\JoueurInexistantConversationException',
-        'Diplo\Exceptions\JoueurInexistantException',
-        'Diplo\Exceptions\OrdreNonExistantException',
-        'Diplo\Exceptions\PartieEnPhasedeCombatException',
-        'Diplo\Exceptions\PartieIntrouvableException',
-        'Diplo\Exceptions\PartieNonEnJeuException',
-        'Diplo\Exceptions\PartiePleineException',
-        'Diplo\Exceptions\PartiesDifferentesException',
-        'Diplo\Exceptions\PasAssezDeJoueursException',
     ];
 
     /**
@@ -41,7 +32,7 @@ class Handler extends ExceptionHandler
      */
     protected $application;
 
-    function __construct(LoggerInterface $loggerInterface, Application $application)
+    public function __construct(LoggerInterface $loggerInterface, Application $application)
     {
         $this->application = $application;
 
@@ -64,9 +55,9 @@ class Handler extends ExceptionHandler
 
         if (is_null($response)) {
             return parent::render($request, $exception);
-        } else {
-            return $response;
         }
+
+        return $response;
     }
 
     /**
@@ -80,14 +71,15 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Récupère un tableau des handlers
+     * Récupère un tableau des handlers.
      *
      * @param string[] $moduleNames
+     *
      * @return ExceptionHandlerInterface[]
      */
     public function getHandlers(array $moduleNames)
     {
-        return array_map(function($moduleName) {
+        return array_map(function ($moduleName) {
             return $this->getHandler($moduleName);
         }, $moduleNames);
     }
@@ -96,11 +88,13 @@ class Handler extends ExceptionHandler
      * Récupère l'objet en charge de la gestion des exceptions pour un module.
      *
      * @param string $moduleName
+     *
      * @return ExceptionHandlerInterface
      */
     protected function getHandler($moduleName)
     {
-        $handler = '\\Diplo\\Exceptions\\' . ucfirst($moduleName) . 'ExceptionHandler';
+        $handler = '\\Diplo\\Exceptions\\'.ucfirst($moduleName).'ExceptionHandler';
+
         return $this->application->make($handler);
     }
 }

@@ -1,4 +1,6 @@
-<?php namespace Diplo\Exceptions;
+<?php
+
+namespace Diplo\Exceptions;
 
 use Diplo\Ordres\Attaquer;
 use Exception;
@@ -8,6 +10,7 @@ use Illuminate\Http\Response;
 class OrdreExceptionHandler implements ExceptionHandlerInterface
 {
     use NextHandlerTrait;
+
     /**
      * @var ResponseFactory
      */
@@ -16,7 +19,7 @@ class OrdreExceptionHandler implements ExceptionHandlerInterface
     /**
      * @param ResponseFactory $responseFactory
      */
-    function __construct(ResponseFactory $responseFactory)
+    public function __construct(ResponseFactory $responseFactory)
     {
         $this->responseFactory = $responseFactory;
     }
@@ -24,11 +27,12 @@ class OrdreExceptionHandler implements ExceptionHandlerInterface
     /**
      * Gère l'exception passée si possible, sinon fait suivre le traitement.
      *
-     * @param Exception $exception
+     * @param Exception                   $exception
      * @param ExceptionHandlerInterface[] $nextHandlers
+     *
      * @return Response|null
      */
-    public function handle(Exception $exception, array $nextHandlers = [])
+    public function handle(Exception $exception, array $nextHandlers = array())
     {
         if ($exception instanceof OrdreNonExistantException) {
             $statut = 'ordre_inconnu';

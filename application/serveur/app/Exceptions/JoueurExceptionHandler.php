@@ -1,4 +1,6 @@
-<?php namespace Diplo\Exceptions;
+<?php
+
+namespace Diplo\Exceptions;
 
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -16,7 +18,7 @@ class JoueurExceptionHandler implements ExceptionHandlerInterface
     /**
      * @param ResponseFactory $responseFactory
      */
-    function __construct(ResponseFactory $responseFactory)
+    public function __construct(ResponseFactory $responseFactory)
     {
         $this->responseFactory = $responseFactory;
     }
@@ -24,11 +26,12 @@ class JoueurExceptionHandler implements ExceptionHandlerInterface
     /**
      * Gère l'exception passée si possible, sinon fait suivre le traitement.
      *
-     * @param Exception $exception
+     * @param Exception                   $exception
      * @param ExceptionHandlerInterface[] $nextHandlers
+     *
      * @return Response|null
      */
-    public function handle(Exception $exception, array $nextHandlers = [])
+    public function handle(Exception $exception, array $nextHandlers = array())
     {
         if ($exception instanceof JoueurInexistantException) {
             $statut = 'joueur_inexistant';
