@@ -31,7 +31,7 @@ class ArmeeExceptionHandler implements ExceptionHandlerInterface
      *
      * @return Response|null
      */
-    public function handle(Exception $exception, array $nextHandlers = array())
+    public function handle(Exception $exception, array $nextHandlers = [])
     {
         if ($exception instanceof ArmeeNonExistanteException) {
             $statut = 'armee_non_trouvee';

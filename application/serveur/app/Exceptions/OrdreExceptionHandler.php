@@ -32,7 +32,7 @@ class OrdreExceptionHandler implements ExceptionHandlerInterface
      *
      * @return Response|null
      */
-    public function handle(Exception $exception, array $nextHandlers = array())
+    public function handle(Exception $exception, array $nextHandlers = [])
     {
         if ($exception instanceof OrdreNonExistantException) {
             $statut = 'ordre_inconnu';

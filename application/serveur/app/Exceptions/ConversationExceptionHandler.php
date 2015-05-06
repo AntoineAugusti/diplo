@@ -31,7 +31,7 @@ class ConversationExceptionHandler implements ExceptionHandlerInterface
      *
      * @return Response|null
      */
-    public function handle(Exception $exception, array $nextHandlers = array())
+    public function handle(Exception $exception, array $nextHandlers = [])
     {
         if ($exception instanceof ConversationExistanteException) {
             $statut = 'conversation_existante';

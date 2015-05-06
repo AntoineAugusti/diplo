@@ -31,7 +31,7 @@ class PartieExceptionHandler implements ExceptionHandlerInterface
      *
      * @return Response|null
      */
-    public function handle(Exception $exception, array $nextHandlers = array())
+    public function handle(Exception $exception, array $nextHandlers = [])
     {
         if ($exception instanceof PartieIntrouvableException) {
             $statut = 'non_trouve';

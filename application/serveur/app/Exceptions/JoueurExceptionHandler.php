@@ -31,7 +31,7 @@ class JoueurExceptionHandler implements ExceptionHandlerInterface
      *
      * @return Response|null
      */
-    public function handle(Exception $exception, array $nextHandlers = array())
+    public function handle(Exception $exception, array $nextHandlers = [])
     {
         if ($exception instanceof JoueurInexistantException) {
             $statut = 'joueur_inexistant';

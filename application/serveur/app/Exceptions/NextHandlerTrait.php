@@ -15,7 +15,7 @@ trait NextHandlerTrait
      *
      * @return Response|null
      */
-    protected function next(Exception $exception, array $handlers = array())
+    protected function next(Exception $exception, array $handlers = [])
     {
         // S'il n'y a plus aucun handler, on s'arrête là
         if (empty($handlers)) {
