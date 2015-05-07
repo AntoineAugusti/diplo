@@ -1,2 +1,9 @@
 \section{Partie Serveur}
 \section{Partie Client}
+	\subsubsection{Affichage Carte}
+	\subsubsection{HTTPS}
+		Lors du développement des fonctions de requêtage HTTP nous avons été confronté à des erreurs 403 de la part du serveur web nginx distant. Le serveur refusait la connexion 
+		en raison d'une requête HTTPS invalide selon lui. En effet, il lui manquait le user-agent, nous avons donc rajouté cette ligne dans nos méthodes :
+			\begin{listing}[H]
+				\inputminted[fontsize=\scriptsize]{java}{code/user-agent.java}
+			\end{listing}
