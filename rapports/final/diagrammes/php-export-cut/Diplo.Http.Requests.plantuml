@@ -1,0 +1,11 @@
+@startuml
+abstract class Diplo.Http.Requests.Request {
+}
+class Diplo.Http.Requests.Request extends Illuminate.Foundation.Http.FormRequest
+
+class Diplo.Http.Kernel {
+    #middleware : array = ["Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode", "Illuminate\Cookie\Middleware\EncryptCookies", "Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse", "Illuminate\Session\Middleware\StartSession", "Illuminate\View\Middleware\ShareErrorsFromSession"]
+    #routeMiddleware : array = ["Diplo\Http\Middleware\Authenticate", "Illuminate\Auth\Middleware\AuthenticateWithBasicAuth", "Diplo\Http\Middleware\RedirectIfAuthenticated"]
+}
+class Diplo.Http.Kernel extends Illuminate.Foundation.Http.Kernel
+@enduml

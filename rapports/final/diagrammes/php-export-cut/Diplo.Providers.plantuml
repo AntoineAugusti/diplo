@@ -1,0 +1,27 @@
+@startuml
+class Diplo.Providers.RouteServiceProvider {
+    #namespace : string = "Diplo\Http\Controllers"
+    +boot(router : Illuminate.Routing.Router)
+    +map(router : Illuminate.Routing.Router)
+}
+class Diplo.Providers.RouteServiceProvider extends Illuminate.Foundation.Support.Providers.RouteServiceProvider
+class Diplo.Providers.AppServiceProvider {
+    +boot()
+    +register()
+}
+class Diplo.Providers.AppServiceProvider extends Illuminate.Support.ServiceProvider
+class Diplo.Providers.BusServiceProvider {
+    +boot(dispatcher : Illuminate.Bus.Dispatcher)
+    +register()
+}
+class Diplo.Providers.BusServiceProvider extends Illuminate.Support.ServiceProvider
+class Diplo.Providers.ConfigServiceProvider {
+    +register()
+}
+class Diplo.Providers.ConfigServiceProvider extends Illuminate.Support.ServiceProvider
+class Diplo.Providers.EventServiceProvider {
+    #listen : array = false
+    +boot(events : Illuminate.Contracts.Events.Dispatcher)
+}
+class Diplo.Providers.EventServiceProvider extends Illuminate.Foundation.Support.Providers.EventServiceProvider
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+class Diplo.Armees.Armee {
+    #casts : array = ["integer", "integer", "integer"]
+    #fillable : array = ["id_case"]
+    #hidden : array = ["created_at", "updated_at", "id_partie"]
+    +caseOccupee() : Illuminate.Database.Eloquent.Relations.HasOne
+    +getCase() : Diplo.Cartes.CaseClass
+    +getId() : int
+    +getJoueur() : Diplo.Joueurs.Joueur
+    +getOrdre() : Diplo.Ordres.OrdreModel
+    +getOrdres() : OrdreModel[]
+    +getProprietaire() : Diplo.Joueurs.Joueur
+    +ordre() : Illuminate.Database.Eloquent.Relations.HasOne
+    +ordres() : Illuminate.Database.Eloquent.Relations.HasMany
+    +proprietaire() : Illuminate.Database.Eloquent.Relations.BelongsTo
+}
+class Diplo.Armees.Armee extends Illuminate.Database.Eloquent.Model
+class Diplo.Armees.EloquentArmeeRepository {
+    +deplacerArmee(armee : Diplo.Armees.Armee, case : Diplo.Cartes.CaseInterface)
+    +detruireArmee(armee : Diplo.Armees.Armee)
+    +trouverParId(id : int) : Armee
+}
+class Diplo.Armees.EloquentArmeeRepository implements Diplo.Armees.ArmeeRepository
+interface Diplo.Armees.ArmeeRepository {
+    +deplacerArmee(armee : Diplo.Armees.Armee, case : Diplo.Cartes.CaseInterface)
+    +detruireArmee(armee : Diplo.Armees.Armee)
+    +trouverParId(id : int) : Armee
+}
+@enduml

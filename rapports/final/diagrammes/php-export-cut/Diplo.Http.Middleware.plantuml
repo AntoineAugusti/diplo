@@ -1,0 +1,11 @@
+@startuml
+class Diplo.Http.Middleware.Authenticate {
+    #auth : Illuminate.Contracts.Auth.Guard
+    +handle(request : Illuminate.Http.Request, next : Closure) : mixed
+    +__construct(auth : Illuminate.Contracts.Auth.Guard)
+}
+class Diplo.Http.Middleware.VerifyCsrfToken {
+    +handle(request : Illuminate.Http.Request, next : Closure) : mixed
+}
+class Diplo.Http.Middleware.VerifyCsrfToken extends Illuminate.Foundation.Http.Middleware.VerifyCsrfToken
+@enduml

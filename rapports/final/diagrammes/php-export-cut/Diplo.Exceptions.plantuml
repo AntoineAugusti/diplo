@@ -1,0 +1,120 @@
+@startuml
+class Diplo.Exceptions.JoueurDupliqueException {
+}
+class Diplo.Exceptions.JoueurDupliqueException extends Diplo.Exceptions.JoueurException
+class Diplo.Exceptions.CaseExceptionHandler {
+    -responseFactory : Illuminate.Contracts.Routing.ResponseFactory
+    +handle(exception : Exception, nextHandlers : ExceptionHandlerInterface[] = []) : Response|null
+    +__construct(responseFactory : Illuminate.Contracts.Routing.ResponseFactory)
+}
+class Diplo.Exceptions.CaseExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+class Diplo.Exceptions.PartieEnPhasedeCombatException {
+}
+class Diplo.Exceptions.PartieEnPhasedeCombatException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.PartiesDifferentesException {
+}
+class Diplo.Exceptions.PartiesDifferentesException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.PartieException {
+}
+class Diplo.Exceptions.PartieException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.PasAssezDeJoueursException {
+}
+class Diplo.Exceptions.PasAssezDeJoueursException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.ArmeeExceptionHandler {
+    -responseFactory : Illuminate.Routing.ResponseFactory
+    +handle(exception : Exception, nextHandlers : ExceptionHandlerInterface[] = []) : Response|null
+    +__construct(responseFactory : Illuminate.Routing.ResponseFactory)
+}
+class Diplo.Exceptions.ArmeeExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+class Diplo.Exceptions.CaseNonExistanteException {
+}
+class Diplo.Exceptions.CaseNonExistanteException extends Diplo.Exceptions.CaseException
+class Diplo.Exceptions.Handler {
+    #application : Illuminate.Contracts.Foundation.Application
+    #dontReport : string[] = ["Diplo\Exceptions\ArmeeException", "Diplo\Exceptions\CaseException", "Diplo\Exceptions\ConversationException", "Diplo\Exceptions\JoueurException", "Diplo\Exceptions\OrdreException", "Diplo\Exceptions\PartieException", "Symfony\Component\HttpKernel\Exception\HttpException"]
+    #getHandler(moduleName : string) : ExceptionHandlerInterface
+    +getHandlers(moduleNames : string[]) : ExceptionHandlerInterface[]
+    #getModules() : string[]
+    +render(request : Illuminate.Http.Request, exception : Exception) : Illuminate.Http.Response
+    +__construct(loggerInterface : Psr.Log.LoggerInterface, application : Illuminate.Contracts.Foundation.Application)
+}
+class Diplo.Exceptions.Handler extends Bugsnag.BugsnagLaravel.BugsnagExceptionHandler
+abstract class Diplo.Exceptions.NextHandlerTrait {
+    #next(exception : Exception, handlers : ExceptionHandlerInterface[] = []) : Response|null
+}
+class Diplo.Exceptions.JoueurAbsentConversationException {
+}
+class Diplo.Exceptions.JoueurAbsentConversationException extends Diplo.Exceptions.JoueurException
+class Diplo.Exceptions.DiploException {
+}
+class Diplo.Exceptions.DiploException extends Exception
+class Diplo.Exceptions.JoueurInexistantConversationException {
+}
+class Diplo.Exceptions.JoueurInexistantConversationException extends Diplo.Exceptions.JoueurException
+class Diplo.Exceptions.ConversationIntrouvableException {
+}
+class Diplo.Exceptions.ConversationIntrouvableException extends Diplo.Exceptions.ConversationException
+class Diplo.Exceptions.JoueurException {
+}
+class Diplo.Exceptions.JoueurException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.ArmeeNonExistanteException {
+}
+class Diplo.Exceptions.ArmeeNonExistanteException extends Diplo.Exceptions.ArmeeException
+class Diplo.Exceptions.PartiePleineException {
+}
+class Diplo.Exceptions.PartiePleineException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.ArmeeException {
+}
+class Diplo.Exceptions.ArmeeException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.PartieNonEnJeuException {
+}
+class Diplo.Exceptions.PartieNonEnJeuException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.PartieExceptionHandler {
+    #responseFactory : Illuminate.Contracts.Routing.ResponseFactory
+    +handle(exception : Exception, nextHandlers : ExceptionHandlerInterface[] = []) : Response|null
+    +__construct(responseFactory : Illuminate.Contracts.Routing.ResponseFactory)
+}
+class Diplo.Exceptions.PartieExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+interface Diplo.Exceptions.ExceptionHandlerInterface {
+    +handle(exception : Exception, nextHandlers : ExceptionHandlerInterface[] = []) : Response|null
+}
+class Diplo.Exceptions.PartieIntrouvableException {
+}
+class Diplo.Exceptions.PartieIntrouvableException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.OrdreException {
+}
+class Diplo.Exceptions.OrdreException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.JoueurInexistantException {
+}
+class Diplo.Exceptions.JoueurInexistantException extends Diplo.Exceptions.JoueurException
+class Diplo.Exceptions.ConversationExistanteException {
+}
+class Diplo.Exceptions.ConversationExistanteException extends Diplo.Exceptions.ConversationException
+class Diplo.Exceptions.OrdreExceptionHandler {
+    -responseFactory : Illuminate.Contracts.Routing.ResponseFactory
+    +handle(exception : Exception, nextHandlers : ExceptionHandlerInterface[] = []) : Response|null
+    +__construct(responseFactory : Illuminate.Contracts.Routing.ResponseFactory)
+}
+class Diplo.Exceptions.OrdreExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+class Diplo.Exceptions.ConversationException {
+}
+class Diplo.Exceptions.ConversationException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.JoueurExceptionHandler {
+    -responseFactory : Illuminate.Contracts.Routing.ResponseFactory
+    +handle(exception : Exception, nextHandlers : ExceptionHandlerInterface[] = []) : Response|null
+    +__construct(responseFactory : Illuminate.Contracts.Routing.ResponseFactory)
+}
+class Diplo.Exceptions.JoueurExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+class Diplo.Exceptions.ConversationExceptionHandler {
+    -responseFactory : Illuminate.Contracts.Routing.ResponseFactory
+    +handle(exception : Exception, nextHandlers : ExceptionHandlerInterface[] = []) : Response|null
+    +__construct(responseFactory : Illuminate.Contracts.Routing.ResponseFactory)
+}
+class Diplo.Exceptions.ConversationExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+class Diplo.Exceptions.CaseException {
+}
+class Diplo.Exceptions.CaseException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.OrdreNonExistantException {
+}
+class Diplo.Exceptions.OrdreNonExistantException extends Diplo.Exceptions.OrdreException
+@enduml

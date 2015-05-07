@@ -1,0 +1,7 @@
+@startuml
+class Diplo.Console.Kernel {
+    #commands : array = []
+    #schedule(schedule : Illuminate.Console.Scheduling.Schedule)
+}
+class Diplo.Console.Kernel extends Illuminate.Foundation.Console.Kernel
+@enduml

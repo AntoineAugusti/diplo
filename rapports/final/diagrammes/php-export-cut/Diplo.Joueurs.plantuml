@@ -1,0 +1,43 @@
+@startuml
+class Diplo.Joueurs.EloquentJoueursRepository {
+    +trouverParId(id : int) : Joueur
+    +trouverParIds(ids : array) : Illuminate.Database.Eloquent.Collection
+}
+class Diplo.Joueurs.EloquentJoueursRepository implements Diplo.Joueurs.JoueursRepository
+interface Diplo.Joueurs.JoueursRepository {
+    +trouverParId(id : int) : Joueur
+    +trouverParIds(ids : array) : Illuminate.Database.Eloquent.Collection
+}
+class Diplo.Joueurs.Joueur {
+    #appends : array = ["armees_restantes", "cases_controlees"]
+    #casts : array = ["integer", "integer"]
+    #fillable : array = ["pseudo", "pays"]
+    #hidden : array = ["created_at", "updated_at"]
+    +armees() : Illuminate.Database.Eloquent.Relations.HasMany
+    +cases() : Illuminate.Database.Eloquent.Relations.HasMany
+    +conversations() : Illuminate.Database.Eloquent.Relations.BelongsToMany
+    +getArmees() : Armee[]
+    +getArmeesRestantesAttribute() : int
+    +getCases() : CaseInterface[]
+    +getCasesControleesAttribute() : int
+    +getConversations() : Conversation[]
+    +getId() : int
+    +getMessages() : Message[]
+    +getPartie() : Diplo.Parties.Partie
+    +getPays() : string
+    +getPseudo() : string
+    +messages() : Illuminate.Database.Eloquent.Relations.HasMany
+    +partie() : Illuminate.Database.Eloquent.Relations.BelongsTo
+}
+class Diplo.Joueurs.Joueur extends Illuminate.Database.Eloquent.Model
+interface Diplo.Joueurs.JoueurGeneratorInterface {
+    +generate(idDansPartie : int) : Joueur
+}
+class Diplo.Joueurs.JoueurGenerator {
+    +generate(idDansPartie : int) : Joueur
+    -genererPays(index : int) : string
+    -genererPseudo(index : int) : string
+    -idToIndex(id : int) : int
+}
+class Diplo.Joueurs.JoueurGenerator implements Diplo.Joueurs.JoueurGeneratorInterface
+@enduml

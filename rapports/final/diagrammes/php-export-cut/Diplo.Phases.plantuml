@@ -1,0 +1,6 @@
+@startuml
+interface Diplo.Phases.PhaseInterface {
+    +estCombat() : bool
+    +estNegociation() : bool
+}
+@enduml

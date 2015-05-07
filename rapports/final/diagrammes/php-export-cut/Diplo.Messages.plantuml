@@ -1,0 +1,36 @@
+@startuml
+interface Diplo.Messages.ConversationsRepository {
+    +creerConversation(idsJoueurs : array) : Conversation
+    +posterMessage(conversation : Diplo.Messages.Conversation, idJoueur : int, texte : string) : Message
+    +trouverParId(id : int) : Conversation
+}
+class Diplo.Messages.Message {
+    #casts : array = ["integer", "integer", "integer"]
+    #fillable : array = ["id_joueur", "texte", "id_conversation"]
+    #hidden : array = ["id_conversation", "updated_at"]
+    +conversation() : Illuminate.Database.Eloquent.Relations.Relation
+    +joueur() : Illuminate.Database.Eloquent.Relations.Relation
+}
+class Diplo.Messages.Message extends Illuminate.Database.Eloquent.Model
+class Diplo.Messages.Conversation {
+    #casts : array = ["integer"]
+    +joueurs() : Illuminate.Database.Eloquent.Relations.Relation
+    +joueursIds() : array
+    +messages() : Illuminate.Database.Eloquent.Relations.Relation
+}
+class Diplo.Messages.Conversation extends Illuminate.Database.Eloquent.Model
+class Diplo.Messages.EloquentConversationsRepository {
+    -joueursRepo : Diplo.Joueurs.JoueursRepository
+    -conversationEntreJoueursExiste(joueurs : Collection) : bool
+    +creerConversation(idsJoueurs : array) : Conversation
+    -joueurAbsentConversation(c : Diplo.Messages.Conversation, idJoueur : int) : bool
+    -partiesSontLesMemes(joueurs : Illuminate.Database.Eloquent.Collection) : bool
+    +posterMessage(conversation : Diplo.Messages.Conversation, idJoueur : int, texte : string) : Message
+    -recupererJoueurs(idsJoueurs : array) : Illuminate.Database.Eloquent.Collection
+    -tableauPossedeDoublons(a : array) : bool
+    +trouverParId(id : int) : Conversation
+    -verifiePossibiliteCreerConversation(idsJoueurs : array) : Illuminate.Database.Eloquent.Collection
+    +__construct(joueursRepo : Diplo.Joueurs.JoueursRepository)
+}
+class Diplo.Messages.EloquentConversationsRepository implements Diplo.Messages.ConversationsRepository
+@enduml

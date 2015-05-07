@@ -1,0 +1,14 @@
+@startuml
+abstract class Diplo.Commands.Command {
+}
+class Diplo.Commands.PartiePhaseSwitcherHandler {
+    -partie : Diplo.Parties.Partie
+    -phase : string
+    -datePourPhase(phase : string) : Carbon.Carbon
+    +handle(queue : Illuminate.Queue.QueueManager, event : Illuminate.Events.Dispatcher)
+    -prochainePhase(partie : Diplo.Parties.Partie) : string
+    +__construct(partie : Diplo.Parties.Partie, phase : string)
+}
+class Diplo.Commands.PartiePhaseSwitcherHandler extends Diplo.Commands.Command
+class Diplo.Commands.PartiePhaseSwitcherHandler implements Illuminate.Contracts.Bus.SelfHandling
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+class Diplo.Events.PartieChangeDePhase {
+    +partie : Diplo.Parties.Partie
+    +phase : string
+    +__construct(partie : Diplo.Parties.Partie, phase : string)
+}
+class Diplo.Events.PartieChangeDePhase extends Diplo.Events.Event
+abstract class Diplo.Events.Event {
+}
+class Diplo.Events.PartieEstTerminee {
+    +partie : Diplo.Parties.Partie
+    +__construct(partie : Diplo.Parties.Partie)
+}
+class Diplo.Events.PartieEstTerminee extends Diplo.Events.Event
+class Diplo.Events.PartieChangeDeTour {
+    +partie : Diplo.Parties.Partie
+    +tour : string
+    +__construct(partie : Diplo.Parties.Partie, tour : int)
+}
+class Diplo.Events.PartieChangeDeTour extends Diplo.Events.Event
+class Diplo.Events.PartiePreteACommencer {
+    +partie : Diplo.Parties.Partie
+    +__construct(partie : Diplo.Parties.Partie)
+}
+class Diplo.Events.PartiePreteACommencer extends Diplo.Events.Event
+@enduml
