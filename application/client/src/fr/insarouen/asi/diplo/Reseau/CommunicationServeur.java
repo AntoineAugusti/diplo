@@ -268,7 +268,7 @@ public class CommunicationServeur{
 		JSONArray armees = file.getJSONArray("armees");
 		ArrayList<Armee> resultat = new ArrayList<Armee>();
 		for(int i=0; i < armees.length();i++){
-			resultat.add(new Armee(armees.getJSONObject(i).getInt("id_armee"),armees.getJSONObject(i).getInt("id_joueur"),armees.getJSONObject(i).getInt("id_case_courante")));
+			resultat.add(new Armee(armees.getJSONObject(i).getInt("id"),armees.getJSONObject(i).getInt("id_joueur"),armees.getJSONObject(i).getInt("id_case")));
 		}
 		return resultat;
 	}
