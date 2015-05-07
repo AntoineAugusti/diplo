@@ -7,28 +7,28 @@
 
 		\paragraph{Sécurité par l'IP} % (fold)
 		\label{par:securite_par_l_ip}
-		
+
 			Une solution très basique et très rapide à mettre en place serait de sauvegarder l'adresse IP du client créant un joueur et de n'autoriser que cette adresse IP à envoyer des ordres aux armées du joueur ou accèder à ses conversations. L'avantage de cette solution est qu'elle ne nécessite aucune modification au niveau du client car l'adresse IP est un identifiant unique géré de façon transparente par le réseau. Le désavantage est le problème du NAT (plusieurs clients avec des adresses IP privées derrière une adresse IP publique), il serait donc impossible de jouer en famille derrière une \enquote{box} par exemple. Cette solution n'est donc pas optimale.
 
 		% paragraph securite_par_l_ip (end)
 
 		\paragraph{Session} % (fold)
 		\label{par:session}
-		
+
 			PHP gère nativement les \texttt{SESSION}. À chaque connexion d'un utilisateur, le serveur va lui attribuer un identifiant de session choisi aléatoirement. Pendant tout le déroulement d'une partie, le serveur va pouvoir enregistrer des informations associées à cet identifiant et y accèder facilement. Le client va envoyer dans les en-tête HTTP son identifiant de session à chaque requête afin d'être identifié. L'avantage de cette solution est la possibilité d'avoir plusieurs joueurs avec la même adresse IP ainsi qu'une relative simplicité. Les sessions sont gérées nativement pas les navigateur web mais nécessite quelques modifications au niveau d'autres types de clients. Le principal désavantage des sessions est leur aspect temporaire, en effet, une session (tout comme les cookies en web par exemple) ont une date d'expiration. Même si cette dernière peut-être allongée, une session sera automatiquement terminée à la fermeture du navigateur par exemple.
 
-		% paragraph session (end) 
+		% paragraph session (end)
 
 		\paragraph{Jeton d'authentification} % (fold)
 		\label{par:jeton_d_authentification}
-		
+
 			Le jeton d'authentification fonctionne de la même manière que les sessions. Il est cependant géré par l'application et non par le langage. Lors de la création d'un utilisateur, un jeton unique est généré et envoyé à l'utilisateur qui l'utilisera par la suite pour effectuer ses requêtes. Cette solution présente les avantages de la session sans la temporalité (car géré côté application serveur et côté application cliente). Le désavantage est une complexité plus élevée lors de la mise en place.
 
 		% paragraph jeton_d_authentification (end)
 
 		\paragraph{Authentification par compte utilisateur} % (fold)
 		\label{par:authentification_par_compte_utilisateur}
-		
+
 			La solution de sécurité optimale est l'inscription de l'utilisateur via un nom d'utilisateur et un mot de passe. Cette procédure est plus lourde pour l'expérience utilisateur qui devra s'inscrire avant de pouvoir jouer. La communication des accès et des droits entre les différents acteurs du système (utilisateur, client et serveur) peut être gérée par le protocole OAuth2 (protocole relativement simple à mettre en place car de nombreuses implémentations existent pour tous les langages). Cette solution est la plus lourde à mettre en place à cause de la création des comptes utilisateurs au niveau client et serveur mais apporte la plus grande sécurité. C'est la solution retenu par la grande majorité des API disponibles sur Internet (Dropbox, Facebook, Google\dots).
 
 		% paragraph authentification_par_compte_utilisateur (end)
@@ -44,21 +44,21 @@
 
 		\paragraph{Traitement de la requête en SQL} % (fold)
 		\label{par:traitement_de_la_requete_en_sql}
-			
+
 			Nos connaissances en SQL sont limitées mais il devrait être possible d'optimiser ces nombreuses insertions en les exécutant d'une seule fois en SQL.
 
 		% paragraph traitement_de_la_requete_en_sql (end)
 
 		\paragraph{Amélioration de la conception} % (fold)
 		\label{par:amelioration_de_la_conception}
-		
+
 			L'amélioration possible au niveau de la conception concerne les liaisons doubles entre les cases. En effet, il n'est pas forcément nécessaire de sauvegarder les deux liens entre les cases car les liaisons sont obligatoirement bidirectionnelles. Nous pourrions uniquement sauvegarder les liaisons par ordre croissant (lien de 1 vers 2 mais pas de 2 vers 1).
 
 		% paragraph amelioration_de_la_conception (end)
 
 		\paragraph{Type de base de données} % (fold)
 		\label{par:type_de_base_de_donnees}
-		
+
 			Il est possible d'améliorer les performances de la base de données en traitant les cases dans une base de données NoSQL orientée graphe par exemple. Le schéma serait dans ce cas plus adapté. Si le choix d'une base de données NoSQL peut sembler extrémiste, il est aussi possible de se renseigner au niveau des types spécifiques aux données géographiques dans les bases de données relationnelles (comme par exemple PostGIS).
 
 		% paragraph type_de_base_de_donnees (end)
@@ -67,8 +67,8 @@
 
 	\subsection{Séparation des services} % (fold)
 	\label{sub:separation_des_services}
-	
-		Actuellement le serveur est seul pour assurer 3 services : l'application métier, la base de données et le serveur de queues. Afin d'améliorer les performances et la maintenabilité de l'application, il serait préférable de séparer ces trois services sur trois machines physiques différentes ou au minimum sur trois machines virtuelles. L'avantage de cette séparation est la possibilité de maintenir différents composants plus simplement (possibilité de mettre à jour certains logiciels d'une machiene sans affecter les autres services). L'avantage supplémentaire des trois machines physique est de séparer la charge de l'application.
+
+		Actuellement le serveur est seul pour assurer 3 services : l'application métier, la base de données et le serveur de queues. Afin d'améliorer les performances et la maintenabilité de l'application, il serait préférable de séparer ces trois services sur trois machines physiques différentes ou au minimum sur trois machines virtuelles. L'avantage de cette séparation est la possibilité de maintenir différents composants plus simplement (possibilité de mettre à jour certains logiciels d'une machine sans affecter les autres services). L'avantage supplémentaire des trois machines physique est de répartir la charge de l'application.
 
 	% subsection separation_des_services (end)
 
