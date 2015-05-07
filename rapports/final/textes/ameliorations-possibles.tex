@@ -40,7 +40,7 @@
 
 		Les performances actuelles de l'application sont plutôt bonnes. Le langage PHP est un langage léger et rapide. Le framework Laravel ajoute une certaine lourdeur au profit d'une simplicité de développement mais reste très rapide à l'exécution.\\
 
-		Malgré tout, il est possible d'améliorer certaines requêtes SQL. En effet, dans un objectif de rapidité du développement, un ORM a été utilisé. Les performances de l'ORM Eloquent sont très bonnes concernant les requêtes classiques mais il est possible d'optimiser les requêtes pour des traitements plus lourds. Par exemple, la création d'une carte est très longue (plus de 30 secondes de traitement) car il est nécessaire de créer toutes les cases afin de générer des identifiants uniques avec l'incrémentation automatique de la base de données puis d'ajouter dans une table pivot les relations de voisinage entre toutes les cases. Plusieurs améliorations sont ici possibles.
+		Malgré tout, il est possible d'améliorer certaines requêtes SQL. En effet, dans un objectif de rapidité du développement, un ORM a été utilisé. Les performances de l'ORM Eloquent sont très bonnes concernant les requêtes classiques mais il est possible d'optimiser les requêtes pour des traitements plus lourds. Par exemple, la création d'une carte est très longue (plus de 30 secondes de traitement sur un ordinateur portable classique, les temps sont largement inférieurs avec un SSD) car il est nécessaire de créer toutes les cases afin de générer des identifiants uniques avec l'incrémentation automatique de la base de données puis d'ajouter dans une table pivot les relations de voisinage entre toutes les cases. Plusieurs améliorations sont ici possibles.
 
 		\paragraph{Traitement de la requête en SQL} % (fold)
 		\label{par:traitement_de_la_requete_en_sql}
@@ -64,5 +64,12 @@
 		% paragraph type_de_base_de_donnees (end)
 
 	% subsection performances (end)
+
+	\subsection{Séparation des services} % (fold)
+	\label{sub:separation_des_services}
+	
+		Actuellement le serveur est seul pour assurer 3 services : l'application métier, la base de données et le serveur de queues. Afin d'améliorer les performances et la maintenabilité de l'application, il serait préférable de séparer ces trois services sur trois machines physiques différentes ou au minimum sur trois machines virtuelles. L'avantage de cette séparation est la possibilité de maintenir différents composants plus simplement (possibilité de mettre à jour certains logiciels d'une machiene sans affecter les autres services). L'avantage supplémentaire des trois machines physique est de séparer la charge de l'application.
+
+	% subsection separation_des_services (end)
 
 \section{Côté client}
