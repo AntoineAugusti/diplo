@@ -1,0 +1,59 @@
+% L'option handout permet de supprimer la barre de navigation
+\documentclass[handout]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+% Pour pouvoir insérer des images
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\graphicspath{images/}
+% Gestion des couleurs
+\usepackage{color}
+\definecolor{red}{RGB}{231, 76, 60}
+
+% Un joli thème flat
+\usetheme{Rochester}
+
+% Personnalisation du thème
+\usecolortheme[named=red]{structure}
+% Numéro de slides dans le footer
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{blocks}[shadow=false]
+
+% ------------------------------------ %
+% -- METADONNÉES DU DOCUMENT --------- %
+\title{
+	Projet Informatique Répartie - Diplo
+}
+\author{
+	\textsc{Ansart}, \textsc{Augusti}, \textsc{Bernard},
+	\textsc{Batise}, \textsc{Dauce}, \textsc{Malo}
+}
+\date{12 mai 2015}
+
+% Début du document
+\begin{document}
+
+	% Génération de la page de titre
+	\begin{frame}[plain]
+		\titlepage
+	\end{frame}
+
+	% Génération du sommaire
+	\begin{frame}[plain]
+		\frametitle{Sommaire}
+		\tableofcontents
+	\end{frame}
+
+	\section{Choix techniques}
+		\input{textes/choix-techniques}
+
+	\section{Problèmes rencontrés}
+		\input{textes/problemes-rencontres}
+
+	\section{Améliorations possibles}
+		\input{textes/ameliorations-possibles}
+
+
+\end{document}
