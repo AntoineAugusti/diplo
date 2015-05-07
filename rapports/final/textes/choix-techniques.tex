@@ -148,3 +148,19 @@
 			\item \textbf{Les changements de phases d'une partie.} C'est une opération qui doit être effectuée à un instant précis. Nous créons donc un message en queue, qui sera délivré à un instant précis et défini dans le futur. La réception de ce message ne ralentira pas les requêtes que peuvent faire les clients de l'API et s'occupera du changement d'état de la partie.
 		\end{itemize}
 \section{Côté client}
+	Tous nos noms de classes et de méthodes sont en Français.
+	\subsection{Interface utilisateur}
+		Nous avons décidé d'utiliser une interface utilisateur de type Command Line Interface car celle-ci présente des avantages:
+			\begin{itemize}
+				\item facilité d'utilisation ;
+				\item simplicité de mise en oeuvre ;
+				\item documentation intégrée à l'interface (RTFM) ;
+			\end{itemize}
+		Nous avons cependant rencontré des difficultés quant à l'affichage de la carte, que nous abordons plus en détails dans la partie Problèmes rencontrés et solutions apportées, chapitre \ref{pb}.
+
+	\subsection{Moteur de Jeu}
+		Afin de pouvoir exécuter le moteur de jeu, qui s'occupe de la bonne coordination du jeu côté client, nous avons créer des classes annexes permettant de manipuler les objets du jeu tels que une case, une carte, un joueur etc.. Nous avons ensuite crée la classe Moteur qui utilise ces classes annexes et qui gère le déroulement du jeu côté client.
+	\subsection{Communication Réseau}
+		Le serveur étant en HTTPS, nous avons donc utilisé l'\textit{HTTPSURLConnection} que propose Java 7. Nous utilisons deux types de requêtes HTTP : GET et POST. Ainsi nous avons 
+		généralisé ces deux fonctions de requêtage HTTP pour l'ensemble des fonctionnalités, en visibilité privée. Nous avons également produit des fonctions privées permettant de parser le JSON reçu ou de produire du JSON selon l'objet passé en paramètre. 
+		Ainsi les méthodes publiques disponibles ne sont uniquement celles dont les autres éléments du jeu ont besoin, et sont extrêment réduites en longueur de code pour une lisibilité plus aisée.
