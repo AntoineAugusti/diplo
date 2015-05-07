@@ -1,0 +1,76 @@
+% L'option handout permet de supprimer la barre de navigation
+\documentclass[handout]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+% Pour pouvoir insérer des images
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\graphicspath{images/}
+% Gestion des couleurs
+\usepackage{color}
+\definecolor{turquoise}{RGB}{26, 188, 156}
+
+% Un joli thème flat
+\usetheme{Rochester}
+
+% Personnalisation du thème
+\usecolortheme[named=turquoise]{structure}
+% Numéro de slides dans le footer
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{blocks}[shadow=false]
+
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+	\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+		\usebeamerfont{author in head/foot}\insertsection
+	\end{beamercolorbox}%
+	\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+		\usebeamerfont{title in head/foot}\insertsubsection
+	\end{beamercolorbox}%
+	\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+		\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+		\insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+	\end{beamercolorbox}}%
+	\vskip0pt%
+}
+
+% ------------------------------------ %
+% -- METADONNÉES DU DOCUMENT --------- %
+\title{
+	Projet Informatique Répartie - Diplo
+}
+\author{
+	\textsc{Ansart}, \textsc{Augusti}, \textsc{Bernard},
+	\textsc{Batise}, \textsc{Dauce}, \textsc{Malo}
+}
+\date{12 mai 2015}
+
+% Début du document
+\begin{document}
+
+	% Génération de la page de titre
+	\begin{frame}[plain]
+		\titlepage
+	\end{frame}
+
+	% Génération du sommaire
+	\begin{frame}[plain]
+		\frametitle{Sommaire}
+		\tableofcontents
+	\end{frame}
+
+	\section{Choix techniques}
+		\input{textes/choix-techniques}
+
+	\section{Problèmes rencontrés}
+		\input{textes/problemes-rencontres}
+
+	\section{Améliorations possibles}
+		\input{textes/ameliorations-possibles}
+
+
+\end{document}
