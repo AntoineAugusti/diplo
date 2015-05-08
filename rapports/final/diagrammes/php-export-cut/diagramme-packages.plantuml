@@ -1,0 +1,240 @@
+@startuml
+
+skinparam shadowing false
+skinparam stereotypeCBackgroundColor #5B9BD5
+' skinparam backgroundColor transparent
+
+skinparam note {
+  BackgroundColor #73AE42
+  BorderColor #6CA43E
+  FontColor white
+}
+
+skinparam class {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #FFFFFF
+}
+
+skinparam sequence {
+  ArrowColor #6CA43E
+
+  LifeLineBorderColor #6CA43E
+  LifeLineBackgroundColor #73AE42
+
+  ParticipantBorderColor #2E75B5
+  ParticipantBackgroundColor #5B9BD5
+
+  ActorBorderColor #2E75B5
+  ActorBackgroundColor #5B9BD5
+
+  BoxLineColor #A5A5A5
+}
+
+skinparam state {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam usecase {
+  BackgroundColor #EEEEEE
+  BorderColor #9E9E9E
+
+  ArrowColor #6CA43E
+  ActorBorderColor #6CA43E
+}
+
+skinparam component {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam node {
+  BackgroundColor #FFFFFF
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam database {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+class Diplo.Cartes.CarteFactory 
+interface Diplo.Cartes.CaseRepository 
+class Diplo.Cartes.CaseClass 
+class Diplo.Cartes.CaseClass extends Illuminate.Database.Eloquent.Model
+class Diplo.Cartes.CaseClass implements Diplo.Cartes.CaseInterface
+class Diplo.Cartes.Carte 
+class Diplo.Cartes.Carte extends Illuminate.Database.Eloquent.Model
+class Diplo.Cartes.CaseVoisine 
+class Diplo.Cartes.CaseVoisine extends Illuminate.Database.Eloquent.Model
+class Diplo.Cartes.EloquentCaseRepository 
+class Diplo.Cartes.EloquentCaseRepository implements Diplo.Cartes.CaseRepository
+interface Diplo.Cartes.CaseInterface 
+class Diplo.Console.Kernel 
+class Diplo.Console.Kernel extends Illuminate.Foundation.Console.Kernel
+abstract class Diplo.Commands.Command 
+class Diplo.Commands.PartiePhaseSwitcherHandler 
+class Diplo.Commands.PartiePhaseSwitcherHandler extends Diplo.Commands.Command
+class Diplo.Commands.PartiePhaseSwitcherHandler implements Illuminate.Contracts.Bus.SelfHandling
+interface Diplo.Parties.PartiesRepository 
+class Diplo.Parties.Partie 
+class Diplo.Parties.Partie extends Illuminate.Database.Eloquent.Model
+class Diplo.Parties.Partie implements Diplo.Phases.PhaseInterface
+class Diplo.Parties.EloquentPartiesRepository 
+class Diplo.Parties.EloquentPartiesRepository implements Diplo.Parties.PartiesRepository
+class Diplo.Http.Controllers.ConversationsController 
+class Diplo.Http.Controllers.ConversationsController extends Diplo.Http.Controllers.Controller
+abstract class Diplo.Http.Controllers.Controller 
+class Diplo.Http.Controllers.Controller extends Illuminate.Routing.Controller
+class Diplo.Http.Controllers.PartiesController 
+class Diplo.Http.Controllers.PartiesController extends Diplo.Http.Controllers.Controller
+class Diplo.Http.Controllers.OrdresController 
+class Diplo.Http.Controllers.OrdresController extends Diplo.Http.Controllers.Controller
+class Diplo.Http.Controllers.WelcomeController 
+class Diplo.Http.Controllers.WelcomeController extends Diplo.Http.Controllers.Controller
+abstract class Diplo.Http.Requests.Request 
+class Diplo.Http.Requests.Request extends Illuminate.Foundation.Http.FormRequest
+class Diplo.Http.Middleware.RedirectIfAuthenticated 
+class Diplo.Http.Middleware.Authenticate 
+class Diplo.Http.Middleware.VerifyCsrfToken 
+class Diplo.Http.Middleware.VerifyCsrfToken extends Illuminate.Foundation.Http.Middleware.VerifyCsrfToken
+class Diplo.Http.Kernel 
+class Diplo.Http.Kernel extends Illuminate.Foundation.Http.Kernel
+class Diplo.Events.PartieChangeDePhase 
+class Diplo.Events.PartieChangeDePhase extends Diplo.Events.Event
+abstract class Diplo.Events.Event 
+class Diplo.Events.PartieEstTerminee 
+class Diplo.Events.PartieEstTerminee extends Diplo.Events.Event
+class Diplo.Events.PartieChangeDeTour 
+class Diplo.Events.PartieChangeDeTour extends Diplo.Events.Event
+class Diplo.Events.PartiePreteACommencer 
+class Diplo.Events.PartiePreteACommencer extends Diplo.Events.Event
+interface Diplo.Phases.PhaseInterface 
+class Diplo.Handlers.Events.DemarragePartie 
+class Diplo.Handlers.Events.DemarragePartie implements Illuminate.Contracts.Queue.ShouldBeQueued
+class Diplo.Handlers.Events.CreerCarte 
+class Diplo.Handlers.Events.CloturerPartie 
+class Diplo.Handlers.Events.CloturerPartie implements Illuminate.Contracts.Queue.ShouldBeQueued
+class Diplo.Handlers.Events.ExecuterOrdres 
+class Diplo.Exceptions.JoueurDupliqueException 
+class Diplo.Exceptions.JoueurDupliqueException extends Diplo.Exceptions.JoueurException
+class Diplo.Exceptions.CaseExceptionHandler 
+class Diplo.Exceptions.CaseExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+class Diplo.Exceptions.PartieEnPhasedeCombatException 
+class Diplo.Exceptions.PartieEnPhasedeCombatException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.PartiesDifferentesException 
+class Diplo.Exceptions.PartiesDifferentesException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.PartieException 
+class Diplo.Exceptions.PartieException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.PasAssezDeJoueursException 
+class Diplo.Exceptions.PasAssezDeJoueursException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.ArmeeExceptionHandler 
+class Diplo.Exceptions.ArmeeExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+class Diplo.Exceptions.CaseNonExistanteException 
+class Diplo.Exceptions.CaseNonExistanteException extends Diplo.Exceptions.CaseException
+class Diplo.Exceptions.Handler 
+abstract class Diplo.Exceptions.NextHandlerTrait 
+class Diplo.Exceptions.DiploException 
+class Diplo.Exceptions.Handler extends Bugsnag.BugsnagLaravel.BugsnagExceptionHandler
+class Diplo.Exceptions.JoueurAbsentConversationException 
+class Diplo.Exceptions.JoueurAbsentConversationException extends Diplo.Exceptions.JoueurException
+class Diplo.Exceptions.DiploException extends Exception
+class Diplo.Exceptions.JoueurInexistantConversationException 
+class Diplo.Exceptions.JoueurInexistantConversationException extends Diplo.Exceptions.JoueurException
+class Diplo.Exceptions.ConversationIntrouvableException 
+class Diplo.Exceptions.ConversationIntrouvableException extends Diplo.Exceptions.ConversationException
+class Diplo.Exceptions.JoueurException 
+class Diplo.Exceptions.JoueurException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.ArmeeNonExistanteException 
+class Diplo.Exceptions.ArmeeNonExistanteException extends Diplo.Exceptions.ArmeeException
+class Diplo.Exceptions.PartiePleineException 
+class Diplo.Exceptions.PartiePleineException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.ArmeeException 
+class Diplo.Exceptions.ArmeeException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.PartieNonEnJeuException 
+class Diplo.Exceptions.PartieNonEnJeuException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.PartieExceptionHandler 
+class Diplo.Exceptions.PartieExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+interface Diplo.Exceptions.ExceptionHandlerInterface 
+class Diplo.Exceptions.PartieIntrouvableException 
+class Diplo.Exceptions.PartieIntrouvableException extends Diplo.Exceptions.PartieException
+class Diplo.Exceptions.OrdreException 
+class Diplo.Exceptions.OrdreException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.JoueurInexistantException 
+class Diplo.Exceptions.JoueurInexistantException extends Diplo.Exceptions.JoueurException
+class Diplo.Exceptions.ConversationExistanteException 
+class Diplo.Exceptions.ConversationExistanteException extends Diplo.Exceptions.ConversationException
+class Diplo.Exceptions.OrdreExceptionHandler 
+class Diplo.Exceptions.OrdreExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+class Diplo.Exceptions.ConversationException 
+class Diplo.Exceptions.ConversationException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.JoueurExceptionHandler 
+class Diplo.Exceptions.JoueurExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+class Diplo.Exceptions.ConversationExceptionHandler 
+class Diplo.Exceptions.ConversationExceptionHandler implements Diplo.Exceptions.ExceptionHandlerInterface
+class Diplo.Exceptions.CaseException 
+class Diplo.Exceptions.CaseException extends Diplo.Exceptions.DiploException
+class Diplo.Exceptions.OrdreNonExistantException 
+class Diplo.Exceptions.OrdreNonExistantException extends Diplo.Exceptions.OrdreException
+interface Diplo.Messages.ConversationsRepository 
+class Diplo.Messages.Message 
+class Diplo.Messages.Message extends Illuminate.Database.Eloquent.Model
+class Diplo.Messages.Conversation 
+class Diplo.Messages.Conversation extends Illuminate.Database.Eloquent.Model
+class Diplo.Messages.EloquentConversationsRepository 
+class Diplo.Messages.EloquentConversationsRepository implements Diplo.Messages.ConversationsRepository
+class Diplo.Armees.Armee 
+class Diplo.Armees.Armee extends Illuminate.Database.Eloquent.Model
+class Diplo.Armees.EloquentArmeeRepository 
+class Diplo.Armees.EloquentArmeeRepository implements Diplo.Armees.ArmeeRepository
+interface Diplo.Armees.ArmeeRepository 
+abstract class Diplo.Ordres.Ordre 
+class Diplo.Ordres.AttaquerExecuteur 
+class Diplo.Ordres.AttaquerExecuteur extends Diplo.Ordres.OrdreCibleExecuteur
+class Diplo.Ordres.TenirExecuteur 
+class Diplo.Ordres.TenirExecuteur extends Diplo.Ordres.OrdreExecuteur
+abstract class Diplo.Ordres.OrdreExecuteur 
+class Diplo.Ordres.SoutienOffensif 
+class Diplo.Ordres.SoutienOffensif extends Diplo.Ordres.OrdreCible
+abstract class Diplo.Ordres.OrdreCible 
+class Diplo.Ordres.OrdreCible extends Diplo.Ordres.Ordre
+interface Diplo.Ordres.OrdreRepository 
+class Diplo.Ordres.Attaquer 
+class Diplo.Ordres.Attaquer extends Diplo.Ordres.OrdreCible
+class Diplo.Ordres.SoutienOffensifExecuteur 
+class Diplo.Ordres.SoutienOffensifExecuteur extends Diplo.Ordres.OrdreCibleExecuteur
+class Diplo.Ordres.OrdreModel 
+class Diplo.Ordres.OrdreModel extends Illuminate.Database.Eloquent.Model
+class Diplo.Ordres.SoutienDefensif 
+class Diplo.Ordres.SoutienDefensif extends Diplo.Ordres.OrdreCible
+class Diplo.Ordres.EloquentOrdreRepository 
+class Diplo.Ordres.EloquentOrdreRepository implements Diplo.Ordres.OrdreRepository
+abstract class Diplo.Ordres.OrdreCibleExecuteur 
+class Diplo.Ordres.OrdreCibleExecuteur extends Diplo.Ordres.OrdreExecuteur
+class Diplo.Ordres.Tenir 
+class Diplo.Ordres.Tenir extends Diplo.Ordres.Ordre
+class Diplo.Ordres.SoutienDefensifExecuteur 
+class Diplo.Ordres.SoutienDefensifExecuteur extends Diplo.Ordres.OrdreCibleExecuteur
+class Diplo.Providers.RouteServiceProvider 
+class Diplo.Providers.RouteServiceProvider extends Illuminate.Foundation.Support.Providers.RouteServiceProvider
+class Diplo.Providers.AppServiceProvider 
+class Diplo.Providers.AppServiceProvider extends Illuminate.Support.ServiceProvider
+class Diplo.Providers.BusServiceProvider 
+class Diplo.Providers.BusServiceProvider extends Illuminate.Support.ServiceProvider
+class Diplo.Providers.ConfigServiceProvider 
+class Diplo.Providers.ConfigServiceProvider extends Illuminate.Support.ServiceProvider
+class Diplo.Providers.EventServiceProvider 
+class Diplo.Providers.EventServiceProvider extends Illuminate.Foundation.Support.Providers.EventServiceProvider
+class Diplo.Joueurs.EloquentJoueursRepository 
+class Diplo.Joueurs.EloquentJoueursRepository implements Diplo.Joueurs.JoueursRepository
+interface Diplo.Joueurs.JoueursRepository 
+class Diplo.Joueurs.Joueur 
+class Diplo.Joueurs.Joueur extends Illuminate.Database.Eloquent.Model
+interface Diplo.Joueurs.JoueurGeneratorInterface 
+class Diplo.Joueurs.JoueurGenerator 
+class Diplo.Joueurs.JoueurGenerator implements Diplo.Joueurs.JoueurGeneratorInterface
+@enduml

@@ -1,4 +1,27 @@
+Afin de travailler plus efficacement, nous avons choisi de diviser l'équipe en 2. Ainsi Antoine Augusti, Etienne Batise et Thibaud Dauce ont travaillé sur le logiciel serveur et Manon Ansart, Jean-Claude Bernard et Nathan Malo ont travaillé sur le logiciel client.\newline
+
 \section{Côté serveur}
+    Pour le logiciel serveur, nous avons déterminé ?? grandes parties :
+
+	\begin{enumerate}
+		\item La création et la rédaction du protocole de communication 
+		\item La mise à jour de la conception pour s'intégrer au framework laravel
+		\item Le développement.\newline
+	\end{enumerate}
+
+    Par ailleurs, le framework laravel permet un grande indépendance de certaines parties du programme. Nous avons donc également divisé le développement selon les parties indépendantes.
+	\begin{enumerate}
+		\item L'ORM. Il s'agit d'utiliser le service de migration fournie par Laravel afin de faciliter la synchronisation avec la base de données.
+		\item Les controleurs. Il s'agit de développer les règles du jeu sous forme d'algorithmes et de répondre au requêtes de l'application cliente. \newline
+	\end{enumerate}
+
+    Nous avons donc répartie les taches ainsi :
+	\begin{description}
+        \item [Antoine Augusti] : Mise à jour de la conception. Développement des controleurs
+		\item [Etienne Batise] : Création du protocole de communication. Développement des migrations
+		\item [Thibaud Dauce] :  Création du protocole de communication. Développement des controleurs
+	\end{description} 
+    
 
 \section{Côté client}
 	Pour le logiciel client, nous avons déterminé trois grandes parties :
