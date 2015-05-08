@@ -14,12 +14,14 @@ import java.util.List;
 import java.util.Set;
 
 import fr.insarouen.asi.diplo.MoteurJeu.*;
+import fr.insarouen.asi.diplo.MoteurJeu.Ordres.*;
+import fr.insarouen.asi.diplo.MoteurJeu.Negociation.*;
 
 public class Cli {
 	private String ordre;
 	private Jeu partie;
 	private Moteur moteur;
-	private Joueur joueur;
+	// private String pseudo, pays;
 	public static final char ESC = 27;
 
 	// constructeur
@@ -31,7 +33,6 @@ public class Cli {
 		this.ordre = null;
 		this.partie = null;
 		this.moteur = new Moteur();
-		this.joueur = new Moteur();
 	}
 
 	// methodes
@@ -44,40 +45,38 @@ public class Cli {
 			// appeler méthode pour créer une partie qui affiche l'id de la partie crée
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
+			System.out.println(e.getMessage());
 		}
 	}
 
-	public void commandeIdentifiants(String nbMinJoueurs) {
-		try {
-			String pseudo, pays;
-			Scanner sc = new Scanner(System.in);
-			System.out.println("Veuillez entrer votre pseudo :");
-			pseudo = sc.nextLine();
-			System.out.println("Veuillez entrer votre nationalité (ex : FRA) :");
-			pays = sc.nextLine();
-
-			this.joueur = new Joueur(pseudo, pays);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return;
-		}
-	}
+	// public void setIdentifiants() {
+	// 	Scanner sc = new Scanner(System.in);
+	// 	System.out.println("Veuillez entrer votre pseudo :");
+	// 	pseudo = sc.nextLine();
+	// 	System.out.println("Veuillez entrer votre nationalité (ex : FRA) :");
+	// 	pays = sc.nextLine();
+	// }
 
 	public void commandeRejoindre(String idPartie) {
 		try {
-			partie = moteur.rejoindrePartie(Integer.parseInt(idPartie));
-
+			this.partie = moteur.rejoindrePartie(Integer.parseInt(idPartie));
+			System.out.println(partie.toString());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
-	public void commandeDonnerOrdre(String unite, String ordre) {
+	public void commandeAttaquer(String numeroCase, String numeroArmee) {
 		try {
-			// appeler méthode ordre;
+			int partieID = partie.getID();
+			if (moteur.recupererInfosPhase(partieID).getStatutPhaseCourante() == Phase.Statut.COMBAT) {
+				Attaquer ordre = new Attaquer(Integer.parseInt(numeroCase), Integer.parseInt(numeroArmee));
+				moteur.posterOrdre(partieID, ordre);
+			} else {
+				System.out.println("Vous n'êtes pas en phase de combat.");
+			}
 		} catch (Exception e) {
-			return;
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -85,7 +84,7 @@ public class Cli {
 		try {
 			// appeler méthode envoyer messages qui va aller chercher l'id associé au pseudo
 		} catch (Exception e) {
-			return;
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -93,7 +92,7 @@ public class Cli {
 		try {
 			// appeler méthode lister unités
 		} catch (Exception e) {
-			return;
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -101,18 +100,17 @@ public class Cli {
 		try {
 			// appeler méthode lister cases contrôlées
 		} catch (Exception e) {
-			return;
+			System.out.println(e.getMessage());
 		}
 	}
 
 	public void commandeAfficherCarte() {
 		try {
-			String info = moteur.recupererInfosPartie(
-				partie.getID());
-			System.out.println(info.toString());
-			System.out.println("Blah");
+			AffichageCarte afficheCarte = new AffichageCarte(partie);
+			afficheCarte.enregistrerCarte(10);
+			afficheCarte.lireCarte("carte.sh");
 		} catch (Exception e) {
-			return;
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -268,7 +266,6 @@ public class Cli {
 
 		while (true) {
 			System.out.print("diplo >> ");
-
 			Scanner sc = new Scanner(System.in);
 
 			s = sc.nextLine();
