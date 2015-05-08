@@ -14,15 +14,16 @@ import java.util.List;
 import java.util.Set;
 
 import fr.insarouen.asi.diplo.MoteurJeu.*;
+import fr.insarouen.asi.diplo.Reseau.*;
 import fr.insarouen.asi.diplo.MoteurJeu.Negociation.*;
 import fr.insarouen.asi.diplo.MoteurJeu.Ordres.*;
 
 public class Cli {
 	private String ordre;
 	private Jeu partie;
+	private CommunicationServeur current;
 	private Moteur moteur;
 	private Joueur joueur;
-	// private String pseudo, pays;
 	public static final char ESC = 27;
 
 	// constructeur
@@ -34,6 +35,7 @@ public class Cli {
 		this.ordre = null;
 		this.partie = null;
 		this.moteur = new Moteur();
+		this.current = new CommunicationServeur("https://api.diplo-lejeu.fr/");
 	}
 
 	// methodes
@@ -50,22 +52,19 @@ public class Cli {
 		}
 	}
 
-	// public void setIdentifiants() {
-	// Scanner sc = new Scanner(System.in);
-	// System.out.println("Veuillez entrer votre pseudo :");
-	// pseudo = sc.nextLine();
-	// System.out.println("Veuillez entrer votre nationalité (ex : FRA) :");
-	// pays = sc.nextLine();
-	// }
-
 	public void commandeRejoindre(String idPartie) {
 		try {
-			this.partie = moteur.rejoindrePartie(Integer.parseInt(
+			this.partie = current.rejoindrePartie(Integer.parseInt(
 				idPartie));
-			System.out.println(partie.toString());
-			HashMap<String, Joueur> listeJoueurs =
-			partie.getJoueurs();
-			this.joueur = listeJoueurs.get(0);
+			System.out.println(this.partie);
+			// HashMap<String, Joueur> listeJoueurs =
+			// partie.getJoueurs();
+			// System.out.println(listeJoueurs.size());
+			// for (Joueur j : listeJoueurs.values()) {
+			// 	this.joueur = j;				
+			// 	System.out.println("Votre pseudo : "+this.joueur.getPseudo());
+			// 	System.out.println("Votre pays : "+this.joueur.getPays());
+			// }
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -148,10 +147,11 @@ public class Cli {
 		}
 	}
 
-	public void commandeEnvoyerMessage(String message, String
+	public void commandeCreerConversation(String
 	listePseudos) {
 		try {
-			int partieID = partie.getID();
+			// int partieID = partie.getID();
+			int partieID = 1;
 			ArrayList<Integer> destinataires =
 			new ArrayList<Integer>();
 			if (moteur.recupererInfosPhase(
@@ -164,7 +164,26 @@ public class Cli {
 					pseudos[i]).getId());
 				Conversation conversation =
 				moteur.creerConversation(destinataires);
-				moteur.posterMessage(conversation.getID(),
+				System.out.println("ID de la conversation avec listePseudos : "+conversation.getID());
+			} else {
+				System.out.println(
+				"Vous n'êtes pas en phase de négociation.");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void commandeEnvoyerMessage(String idConversation, String
+	message) {
+		try {
+			int partieID = partie.getID();
+			ArrayList<Integer> destinataires =
+			new ArrayList<Integer>();
+			if (moteur.recupererInfosPhase(
+			partieID).getStatutPhaseCourante() ==
+			Phase.Statut.NEGOCIATION) {
+				moteur.posterMessage(Integer.parseInt(idConversation),
 				this.joueur.getId(), message);
 			} else {
 				System.out.println(
@@ -194,7 +213,7 @@ public class Cli {
 	public void commandeAfficherCarte() {
 		try {
 			AffichageCarte afficheCarte = new AffichageCarte(
-				partie);
+				this.partie);
 			afficheCarte.enregistrerCarte(10);
 			afficheCarte.lireCarte("carte.sh");
 		} catch (Exception e) {
@@ -288,10 +307,20 @@ public class Cli {
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
+		System.out.println("creerConversation");
+		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
+		System.out.println("Créer une conversation associée une liste de joueurs");
+		System.out.println(setBoldText + "OPTIONS" + setPlainText);
+		System.out.println(
+		"pseudos  La liste de pseudos des joueurs à qui envoyer le message");
+		System.out.println("");
+
+		System.out.println(setBoldText + "NOM" + setPlainText);
 		System.out.println("envoyerMessage");
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
-		System.out.println("Envoyer un message à une liste de joueurs");
+		System.out.println("Envoyer un message à une liste de joueurs dans une conversation");
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
+		System.out.println("idConversation L'id de la conversation où l'on veut poster le message");
 		System.out.println(
 		"pseudos  La liste de pseudos des joueurs à qui envoyer le message");
 		System.out.println("");

@@ -108,7 +108,7 @@ public class CommunicationServeur {
 			int responseCode = httpsConnection.getResponseCode();
 
 			if ((responseCode != 200) && (responseCode != 201) &&
-			(responseCode != 202)) {
+			(responseCode != 202) || (responseCode == 500)) {
 				BufferedReader br0 = new BufferedReader(
 					new InputStreamReader(
 					httpsConnection.getErrorStream()));
@@ -125,7 +125,6 @@ public class CommunicationServeur {
 
 			while ((line = br.readLine()) != null)
 				response += line;
-			System.out.println(response);
 		} catch (MalformedURLException e) {
 			System.out.println(" L URL du serveur est invalide :" +
 			e.getMessage());
