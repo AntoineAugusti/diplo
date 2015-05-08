@@ -158,7 +158,7 @@ public class Cli {
 					pseudos[i]).getId());
 				Conversation conversation =
 				moteur.creerConversation(destinataires);
-				System.out.println("ID de la conversation avec listePseudos : "+conversation.getID());
+				System.out.println("ID de la conversation avec "+listePseudos+" : "+conversation.getID());
 			} else {
 				System.out.println(
 				"Vous n'êtes pas en phase de négociation.");
@@ -179,6 +179,64 @@ public class Cli {
 			Phase.Statut.NEGOCIATION) {
 				moteur.posterMessage(Integer.parseInt(idConversation),
 				this.joueur.getId(), message);
+			} else {
+				System.out.println(
+				"Vous n'êtes pas en phase de négociation.");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void commandeInfosConversations() {
+		try {
+			int partieID = partie.getID();
+			ArrayList<Conversation> conversations =
+			new ArrayList<Conversation>();
+			String listeJoueurs = "";
+			ArrayList<Integer> joueurs = new ArrayList<Integer>();
+
+			if (moteur.recupererInfosPhase(
+			partieID).getStatutPhaseCourante() ==
+			Phase.Statut.NEGOCIATION) {
+				conversations = moteur.recupererInfosConversationSelonJoueur(this.joueur.getId());
+				System.out.println("Conversations : ");
+				for (Conversation c : conversations) {
+					joueurs = c.getIdJoueurs();
+					for(Joueur j : joueurs) {
+						listeJoueurs = listeJoueurs + j.getPseudo()+", ";
+					}
+					System.out.println("ID : "+c.getID()+", Joueurs : "+listeJoueurs.substring(0, listeJoueurs.length - 2));
+				}
+			} else {
+				System.out.println(
+				"Vous n'êtes pas en phase de négociation.");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void commandeHistoriqueConversation(String idConversation) {
+		try {
+			int partieID = partie.getID();
+			String listeJoueurs = "";
+			ArrayList<Integer> joueurs = new ArrayList<Integer>();
+			ArrayList<Message> messages = new ArrayList<Message>();
+
+			if (moteur.recupererInfosPhase(
+			partieID).getStatutPhaseCourante() ==
+			Phase.Statut.NEGOCIATION) {
+				Conversation conversation = moteur.recupererInfosConversation(Integer.parseInt(idConversation));
+				System.out.println("Conversation : ");
+				System.out.println("");
+				messages = c.getMessages();
+				for(Message m : messages) {
+					System.out.println("Joueur : "+partie.getJoueur(m.getIdJoueur()).getPseudo());
+					System.out.println("Date : "+m.getDateCreation());
+					System.out.println("Texte : "+m.getTexte());
+					System.out.println("");
+				}
 			} else {
 				System.out.println(
 				"Vous n'êtes pas en phase de négociation.");
@@ -322,7 +380,7 @@ public class Cli {
 		System.out.println("Créer une conversation associée une liste de joueurs");
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
 		System.out.println(
-		"pseudos  La liste de pseudos des joueurs à qui envoyer le message");
+		"pseudos  La liste de pseudos des joueurs à qui envoyer le message séparé par des virgules");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
@@ -351,6 +409,12 @@ public class Cli {
 		System.out.println("afficherParticipants");
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
 		System.out.println("Liste les participants de la partie");
+		System.out.println("");
+
+		System.out.println(setBoldText + "NOM" + setPlainText);
+		System.out.println("phaseCourante");
+		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
+		System.out.println("Affiche la phase courante et le temps restant");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
