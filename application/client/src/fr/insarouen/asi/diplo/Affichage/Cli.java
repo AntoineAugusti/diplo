@@ -18,16 +18,16 @@ public class Cli {
 	private String ordre;
 	public static final char ESC = 27;
 
-// constructeur
+	// constructeur
 
-/**
- * Constructeur de la classe Cli,
- */
+	/**
+	 * Constructeur de la classe Cli,
+	 */
 	public Cli() {
 		this.ordre = null;
 	}
 
-// methodes
+	// methodes
 	public void setOrdre(String ordre) {
 		this.ordre = ordre;
 	}

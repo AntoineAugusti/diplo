@@ -18,7 +18,7 @@ import javax.net.ssl.SSLPeerUnverifiedException;
 import org.json.*;
 
 public class CommunicationServeur {
-// Doit être de type http://example.com/, afin que les autres méthodes n'aient plus qu'à ajouter l'URI à la fin.
+	// Doit être de type http://example.com/, afin que les autres méthodes n'aient plus qu'à ajouter l'URI à la fin.
 	private String serveurURL;
 
 	public CommunicationServeur(String URL) {
@@ -390,7 +390,7 @@ public class CommunicationServeur {
 		return jeuCourant;
 	}
 
-// Renvoi un tableau de joueurs.
+	// Renvoi un tableau de joueurs.
 	public ArrayList<Joueur> recupererInfosJoueurs(int partieID) throws
 	PartieIntrouvableException, RuntimeException {
 		ArrayList<Joueur> liste = new ArrayList<Joueur>();
@@ -412,7 +412,7 @@ public class CommunicationServeur {
 		return liste;
 	}
 
-// Renvoi une chaîne de caractères décrivant l'état de la partie
+	// Renvoi une chaîne de caractères décrivant l'état de la partie
 	public String recupererInfosPartie(int partieID) throws
 	PartieIntrouvableException, RuntimeException {
 		String etat = "En cours";
