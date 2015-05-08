@@ -200,12 +200,38 @@ public class Cli {
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
-		System.out.println("donnerOrdre");
+		System.out.println("attaquer");
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
-		System.out.println("Donner un ordre à une unité");
+		System.out.println("Lancer une attaque");
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
-		System.out.println("unite  L'unité que l'on veut commander");
-		System.out.println("ordre  L'ordre que l'on veut donner");
+		System.out.println("numéro de case  La case que l'on veut attaquer");
+		System.out.println("numéro de l'armée  L'armée que l'on veut contrôler");
+		System.out.println("")
+
+		System.out.println(setBoldText + "NOM" + setPlainText);
+		System.out.println("soutienDefensif");
+		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
+		System.out.println("Lancer un soutien défensif");
+		System.out.println(setBoldText + "OPTIONS" + setPlainText);
+		System.out.println("numéro de case  La case que l'on veut soutenir");
+		System.out.println("numéro de l'armée  L'armée que l'on veut contrôler");
+		System.out.println("")
+
+		System.out.println(setBoldText + "NOM" + setPlainText);
+		System.out.println("soutienOffensif");
+		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
+		System.out.println("Lancer un soutien offensif");
+		System.out.println(setBoldText + "OPTIONS" + setPlainText);
+		System.out.println("numéro de case  La case que l'on veut soutenir");
+		System.out.println("numéro de l'armée  L'armée que l'on veut contrôler");
+		System.out.println("")
+
+		System.out.println(setBoldText + "NOM" + setPlainText);
+		System.out.println("tenir");
+		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
+		System.out.println("Tenir la case courante");
+		System.out.println(setBoldText + "OPTIONS" + setPlainText);
+		System.out.println("numéro de l'armée  L'armée que l'on veut faire tenir");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
