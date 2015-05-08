@@ -102,7 +102,8 @@ public class JSONTests {
 	public static void main(String[] args) throws Throwable {
 		ArrayList<Joueur> infosJoueurs = parsageJSONInfosJoueurs();
 		assert infosJoueurs.get(0).getId() ==
-		1 : "L'id du premier joueur vaut " + infosJoueurs.get(0).getId();
+		1 : "L'id du premier joueur vaut " + infosJoueurs.get(
+		0).getId();
 		assert infosJoueurs.get(0).getPseudo().equals(
 		"Fake"): "Le pseudo du premier joueur vaut " +
 			 infosJoueurs.get(0).getPseudo();
@@ -116,7 +117,8 @@ public class JSONTests {
 		3   : "Le nombre de cases_controlees du premier joueur vaut "
 		+ infosJoueurs.get(0).getCasesControlees();
 		assert infosJoueurs.get(1).getId() ==
-		2 : "L'id du second joueur vaut " + infosJoueurs.get(1).getId();
+		2 : "L'id du second joueur vaut " + infosJoueurs.get(
+		1).getId();
 		assert infosJoueurs.get(1).getPseudo().equals(
 		"Dummy"): "Le pseudo du second joueur vaut " +
 			  infosJoueurs.get(1).getPseudo();
@@ -143,7 +145,8 @@ public class JSONTests {
 		assert joueurs.containsKey(
 		"Blah"): "Le joueur est dans la hashmap ?";
 		assert joueurs.get("Blah").getId() ==
-		2 : "Le joueur Blah a un id de " + joueurs.get("Blah").getId();
+		2 : "Le joueur Blah a un id de " + joueurs.get(
+		"Blah").getId();
 		assert joueurs.get("Blah").getPays().equals(
 		"FRA"): "Le joueur Blah a FRA en pays " + joueurs.get(
 			"Blah").getPays();

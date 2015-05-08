@@ -44,7 +44,8 @@ public class ComTests {
 		assert joueurs.size() >= 3 : "Il y a au moins 3 joueurs";
 		for (int i = 0; i < joueurs.size(); i++) {
 			local = joueurs.get(i);
-			assert local.getPseudo() != null : "Le nom est non null";
+			assert local.getPseudo() !=
+			null : "Le nom est non null";
 			assert local.getId() > 0 : "L'id est non null";
 			assert local.getPays() != null : "Le pays est non null";
 			assert local.getArmeesRestantes() ==
