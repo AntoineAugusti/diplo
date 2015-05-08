@@ -2,11 +2,11 @@
 
 namespace Diplo\Handlers\Events;
 
+use Diplo\Commands\PartiePhaseSwitcherHandler;
+use Diplo\Events\CarteAEteCreee;
 use Diplo\Parties\Partie;
-use Diplo\Events\PartiePreteACommencer;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
 use Illuminate\Queue\QueueManager as Queue;
-use Diplo\Commands\PartiePhaseSwitcherHandler;
 
 class DemarragePartie implements ShouldBeQueued
 {
@@ -26,9 +26,9 @@ class DemarragePartie implements ShouldBeQueued
     /**
      * Démarre une partie.
      *
-     * @param PartiePreteACommencer $event
+     * @param CarteAEteCreee $event
      */
-    public function handle(PartiePreteACommencer $event)
+    public function handle(CarteAEteCreee $event)
     {
         $partie = $event->partie;
         $partie->statut = Partie::EN_JEU;

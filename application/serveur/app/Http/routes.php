@@ -39,3 +39,14 @@ Route::get('/testCreerPartie', function () {
 Route::get('/testArmees', function () {
     return Partie::first()->getArmees()->first()->getOrdre();
 });
+
+Route::get('/testSetArmee', function () {
+    $cases = \Diplo\Cartes\CaseClass::all();
+
+    foreach ($cases as $case) {
+        if (!is_null($case->getJoueur())) {
+            return $case->getJoueur();
+        }
+    }
+
+});

@@ -65,14 +65,14 @@ skinparam database {
 class Diplo.Handlers.Events.DemarragePartie {
     -queue : Queue
     +__construct(queue : Illuminate.Queue.QueueManager)
-    +handle(event : Diplo.Events.PartiePreteACommencer)
+    +handle(event : Diplo.Events.CarteAEteCreee)
 }
 class Diplo.Handlers.Events.DemarragePartie implements Illuminate.Contracts.Queue.ShouldBeQueued
 class Diplo.Handlers.Events.CreerCarte {
     -factory : Diplo.Cartes.CarteFactory
     -event: Illuminate.Events.Dispatcher
     +__construct(factory : Diplo.Cartes.CarteFactory)
-    +handle(event : Diplo.Events.PartiePreteACommencer)
+    +handle(event : Diplo.Events.CarteAEteCreee)
 }
 class Diplo.Handlers.Events.CloturerPartie {
     +__construct()

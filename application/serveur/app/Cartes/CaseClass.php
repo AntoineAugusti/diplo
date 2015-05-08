@@ -30,14 +30,14 @@ class CaseClass extends Model implements CaseInterface
      *
      * @var array
      */
-    protected $appends = ['est_libre', 'id_joueur', 'est_occupee', 'id_armee', 'id_cases_voisines'];
+    protected $appends = ['est_libre', 'est_occupee', 'id_armee', 'id_cases_voisines'];
 
     /**
      * Les attributs cachés lors de la conversion en array ou JSON.
      *
      * @var array
      */
-    protected $hidden = ['id_carte', 'armee', 'created_at', 'updated_at'];
+    protected $hidden = ['id_carte', 'armee', 'joueur', 'created_at', 'updated_at'];
 
     /**
      * Les attributs du modèle qui doivent être castés vers des types.
@@ -46,6 +46,7 @@ class CaseClass extends Model implements CaseInterface
      */
     protected $casts = [
         'id' => 'integer',
+        'id_joueur' => 'integer',
     ];
 
     /**
@@ -86,21 +87,6 @@ class CaseClass extends Model implements CaseInterface
     public function getEstLibreAttribute()
     {
         return is_null($this->getJoueur());
-    }
-
-    /**
-     * Retourne l'identifiant du joueur possédant la case ou null si elle n'est pas possédée.
-     *
-     * @return int | null
-     */
-    public function getIdJoueurAttribute()
-    {
-        $joueur = $this->getJoueur();
-        if (is_null($joueur)) {
-            return null;
-        }
-
-        return $joueur->getId();
     }
 
     /**
@@ -204,23 +190,17 @@ class CaseClass extends Model implements CaseInterface
     }
 
     /**
-     * Pose une armée sur une case.
+     * Définit le joueur possèdant la case.
      *
-     * @param Armee $armee
+     * @param Joueur $joueur
      */
-    public function setArmee(Armee $armee)
+    public function setJoueur(Joueur $joueur)
     {
-        $this->update([
-            'id_joueur' => $armee->getJoueur()->getId(),
-        ]);
-
-        $armee->update([
-            'id_case' => $this->getId(),
-        ]);
+        $this->id_joueur = $joueur->getId();
     }
 
     /**
-     * Récupère le joueur sur la case.
+     * Récupère le joueur possèdant la case.
      *
      * @return Joueur | null
      */
@@ -230,9 +210,9 @@ class CaseClass extends Model implements CaseInterface
     }
 
     /**
-     * Définit la relation avec le joueur sur la case.
+     * Définit la relation avec le joueur possèdant la case.
      *
-     * @return Joueur
+     * @return Joueur|null
      */
     public function joueur()
     {
