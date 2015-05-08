@@ -13,12 +13,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import fr.insarouen.asi.diplo.MoteurJeu.*;
-import fr.insarouen.asi.diplo.Reseau.*;
-import fr.insarouen.asi.diplo.Exception.ReseauException.*;
 import fr.insarouen.asi.diplo.Exception.OrdresException.*;
+import fr.insarouen.asi.diplo.Exception.ReseauException.*;
+import fr.insarouen.asi.diplo.MoteurJeu.*;
 import fr.insarouen.asi.diplo.MoteurJeu.Negociation.*;
 import fr.insarouen.asi.diplo.MoteurJeu.Ordres.*;
+import fr.insarouen.asi.diplo.Reseau.*;
 
 public class Cli {
 	private String ordre;
@@ -52,14 +52,15 @@ public class Cli {
 			partie.getJoueurs();
 			System.out.println(listeJoueurs.size());
 			for (Joueur j : listeJoueurs.values()) {
-				this.joueur = j;				
-				System.out.println("Votre pseudo : "+this.joueur.getPseudo());
-				System.out.println("Votre pays : "+this.joueur.getPays());
+				this.joueur = j;
+				System.out.println("Votre pseudo : " +
+				this.joueur.getPseudo());
+				System.out.println("Votre pays : " +
+				this.joueur.getPays());
 			}
 		} catch (PartieIntrouvableException e) {
 			System.out.println(e.getMessage());
-		}
-		catch (PartiePleineException e) {
+		} catch (PartiePleineException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -141,8 +142,7 @@ public class Cli {
 		}
 	}
 
-	public void commandeCreerConversation(String
-	listePseudos) {
+	public void commandeCreerConversation(String listePseudos) {
 		try {
 			// int partieID = partie.getID();
 			int partieID = 1;
@@ -158,7 +158,10 @@ public class Cli {
 					pseudos[i]).getId());
 				Conversation conversation =
 				moteur.creerConversation(destinataires);
-				System.out.println("ID de la conversation avec "+listePseudos+" : "+conversation.getID());
+				System.out.println(
+				"ID de la conversation avec " +
+				listePseudos + " : " +
+				conversation.getID());
 			} else {
 				System.out.println(
 				"Vous n'êtes pas en phase de négociation.");
@@ -177,8 +180,9 @@ public class Cli {
 			if (moteur.recupererInfosPhase(
 			partieID).getStatutPhaseCourante() ==
 			Phase.Statut.NEGOCIATION) {
-				moteur.posterMessage(Integer.parseInt(idConversation),
-				this.joueur.getId(), message);
+				moteur.posterMessage(Integer.parseInt(
+				idConversation), this.joueur.getId(),
+				message);
 			} else {
 				System.out.println(
 				"Vous n'êtes pas en phase de négociation.");
@@ -195,18 +199,23 @@ public class Cli {
 			new ArrayList<Conversation>();
 			String listeJoueurs = "";
 			ArrayList<Integer> joueurs = new ArrayList<Integer>();
-
 			if (moteur.recupererInfosPhase(
 			partieID).getStatutPhaseCourante() ==
 			Phase.Statut.NEGOCIATION) {
-				conversations = moteur.recupererInfosConversationSelonJoueur(this.joueur.getId());
+				conversations =
+				moteur.recupererInfosConversationSelonJoueur(
+					this.joueur.getId());
 				System.out.println("Conversations : ");
 				for (Conversation c : conversations) {
 					joueurs = c.getIdJoueurs();
-					for(Joueur j : joueurs) {
-						listeJoueurs = listeJoueurs + j.getPseudo()+", ";
-					}
-					System.out.println("ID : "+c.getID()+", Joueurs : "+listeJoueurs.substring(0, listeJoueurs.length - 2));
+					for (Integer j : joueurs)
+						listeJoueurs = listeJoueurs +
+						partie.getJoueur(
+							j).getPseudo() + ", ";
+					System.out.println("ID : " + c.getID() +
+					", Joueurs : " +
+					listeJoueurs.substring(0,
+					listeJoueurs.length() - 2));
 				}
 			} else {
 				System.out.println(
@@ -223,18 +232,23 @@ public class Cli {
 			String listeJoueurs = "";
 			ArrayList<Integer> joueurs = new ArrayList<Integer>();
 			ArrayList<Message> messages = new ArrayList<Message>();
-
 			if (moteur.recupererInfosPhase(
 			partieID).getStatutPhaseCourante() ==
 			Phase.Statut.NEGOCIATION) {
-				Conversation conversation = moteur.recupererInfosConversation(Integer.parseInt(idConversation));
+				Conversation conversation =
+				moteur.recupererInfosConversation(
+					Integer.parseInt(idConversation));
 				System.out.println("Conversation : ");
 				System.out.println("");
-				messages = c.getMessages();
-				for(Message m : messages) {
-					System.out.println("Joueur : "+partie.getJoueur(m.getIdJoueur()).getPseudo());
-					System.out.println("Date : "+m.getDateCreation());
-					System.out.println("Texte : "+m.getTexte());
+				messages = conversation.getMessages();
+				for (Message m : messages) {
+					System.out.println("Joueur : " +
+					partie.getJoueur(
+					m.getIdJoueur()).getPseudo());
+					System.out.println("Date : " +
+					m.getDateCreation());
+					System.out.println("Texte : " +
+					m.getTexte());
 					System.out.println("");
 				}
 			} else {
@@ -247,24 +261,27 @@ public class Cli {
 	}
 
 	public void commandeListerArmees() {
-		try {
-
-		} catch (Exception e) {
+		try {} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
 	public void commandeAfficherParticipants() {
 		try {
+			int partieID = partie.getID();
 			if (moteur.recupererInfosPhase(
 			partieID).getStatutPhaseCourante() !=
-			Phase.Statut.INACTIF) {		
-				ArrayList<Joueur> participants = moteur.recupererInfosJoueurs(partie.getID());
-				for (Joueur j : participants) {
-					System.out.println("Pseudo : "+j.getPseudo()+", Couleur : "+j.getCouleurJoueur());
-				}
+			Phase.Statut.INACTIF) {
+				ArrayList<Joueur> participants =
+				moteur.recupererInfosJoueurs(
+					partie.getID());
+				for (Joueur j : participants)
+					System.out.println("Pseudo : " +
+					j.getPseudo() + ", Couleur : " +
+					j.getCouleurJoueur());
 			} else {
-				System.out.println("La partie n'a pas encore commencée.")
+				System.out.println(
+				"La partie n'a pas encore commencée.");
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -272,9 +289,12 @@ public class Cli {
 	}
 
 	public void commandePhaseCourante() {
-		try {	
-			Phase phase = moteur.recupererInfosJoueurs(partie.getID());
-			System.out.println("Phase : "+phase.getStatutPhaseCourante()+", Temps : "+phase.getChrono());
+		try {
+			Phase phase = moteur.recupererInfosPhase(
+				partie.getID());
+			System.out.println("Phase : " +
+			phase.getStatutPhaseCourante() + ", Temps : " +
+			phase.getChrono());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -377,7 +397,8 @@ public class Cli {
 		System.out.println(setBoldText + "NOM" + setPlainText);
 		System.out.println("creerConversation");
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
-		System.out.println("Créer une conversation associée une liste de joueurs");
+		System.out.println(
+		"Créer une conversation associée une liste de joueurs");
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
 		System.out.println(
 		"pseudos  La liste de pseudos des joueurs à qui envoyer le message séparé par des virgules");
@@ -386,9 +407,11 @@ public class Cli {
 		System.out.println(setBoldText + "NOM" + setPlainText);
 		System.out.println("envoyerMessage");
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
-		System.out.println("Envoyer un message à une liste de joueurs dans une conversation");
+		System.out.println(
+		"Envoyer un message à une liste de joueurs dans une conversation");
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
-		System.out.println("idConversation L'id de la conversation où l'on veut poster le message");
+		System.out.println(
+		"idConversation L'id de la conversation où l'on veut poster le message");
 		System.out.println(
 		"pseudos  La liste de pseudos des joueurs à qui envoyer le message");
 		System.out.println("");
@@ -405,7 +428,8 @@ public class Cli {
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
 		System.out.println("Affiche l'historique d'une conversation");
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
-		System.out.println("idConversation L'id de la conversation à afficher");
+		System.out.println(
+		"idConversation L'id de la conversation à afficher");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
@@ -429,7 +453,8 @@ public class Cli {
 		System.out.println(setBoldText + "NOM" + setPlainText);
 		System.out.println("phaseCourante");
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
-		System.out.println("Affiche la phase courante et le temps restant");
+		System.out.println(
+		"Affiche la phase courante et le temps restant");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);

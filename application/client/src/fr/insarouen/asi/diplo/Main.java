@@ -2,9 +2,9 @@ package fr.insarouen.asi.diplo;
 
 import fr.insarouen.asi.diplo.Affichage.Cli;
 import fr.insarouen.asi.diplo.MoteurJeu.*;
-import org.json.*;
 import java.lang.*;
 import java.util.*;
+import org.json.*;
 
 
 public class Main {
