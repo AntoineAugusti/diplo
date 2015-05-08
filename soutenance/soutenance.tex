@@ -49,6 +49,17 @@
 }
 \date{12 mai 2015}
 
+% Générer une page de titre à chaque début de section
+\AtBeginSection[]
+{
+	\begin{frame}
+	\frametitle{On parle de quoi ?}
+		\begin{center}\Huge
+			\textbf{\insertsection}
+		\end{center}
+	\end{frame}
+}
+
 % Début du document
 \begin{document}
 
@@ -62,6 +73,9 @@
 		\frametitle{Sommaire}
 		\tableofcontents
 	\end{frame}
+
+	\section{Spécifications}
+		\input{textes/specifications}
 
 	\section{Choix techniques}
 		\input{textes/choix-techniques}
