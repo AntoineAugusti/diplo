@@ -21,6 +21,7 @@ public class Cli {
 	private String ordre;
 	private Jeu partie;
 	private Moteur moteur;
+	private Joueur joueur;
 	// private String pseudo, pays;
 	public static final char ESC = 27;
 
@@ -61,6 +62,8 @@ public class Cli {
 		try {
 			this.partie = moteur.rejoindrePartie(Integer.parseInt(idPartie));
 			System.out.println(partie.toString());
+			HashMap<String, Joueur> listeJoueurs = partie.getJoueurs();
+			this.joueur = listeJoueurs.get(0);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -122,9 +125,23 @@ public class Cli {
 		}
 	}
 
-	public void commandeEnvoyerMessage(String message, String pseudos) {
+	public void commandeEnvoyerMessage(String message, String listePseudos) {
 		try {
-			// appeler méthode envoyer messages qui va aller chercher l'id associé au pseudo
+			int partieID = partie.getID();
+			ArrayList<int> destinataires = new ArrayList<int>();
+
+			if (moteur.recupererInfosPhase(partieID).getStatutPhaseCourante() == Phase.Statut.NEGOCIATION) {
+				String[] pseudos = this.listePseudos.split(",");
+
+				for (int i = 0, i < pseudos.length(), i++) {
+					destinataires.add(partie.getJoueurByPseudo(pseudos[i]));
+				}
+
+				Conversation conversation = moteur.creerConversation(destinataires);
+				moteur.posterMessage(conversation.getID(), , message);
+			} else {
+				System.out.println("Vous n'êtes pas en phase de négociation.");
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
