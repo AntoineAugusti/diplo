@@ -2,6 +2,7 @@
 
 namespace Diplo\Providers;
 
+use Diplo\Events\CarteAEteCreee;
 use Diplo\Events\PartieChangeDeTour;
 use Diplo\Events\PartieEstTerminee;
 use Diplo\Events\PartiePreteACommencer;
@@ -22,8 +23,10 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         PartiePreteACommencer::class => [
-            DemarragePartie::class,
             CreerCarte::class,
+        ],
+        CarteAEteCreee::class => [
+            DemarragePartie::class,
         ],
         PartieEstTerminee::class => [
             CloturerPartie::class,

@@ -64,28 +64,29 @@ skinparam database {
 }
 class Diplo.Handlers.Events.DemarragePartie {
     -queue : Queue
-    +handle(event : Diplo.Events.PartiePreteACommencer)
     +__construct(queue : Illuminate.Queue.QueueManager)
+    +handle(event : Diplo.Events.PartiePreteACommencer)
 }
 class Diplo.Handlers.Events.DemarragePartie implements Illuminate.Contracts.Queue.ShouldBeQueued
 class Diplo.Handlers.Events.CreerCarte {
-    #factory : Diplo.Cartes.CarteFactory
-    +handle(event : Diplo.Events.PartiePreteACommencer)
+    -factory : Diplo.Cartes.CarteFactory
+    -event: Illuminate.Events.Dispatcher
     +__construct(factory : Diplo.Cartes.CarteFactory)
+    +handle(event : Diplo.Events.PartiePreteACommencer)
 }
 class Diplo.Handlers.Events.CloturerPartie {
-    +handle(event : Diplo.Events.PartieEstTerminee)
     +__construct()
+    +handle(event : Diplo.Events.PartieEstTerminee)
 }
 class Diplo.Handlers.Events.CloturerPartie implements Illuminate.Contracts.Queue.ShouldBeQueued
 class Diplo.Handlers.Events.ExecuterOrdres {
-    #application : Illuminate.Contracts.Foundation.Application
-    #executeurs : OrdreExecuteur[] = []
     -ordreRepository : Diplo.Ordres.OrdreRepository
+    -application : Illuminate.Contracts.Foundation.Application
+    -executeurs : OrdreExecuteur[] = []
+    +__construct(application : Illuminate.Contracts.Foundation.Application, ordreRepository : Diplo.Ordres.OrdreRepository)
+    +handle(event : Diplo.Events.PartieChangeDeTour)
     #executer(ordre : Diplo.Ordres.Ordre, ordres)
     #getOrdreExecuteur(ordre : Diplo.Ordres.Ordre) : Diplo.Ordres.OrdreExecuteur
-    +handle(event : Diplo.Events.PartieChangeDeTour)
     #verifierOrdre(ordre : Diplo.Ordres.Ordre) : bool
-    +__construct(application : Illuminate.Contracts.Foundation.Application, ordreRepository : Diplo.Ordres.OrdreRepository)
 }
 @enduml
