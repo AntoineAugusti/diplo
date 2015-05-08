@@ -1,0 +1,149 @@
+@startuml
+
+skinparam shadowing false
+skinparam stereotypeCBackgroundColor #5B9BD5
+' skinparam backgroundColor transparent
+
+skinparam note {
+  BackgroundColor #73AE42
+  BorderColor #6CA43E
+  FontColor white
+}
+
+skinparam class {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #FFFFFF
+}
+
+skinparam sequence {
+  ArrowColor #6CA43E
+
+  LifeLineBorderColor #6CA43E
+  LifeLineBackgroundColor #73AE42
+
+  ParticipantBorderColor #2E75B5
+  ParticipantBackgroundColor #5B9BD5
+
+  ActorBorderColor #2E75B5
+  ActorBackgroundColor #5B9BD5
+
+  BoxLineColor #A5A5A5
+}
+
+skinparam state {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam usecase {
+  BackgroundColor #EEEEEE
+  BorderColor #9E9E9E
+
+  ArrowColor #6CA43E
+  ActorBorderColor #6CA43E
+}
+
+skinparam component {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam node {
+  BackgroundColor #FFFFFF
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam database {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+abstract class Diplo.Ordres.Ordre {
+    #armee : Diplo.Armees.Armee
+    #joueur : Diplo.Joueurs.Joueur
+    +typeAcceptes : array = ["Tenir", "Attaquer", "SoutienDefensif", "SoutienOffensif"]
+    +getArmee() : Diplo.Armees.Armee
+    +getJoueur() : Diplo.Joueurs.Joueur
+    +{static}presenteOrdresPossibles() : string
+    +setArmee(armee : Diplo.Armees.Armee)
+    +setJoueur(joueur : Diplo.Joueurs.Joueur)
+}
+class Diplo.Ordres.AttaquerExecuteur {
+    #armeeRepository : Diplo.Armees.ArmeeRepository
+    #calculerSoutiens(estBonTypeSoutien : Closure, caseId : int, ordres : array) : int
+    #calculerSoutiensDefensifs(caseId : int, ordres : Ordre[]) : int
+    #calculerSoutiensOffensifs(caseId : int, ordres : Ordre[]) : int
+    #deplacerArmeeAleatoirementOuDetruire(armee : Diplo.Armees.Armee)
+    +executer(ordre : Diplo.Ordres.Ordre, autresOrdres : Ordre[])
+    +verifierOrdre(ordre : Diplo.Ordres.Ordre) : bool
+    +__construct(armeeRepository : Diplo.Armees.ArmeeRepository)
+}
+class Diplo.Ordres.AttaquerExecuteur extends Diplo.Ordres.OrdreCibleExecuteur
+class Diplo.Ordres.TenirExecuteur {
+    +executer(ordre : Diplo.Ordres.Ordre, autresOrdres : Ordre[])
+    +verifierOrdre(ordre : Diplo.Ordres.Ordre) : bool
+}
+class Diplo.Ordres.TenirExecuteur extends Diplo.Ordres.OrdreExecuteur
+abstract class Diplo.Ordres.OrdreExecuteur {
+    +executer(ordre : Diplo.Ordres.Ordre, autresOrdres : Ordre[])
+    +verifierOrdre(ordre : Diplo.Ordres.Ordre) : bool
+}
+class Diplo.Ordres.SoutienOffensif {
+}
+class Diplo.Ordres.SoutienOffensif extends Diplo.Ordres.OrdreCible
+abstract class Diplo.Ordres.OrdreCible {
+    #caseCible : Diplo.Cartes.CaseInterface
+    +getCase() : Diplo.Cartes.CaseInterface
+    +setCase(case : Diplo.Cartes.CaseInterface)
+}
+class Diplo.Ordres.OrdreCible extends Diplo.Ordres.Ordre
+interface Diplo.Ordres.OrdreRepository {
+    +marquerTousLesOrdresCommeExecutes(partie : Diplo.Parties.Partie)
+    +passerOrdre(armee : Diplo.Armees.Armee, type : string, case : Diplo.Cartes.CaseClass = null) : OrdreModel
+}
+class Diplo.Ordres.Attaquer {
+}
+class Diplo.Ordres.Attaquer extends Diplo.Ordres.OrdreCible
+class Diplo.Ordres.SoutienOffensifExecuteur {
+    +executer(ordre : Diplo.Ordres.Ordre, autresOrdres : Ordre[])
+    +verifierOrdre(ordre : Diplo.Ordres.Ordre) : bool
+}
+class Diplo.Ordres.SoutienOffensifExecuteur extends Diplo.Ordres.OrdreCibleExecuteur
+class Diplo.Ordres.OrdreModel {
+    #casts : array = ["integer", "boolean"]
+    #fillable : array = ["type", "id_armee", "id_case"]
+    #ordre : Ordre
+    #table : string = "ordres"
+    +armee() : Illuminate.Database.Eloquent.Relations.BelongsTo
+    +caseCible() : Illuminate.Database.Eloquent.Relations.BelongsTo
+    +executer()
+    +getOrdre() : Ordre
+    #recreerOrdre()
+    +setOrdre(ordre : Diplo.Ordres.Ordre)
+}
+class Diplo.Ordres.OrdreModel extends Illuminate.Database.Eloquent.Model
+class Diplo.Ordres.SoutienDefensif {
+}
+class Diplo.Ordres.SoutienDefensif extends Diplo.Ordres.OrdreCible
+class Diplo.Ordres.EloquentOrdreRepository {
+    +marquerTousLesOrdresCommeExecutes(partie : Diplo.Parties.Partie)
+    +passerOrdre(armee : Diplo.Armees.Armee, type : string, case : Diplo.Cartes.CaseClass = null) : OrdreModel
+}
+class Diplo.Ordres.EloquentOrdreRepository implements Diplo.Ordres.OrdreRepository
+abstract class Diplo.Ordres.OrdreCibleExecuteur {
+    #verifierSiCaseCibleEstCaseVoisine(ordre : Diplo.Ordres.OrdreCible) : bool
+}
+class Diplo.Ordres.OrdreCibleExecuteur extends Diplo.Ordres.OrdreExecuteur
+class Diplo.Ordres.Tenir {
+}
+class Diplo.Ordres.Tenir extends Diplo.Ordres.Ordre
+class Diplo.Ordres.SoutienDefensifExecuteur {
+    +executer(ordre : Diplo.Ordres.Ordre, autresOrdres : Ordre[])
+    +verifierOrdre(ordre : Diplo.Ordres.Ordre) : bool
+}
+class Diplo.Ordres.SoutienDefensifExecuteur extends Diplo.Ordres.OrdreCibleExecuteur
+@enduml

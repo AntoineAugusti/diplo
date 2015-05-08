@@ -1,0 +1,91 @@
+@startuml
+
+skinparam shadowing false
+skinparam stereotypeCBackgroundColor #5B9BD5
+' skinparam backgroundColor transparent
+
+skinparam note {
+  BackgroundColor #73AE42
+  BorderColor #6CA43E
+  FontColor white
+}
+
+skinparam class {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #FFFFFF
+}
+
+skinparam sequence {
+  ArrowColor #6CA43E
+
+  LifeLineBorderColor #6CA43E
+  LifeLineBackgroundColor #73AE42
+
+  ParticipantBorderColor #2E75B5
+  ParticipantBackgroundColor #5B9BD5
+
+  ActorBorderColor #2E75B5
+  ActorBackgroundColor #5B9BD5
+
+  BoxLineColor #A5A5A5
+}
+
+skinparam state {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam usecase {
+  BackgroundColor #EEEEEE
+  BorderColor #9E9E9E
+
+  ArrowColor #6CA43E
+  ActorBorderColor #6CA43E
+}
+
+skinparam component {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam node {
+  BackgroundColor #FFFFFF
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam database {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+class Diplo.Handlers.Events.DemarragePartie {
+    -queue : Queue
+    +handle(event : Diplo.Events.PartiePreteACommencer)
+    +__construct(queue : Illuminate.Queue.QueueManager)
+}
+class Diplo.Handlers.Events.DemarragePartie implements Illuminate.Contracts.Queue.ShouldBeQueued
+class Diplo.Handlers.Events.CreerCarte {
+    #factory : Diplo.Cartes.CarteFactory
+    +handle(event : Diplo.Events.PartiePreteACommencer)
+    +__construct(factory : Diplo.Cartes.CarteFactory)
+}
+class Diplo.Handlers.Events.CloturerPartie {
+    +handle(event : Diplo.Events.PartieEstTerminee)
+    +__construct()
+}
+class Diplo.Handlers.Events.CloturerPartie implements Illuminate.Contracts.Queue.ShouldBeQueued
+class Diplo.Handlers.Events.ExecuterOrdres {
+    #application : Illuminate.Contracts.Foundation.Application
+    #executeurs : OrdreExecuteur[] = []
+    -ordreRepository : Diplo.Ordres.OrdreRepository
+    #executer(ordre : Diplo.Ordres.Ordre, ordres)
+    #getOrdreExecuteur(ordre : Diplo.Ordres.Ordre) : Diplo.Ordres.OrdreExecuteur
+    +handle(event : Diplo.Events.PartieChangeDeTour)
+    #verifierOrdre(ordre : Diplo.Ordres.Ordre) : bool
+    +__construct(application : Illuminate.Contracts.Foundation.Application, ordreRepository : Diplo.Ordres.OrdreRepository)
+}
+@enduml

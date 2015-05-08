@@ -1,0 +1,105 @@
+@startuml
+
+skinparam shadowing false
+skinparam stereotypeCBackgroundColor #5B9BD5
+' skinparam backgroundColor transparent
+
+skinparam note {
+  BackgroundColor #73AE42
+  BorderColor #6CA43E
+  FontColor white
+}
+
+skinparam class {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #FFFFFF
+}
+
+skinparam sequence {
+  ArrowColor #6CA43E
+
+  LifeLineBorderColor #6CA43E
+  LifeLineBackgroundColor #73AE42
+
+  ParticipantBorderColor #2E75B5
+  ParticipantBackgroundColor #5B9BD5
+
+  ActorBorderColor #2E75B5
+  ActorBackgroundColor #5B9BD5
+
+  BoxLineColor #A5A5A5
+}
+
+skinparam state {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam usecase {
+  BackgroundColor #EEEEEE
+  BorderColor #9E9E9E
+
+  ArrowColor #6CA43E
+  ActorBorderColor #6CA43E
+}
+
+skinparam component {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam node {
+  BackgroundColor #FFFFFF
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam database {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+class Diplo.Http.Controllers.ConversationsController {
+    -conversationsRepo : Diplo.Messages.ConversationsRepository
+    +getConversation(conversation : Diplo.Messages.Conversation) : Response
+    +getConversationJoueur(joueur : Diplo.Joueurs.Joueur) : Response
+    +postConversationMessages(conversation : Diplo.Messages.Conversation, request : Illuminate.Http.Request) : Response
+    +postConversations(request : Illuminate.Http.Request) : Response
+    +__construct(conversationsRepo : Diplo.Messages.ConversationsRepository)
+}
+class Diplo.Http.Controllers.ConversationsController extends Diplo.Http.Controllers.Controller
+abstract class Diplo.Http.Controllers.Controller {
+    #enleveClesPourTableau(a : array, supprime : array) : array
+    #gardeClesPourTableau(a : array, garde : array) : array
+}
+class Diplo.Http.Controllers.Controller extends Illuminate.Routing.Controller
+class Diplo.Http.Controllers.PartiesController {
+    +getArmees(partie : Diplo.Parties.Partie) : Response
+    +getCarte(partie : Diplo.Parties.Partie) : Response
+    +getJoueurs(partie : Diplo.Parties.Partie) : Response
+    +getPhase(partie : Diplo.Parties.Partie) : Response
+    +getStatut(partie : Diplo.Parties.Partie) : Response
+    +postRejoindre(partie : Diplo.Parties.Partie, partiesRepo : Diplo.Parties.PartiesRepository) : Response
+    -prepareReponseRejoindre(partie : Diplo.Parties.Partie, joueur : Diplo.Joueurs.Joueur) : array
+    -statutVersMessage(statut : string) : string
+}
+class Diplo.Http.Controllers.PartiesController extends Diplo.Http.Controllers.Controller
+class Diplo.Http.Controllers.OrdresController {
+    -armeeRepository : Diplo.Armees.ArmeeRepository
+    -caseRepository : Diplo.Cartes.CaseRepository
+    -ordreRepository : Diplo.Ordres.OrdreRepository
+    -responseFactory : Illuminate.Contracts.Routing.ResponseFactory
+    +postOrdre(request : Illuminate.Http.Request) : Illuminate.Contracts.Routing.ResponseFactory
+    -recupererArmee(request : Illuminate.Http.Request) : null|.Diplo.Armees.Armee
+    -recupererCase(request : Illuminate.Http.Request) : null|.Diplo.Cases.CaseInterface
+    +__construct(responseFactory : Illuminate.Contracts.Routing.ResponseFactory, armeeRepository : Diplo.Armees.ArmeeRepository, caseRepository : Diplo.Cartes.CaseRepository, ordreRepository : Diplo.Ordres.OrdreRepository)
+}
+class Diplo.Http.Controllers.OrdresController extends Diplo.Http.Controllers.Controller
+class Diplo.Http.Controllers.WelcomeController {
+    +showWelcome() : Response
+}
+class Diplo.Http.Controllers.WelcomeController extends Diplo.Http.Controllers.Controller
+@enduml

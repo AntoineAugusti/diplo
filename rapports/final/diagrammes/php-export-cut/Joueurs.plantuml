@@ -1,0 +1,106 @@
+@startuml
+
+skinparam shadowing false
+skinparam stereotypeCBackgroundColor #5B9BD5
+' skinparam backgroundColor transparent
+
+skinparam note {
+  BackgroundColor #73AE42
+  BorderColor #6CA43E
+  FontColor white
+}
+
+skinparam class {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #FFFFFF
+}
+
+skinparam sequence {
+  ArrowColor #6CA43E
+
+  LifeLineBorderColor #6CA43E
+  LifeLineBackgroundColor #73AE42
+
+  ParticipantBorderColor #2E75B5
+  ParticipantBackgroundColor #5B9BD5
+
+  ActorBorderColor #2E75B5
+  ActorBackgroundColor #5B9BD5
+
+  BoxLineColor #A5A5A5
+}
+
+skinparam state {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam usecase {
+  BackgroundColor #EEEEEE
+  BorderColor #9E9E9E
+
+  ArrowColor #6CA43E
+  ActorBorderColor #6CA43E
+}
+
+skinparam component {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam node {
+  BackgroundColor #FFFFFF
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam database {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+class Diplo.Joueurs.EloquentJoueursRepository {
+    +trouverParId(id : int) : Joueur
+    +trouverParIds(ids : array) : Illuminate.Database.Eloquent.Collection
+}
+class Diplo.Joueurs.EloquentJoueursRepository implements Diplo.Joueurs.JoueursRepository
+interface Diplo.Joueurs.JoueursRepository {
+    +trouverParId(id : int) : Joueur
+    +trouverParIds(ids : array) : Illuminate.Database.Eloquent.Collection
+}
+class Diplo.Joueurs.Joueur {
+    #appends : array = ["armees_restantes", "cases_controlees"]
+    #casts : array = ["integer", "integer"]
+    #fillable : array = ["pseudo", "pays"]
+    #hidden : array = ["created_at", "updated_at"]
+    +armees() : Illuminate.Database.Eloquent.Relations.HasMany
+    +cases() : Illuminate.Database.Eloquent.Relations.HasMany
+    +conversations() : Illuminate.Database.Eloquent.Relations.BelongsToMany
+    +getArmees() : Armee[]
+    +getArmeesRestantesAttribute() : int
+    +getCases() : CaseInterface[]
+    +getCasesControleesAttribute() : int
+    +getConversations() : Conversation[]
+    +getId() : int
+    +getMessages() : Message[]
+    +getPartie() : Diplo.Parties.Partie
+    +getPays() : string
+    +getPseudo() : string
+    +messages() : Illuminate.Database.Eloquent.Relations.HasMany
+    +partie() : Illuminate.Database.Eloquent.Relations.BelongsTo
+}
+class Diplo.Joueurs.Joueur extends Illuminate.Database.Eloquent.Model
+interface Diplo.Joueurs.JoueurGeneratorInterface {
+    +generate(idDansPartie : int) : Joueur
+}
+class Diplo.Joueurs.JoueurGenerator {
+    +generate(idDansPartie : int) : Joueur
+    -genererPays(index : int) : string
+    -genererPseudo(index : int) : string
+    -idToIndex(id : int) : int
+}
+class Diplo.Joueurs.JoueurGenerator implements Diplo.Joueurs.JoueurGeneratorInterface
+@enduml

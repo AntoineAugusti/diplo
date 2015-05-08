@@ -1,0 +1,90 @@
+@startuml
+
+skinparam shadowing false
+skinparam stereotypeCBackgroundColor #5B9BD5
+' skinparam backgroundColor transparent
+
+skinparam note {
+  BackgroundColor #73AE42
+  BorderColor #6CA43E
+  FontColor white
+}
+
+skinparam class {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #FFFFFF
+}
+
+skinparam sequence {
+  ArrowColor #6CA43E
+
+  LifeLineBorderColor #6CA43E
+  LifeLineBackgroundColor #73AE42
+
+  ParticipantBorderColor #2E75B5
+  ParticipantBackgroundColor #5B9BD5
+
+  ActorBorderColor #2E75B5
+  ActorBackgroundColor #5B9BD5
+
+  BoxLineColor #A5A5A5
+}
+
+skinparam state {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam usecase {
+  BackgroundColor #EEEEEE
+  BorderColor #9E9E9E
+
+  ArrowColor #6CA43E
+  ActorBorderColor #6CA43E
+}
+
+skinparam component {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam node {
+  BackgroundColor #FFFFFF
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam database {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+class Diplo.Providers.RouteServiceProvider {
+    #namespace : string = "Diplo\Http\Controllers"
+    +boot(router : Illuminate.Routing.Router)
+    +map(router : Illuminate.Routing.Router)
+}
+class Diplo.Providers.RouteServiceProvider extends Illuminate.Foundation.Support.Providers.RouteServiceProvider
+class Diplo.Providers.AppServiceProvider {
+    +boot()
+    +register()
+}
+class Diplo.Providers.AppServiceProvider extends Illuminate.Support.ServiceProvider
+class Diplo.Providers.BusServiceProvider {
+    +boot(dispatcher : Illuminate.Bus.Dispatcher)
+    +register()
+}
+class Diplo.Providers.BusServiceProvider extends Illuminate.Support.ServiceProvider
+class Diplo.Providers.ConfigServiceProvider {
+    +register()
+}
+class Diplo.Providers.ConfigServiceProvider extends Illuminate.Support.ServiceProvider
+class Diplo.Providers.EventServiceProvider {
+    #listen : array = false
+    +boot(events : Illuminate.Contracts.Events.Dispatcher)
+}
+class Diplo.Providers.EventServiceProvider extends Illuminate.Foundation.Support.Providers.EventServiceProvider
+@enduml

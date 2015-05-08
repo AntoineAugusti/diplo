@@ -1,0 +1,129 @@
+@startuml
+
+skinparam shadowing false
+skinparam stereotypeCBackgroundColor #5B9BD5
+' skinparam backgroundColor transparent
+
+skinparam note {
+  BackgroundColor #73AE42
+  BorderColor #6CA43E
+  FontColor white
+}
+
+skinparam class {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #FFFFFF
+}
+
+skinparam sequence {
+  ArrowColor #6CA43E
+
+  LifeLineBorderColor #6CA43E
+  LifeLineBackgroundColor #73AE42
+
+  ParticipantBorderColor #2E75B5
+  ParticipantBackgroundColor #5B9BD5
+
+  ActorBorderColor #2E75B5
+  ActorBackgroundColor #5B9BD5
+
+  BoxLineColor #A5A5A5
+}
+
+skinparam state {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam usecase {
+  BackgroundColor #EEEEEE
+  BorderColor #9E9E9E
+
+  ArrowColor #6CA43E
+  ActorBorderColor #6CA43E
+}
+
+skinparam component {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam node {
+  BackgroundColor #FFFFFF
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam database {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+interface Diplo.Cartes.CaseRepository {
+    +trouverParId(id : int) : CaseClass
+}
+class Diplo.Cartes.CaseClass {
+    #appends : array = ["est_libre", "id_joueur", "est_occupee", "id_armee", "id_cases_voisines"]
+    #casts : array = ["integer"]
+    #fillable : array = ["id_carte"]
+    #hidden : array = ["id_carte", "armee", "created_at", "updated_at"]
+    #table : string = "cases"
+    +armee() : Illuminate.Database.Eloquent.Relations.HasOne
+    +carte() : Illuminate.Database.Eloquent.Relations.BelongsTo
+    +casesVoisines() : Illuminate.Database.Eloquent.Relations.BelongsToMany
+    +estOccupee() : bool
+    +getArmee() : Diplo.Armees.Armee
+    +getCarte() : Carte
+    +getCasesVoisines() : CaseInterface[]
+    +getCasesVoisinesIds() : int[]
+    +getEstLibreAttribute() : bool
+    +getEstOccupeeAttribute() : bool
+    +getId() : int
+    +getIdArmeeAttribute() : int|null
+    +getIdCasesVoisinesAttribute() : int[]
+    +getIdJoueurAttribute() : int
+    +getJoueur() : Diplo.Joueurs.Joueur
+    +joueur() : Diplo.Joueurs.Joueur
+    +setArmee(armee : Diplo.Armees.Armee)
+}
+class Diplo.Cartes.CaseClass extends Illuminate.Database.Eloquent.Model
+class Diplo.Cartes.CaseClass implements Diplo.Cartes.CaseInterface
+class Diplo.Cartes.Carte {
+    #fillable : array = ["id_partie"]
+    +cases() : Illuminate.Database.Eloquent.Relations.HasMany
+    +getCases() : CaseClass[]
+    +getId() : int
+    +getPartie() : Diplo.Parties.Partie
+    +partie() : Illuminate.Database.Eloquent.Relations.BelongsTo
+}
+class Diplo.Cartes.Carte extends Illuminate.Database.Eloquent.Model
+class Diplo.Cartes.CaseVoisine {
+    #casts : array = ["integer", "integer", "integer"]
+    #table : string = "cases_cases"
+}
+class Diplo.Cartes.CaseVoisine extends Illuminate.Database.Eloquent.Model
+class Diplo.Cartes.EloquentCaseRepository {
+    +trouverParId(id : int) : CaseClass
+}
+class Diplo.Cartes.EloquentCaseRepository implements Diplo.Cartes.CaseRepository
+interface Diplo.Cartes.CaseInterface {
+    +estOccupee() : bool
+    +getArmee() : Diplo.Armees.Armee
+    +getCasesVoisines() : CaseInterface[]
+    +getCasesVoisinesIds() : int[]
+    +getId() : int
+    +getJoueur() : Diplo.Joueurs.Joueur
+    +setArmee(armee : Diplo.Armees.Armee)
+}
+class Diplo.Cartes.CarteFactory {
+    #cases : array = []
+    #positions : array = [...]
+    #tailleCarre : int = 15
+    +creer(partie : Diplo.Parties.Partie)
+    -definirPositionsArmeesPourJoueur(joueur : Diplo.Joueurs.Joueur, id : int)
+    #getCase(i : int, j : int) : CaseInterface
+}
+@enduml
