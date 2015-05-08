@@ -1,5 +1,14 @@
-\section{Côté serveur}
+\section{Architecture générale}
+	Un schéma de l'architecture générale de l'application est présenté dans la figure~\ref{fig:architecture-generale}. Les composants seront vus en détail dans les parties suivantes.
 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\textwidth]{images/architecture.png}
+		\caption{Architecture générale}
+		\label{fig:architecture-generale}
+	\end{figure}
+
+\section{Côté serveur}
 	\subsection{Une API REST}
 		Nous avons décider de proposer une API REST pour le serveur de notre application. Ce choix s'explique par la popularité de ce type d'API depuis plusieurs années, et surtout sa capacité à pouvoir être utilisée facilement (peu de firewalls bloquent le port 443 correspondant au HTTPS) et rapidement (tous les langages et frameworks proposent des méthodes d'accès à ce type d'API).
 
