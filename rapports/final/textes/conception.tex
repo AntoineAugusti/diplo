@@ -10,51 +10,131 @@
 \section{Diagramme de classes participantes}
 	\subsection{Partie Serveur}
 		\subsubsection{Moteur du jeu}
+        Les diagrammes décrivant le moteur du jeu sont les figures \ref{pparties}, \ref{parmees}, \ref{pcartes}, \ref{pjoueurs}, \ref{pmessages}.
 			\begin{figure}[!h]
 				\centering
-                \includegraphics[scale=0.3]{diagrammes/php-export-cut/Parties.png}
-				\caption{Package Parties}
+                \includegraphics[scale=0.4]{diagrammes/php-export-cut/Parties.png}
+                \caption{\label{pparties}Package Parties}
 			\end{figure}
+
 			\begin{figure}[!h]
 				\centering
-                \includegraphics[scale=0.3]{diagrammes/php-export-cut/Armees.png}
-				\caption{Package Armees}
+                \includegraphics[scale=0.4]{diagrammes/php-export-cut/Armees.png}
+                \caption{\label{parmees}Package Armees}
 			\end{figure}
+            
 			\begin{figure}[!h]
 				\centering
-                \includegraphics[scale=0.2, angle=90]{diagrammes/php-export-cut/Cartes.png}
-				\caption{Package Cartes}
+                \includegraphics[scale=0.25]{diagrammes/php-export-cut/Cartes.png}
+                \caption{\label{pcartes}Package Cartes}
 			\end{figure}
-		\newpage
-        \pagebreak
+
+			\begin{figure}[!h]
+				\centering
+                \includegraphics[scale=0.4]{diagrammes/php-export-cut/Joueurs.png}
+                \caption{\label{pjoueurs}Package Joueurs}
+			\end{figure}
+
+			\begin{figure}[h!]
+				\centering
+                \includegraphics[scale=0.32]{diagrammes/php-export-cut/Messages.png}
+                \caption{\label{pmessages}Package Messages}
+                \pagebreak
+			\end{figure} 
+
+        \newpage
+        \subsubsection{Les phases du jeu}
+        Les diagrammes décrivant les phases du jeu sont les figures \ref{pphases}, \ref{pevents}.
+
+			\begin{figure}[!h]
+				\centering
+                \includegraphics[scale=0.5]{diagrammes/php-export-cut/Phases.png}
+                \caption{\label{pphases}Package Phases}
+			\end{figure}
+
+			\begin{figure}[!h]
+				\centering
+                \includegraphics[scale=0.4]{diagrammes/php-export-cut/Events.png}
+                \caption{\label{pevents}Package Events}
+			\end{figure}
+        
+        \newpage
+        \subsubsection{Les controleurs}
+        Les diagrammes décrivant les phases du jeu sont les figures \ref{phcontrollers}, \ref{phandlers}, \ref{pcommands}, \ref{pconsole}, \ref{phmiddleware}.
+        
+		%	\begin{figure}[!h]
+		%		\centering
+        %        \includegraphics[scale=0.2, angle=90]{diagrammes/php-export-cut/Http_Controllers.png}
+        %        \caption{\label{phcontrollers}Package Http.Controllers}
+		%	\end{figure}
+
+			\begin{figure}[!h]
+				\centering
+                \includegraphics[scale=0.25]{diagrammes/php-export-cut/Handlers.png}
+                \caption{\label{phandlers}Package Handlers}
+			\end{figure}
+
+			\begin{figure}[!h]
+				\centering
+                \includegraphics[scale=0.5]{diagrammes/php-export-cut/Commands.png}
+                \caption{\label{pcommands}Package Commands}
+			\end{figure}
+
+			\begin{figure}[!h]
+				\centering
+                \includegraphics[scale=0.5]{diagrammes/php-export-cut/Console.png}
+                \caption{\label{pconsole}Package Console}
+			\end{figure}
+
+			\begin{figure}[!h]
+				\centering
+                \includegraphics[scale=0.5]{diagrammes/php-export-cut/Http_Middleware.png}
+                \caption{\label{phmiddleware}Package Http.Middleware}
+			\end{figure}
+
+        \newpage
+        \subsubsection{Le framework}
+        Les diagrammes décrivant l'utilisation du framework laraval sont les figures \ref{pproviders}
+			\begin{figure}[!h]
+				\centering
+                \includegraphics[scale=0.25]{diagrammes/php-export-cut/Providers.png}
+                \caption{\label{pproviders}Package Providers}
+			\end{figure}
+        \newpage
+
+        \newpage
 		\subsubsection{Les ordres}
 			% \begin{figure}[!h]
 			% 	\centering
 			% 	\includegraphics[scale=0.5]{images/DCP2.png}
 			% 	\caption{Les ordres}
 			% \end{figure}
-			\vspace{10mm}
-			\begin{figure}[!h]
-				\centering
-                \includegraphics[scale=0.3, angle=90]{diagrammes/php-export-cut/Ordres.png}
-				\caption{Package Ordres}
-			\end{figure}
+			%\vspace{10mm}
+			%\begin{figure}[!h]
+			%	\centering
+            %    \includegraphics[scale=0.25, angle=90]{diagrammes/php-export-cut/Ordres.png}
+			%	\caption{Package Ordres}
+			%\end{figure}
 
+        \newpage
 		\subsubsection{Les exceptions}
-			\vspace{10mm}
-			\begin{figure}[!h]
-				\centering
-                \includegraphics[scale=0.3, angle=90]{diagrammes/php-export-cut/Exceptions.png}
-				\caption{Package Exceptions}
-			\end{figure}
+			%\vspace{10mm}
+		   % \begin{figure}[!h]
+		   % 	\centering
+           %     \includegraphics[scale=0.3, angle=90]{diagrammes/php-export-cut/Exceptions.png}
+		   % 	\caption{Package Exceptions}
+		   % \end{figure}
 			% \begin{figure}[!h]
 			% 	\centering
 			% 	\includegraphics[scale=0.5]{images/DCP3.png}
 			% 	\caption{Les exceptions}
 			% \end{figure}
-		\newpage
+
+        
+    \pagebreak
 	\subsection{Partie Client}
 
+    \newpage
 \section{Diagramme de packages}
 	\subsection{Partie Serveur}
 		\subsubsection{Première partie}
