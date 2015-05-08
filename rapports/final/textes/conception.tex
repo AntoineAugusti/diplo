@@ -1,130 +1,111 @@
 \section{Diagramme de cas d'utilisation}
-	\begin{figure}[!h]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.4]{images/UseCase.png}
 		\caption{Diagramme de cas d'utilisation}
 	\end{figure}
 
-\newpage
 
 \section{Diagramme de classes participantes}
 	\subsection{Partie Serveur}
 		\subsubsection{Moteur du jeu}
         Les diagrammes décrivant le moteur du jeu sont les figures \ref{pparties}, \ref{parmees}, \ref{pcartes}, \ref{pjoueurs}, \ref{pmessages}.
-			\begin{figure}[!h]
+			\begin{figure}[H]
 				\centering
-                \includegraphics[scale=0.4]{diagrammes/php-export-cut/Parties.png}
+                \includegraphics[scale=0.7]{diagrammes/php-export-cut/Parties.png}
                 \caption{\label{pparties}Package Parties}
 			\end{figure}
 
-			\begin{figure}[!h]
+			\begin{figure}[H]
 				\centering
-                \includegraphics[scale=0.4]{diagrammes/php-export-cut/Armees.png}
+                \includegraphics[scale=0.5]{diagrammes/php-export-cut/Armees.png}
                 \caption{\label{parmees}Package Armees}
 			\end{figure}
-            
-			\begin{figure}[!h]
+
+			\begin{figure}[H]
 				\centering
-                \includegraphics[scale=0.25]{diagrammes/php-export-cut/Cartes.png}
+                \includegraphics[scale=0.3]{diagrammes/php-export-cut/Cartes.png}
                 \caption{\label{pcartes}Package Cartes}
 			\end{figure}
 
-			\begin{figure}[!h]
+			\begin{figure}[H]
 				\centering
-                \includegraphics[scale=0.4]{diagrammes/php-export-cut/Joueurs.png}
+                \includegraphics[scale=0.45]{diagrammes/php-export-cut/Joueurs.png}
                 \caption{\label{pjoueurs}Package Joueurs}
 			\end{figure}
 
 			\begin{figure}[h!]
 				\centering
-                \includegraphics[scale=0.32]{diagrammes/php-export-cut/Messages.png}
+                \includegraphics[scale=0.35]{diagrammes/php-export-cut/Messages.png}
                 \caption{\label{pmessages}Package Messages}
                 \pagebreak
-			\end{figure} 
+			\end{figure}
 
-        \newpage
         \subsubsection{Les phases du jeu}
-        Les diagrammes décrivant les phases du jeu sont les figures \ref{pphases}, \ref{pevents}.
+        Le diagramme décrivant les phases du jeu est visible dans la figure~\ref{pphases}.
 
-			\begin{figure}[!h]
+			\begin{figure}[H]
 				\centering
-                \includegraphics[scale=0.5]{diagrammes/php-export-cut/Phases.png}
+                \includegraphics[scale=0.7]{diagrammes/php-export-cut/Phases.png}
                 \caption{\label{pphases}Package Phases}
 			\end{figure}
 
-			\begin{figure}[!h]
+        \subsubsection{Les contrôleurs HTTP}
+        Le diagrammes décrivant le package \verb|Http.Controllers| étant trop grand, il est consultable à l'URL \url{https://diplo-lejeu.fr/images/http\_controllers.png}.
+
+        \subsubsection{Les événements}
+        Les diagrammes décrivant les événements et la gestion de ceux-ci sont visibles dans les figures \ref{pevents}, \ref{phandlers}, \ref{pcommands}.
+
+        	\begin{figure}[H]
 				\centering
                 \includegraphics[scale=0.4]{diagrammes/php-export-cut/Events.png}
                 \caption{\label{pevents}Package Events}
 			\end{figure}
-        
-        \newpage
-        \subsubsection{Les controleurs}
-        Les diagrammes décrivant les phases du jeu sont les figures \ref{phandlers}, \ref{pcommands}, \ref{pconsole}, \ref{phmiddleware}.
-        Les diagrammes décrivant le package \verb|Http.Controllers| étant trop grand, il est consultable à l'url \url{http://diplo-le-jeu.fr/Http\_Controllers.png}
 
-			\begin{figure}[!h]
+			\begin{figure}[H]
 				\centering
                 \includegraphics[scale=0.25]{diagrammes/php-export-cut/Handlers.png}
                 \caption{\label{phandlers}Package Handlers}
 			\end{figure}
 
-			\begin{figure}[!h]
+			\begin{figure}[H]
 				\centering
-                \includegraphics[scale=0.5]{diagrammes/php-export-cut/Commands.png}
+                \includegraphics[scale=0.7]{diagrammes/php-export-cut/Commands.png}
                 \caption{\label{pcommands}Package Commands}
 			\end{figure}
 
-			\begin{figure}[!h]
-				\centering
-                \includegraphics[scale=0.5]{diagrammes/php-export-cut/Console.png}
-                \caption{\label{pconsole}Package Console}
-			\end{figure}
+        \subsubsection{Les Service Providers}
+        Le diagrammes décrivant les Service Providers, propres au framework Laravel est visible dans la figure~\ref{pproviders}.
 
-			\begin{figure}[!h]
+			\begin{figure}[H]
 				\centering
-                \includegraphics[scale=0.5]{diagrammes/php-export-cut/Http_Middleware.png}
-                \caption{\label{phmiddleware}Package Http.Middleware}
-			\end{figure}
-
-        \newpage
-        \subsubsection{Le framework}
-        Les diagrammes décrivant l'utilisation du framework laraval sont les figures \ref{pproviders}
-			\begin{figure}[!h]
-				\centering
-                \includegraphics[scale=0.25]{diagrammes/php-export-cut/Providers.png}
+                \includegraphics[scale=0.4]{diagrammes/php-export-cut/Providers.png}
                 \caption{\label{pproviders}Package Providers}
 			\end{figure}
-        \newpage
 
-        \newpage
 		\subsubsection{Les ordres}
-        Les diagrammes décrivant les ordres du jeu étant trop grand, ils sont consultables à l'url suivante \url{http://diplo-le-jeu.fr/Ordres.png}
+        Le diagrammes décrivant les ordres du jeu étant trop grand, il est consultable à l'URL suivante \url{https://diplo-lejeu.fr/images/ordres.png}
 
-        \newpage
 		\subsubsection{Les exceptions}
-        Les diagrammes décrivant les exceptions du jeu étant trop grand, ils sont consultables à l'url suivante \url{http://diplo-le-jeu.fr/Exceptions.png}
+        Les diagrammes décrivant les exceptions du jeu étant trop grand, il est consultable à l'URL suivante \url{https://diplo-lejeu.fr/images/exceptions.png}
 
-        
     \pagebreak
 	\subsection{Partie Client}
 
-    \newpage
 \section{Diagramme de packages}
 	\subsection{Partie Serveur}
 		\subsubsection{Première partie}
 			\vspace{10mm}
-			\begin{figure}[!h]
+			\begin{figure}[H]
 				\centering
 				\includegraphics[angle=90,width=150mm]{images/DP1.png}
 				\caption{Première partie}
 			\end{figure}
 
-		\newpage
 
 		\subsubsection{Deuxième partie}
 			\vspace{10mm}
-			\begin{figure}[!h]
+			\begin{figure}[H]
 				\centering
 				\includegraphics[scale=0.4]{images/DP2.png}
 				\caption{Le package Ordres}
@@ -132,26 +113,26 @@
 
 		\subsubsection{Troisième partie}
 			\vspace{10mm}
-			\begin{figure}[!h]
+			\begin{figure}[H]
 				\centering
 				\includegraphics[scale=0.4]{images/DP3.png}
 				\caption{Le package Exceptions}
 			\end{figure}
-		\newpage
+
 	\subsection{Partie Client}
+
 \section{Diagramme de séquence système}
 	\subsection{Créer une partie}
 		\vspace{10mm}
-		\begin{figure}[!h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.5]{images/DSSCreate.png}
 			\caption{Créer une partie}
 		\end{figure}
 
-
 	\subsection{Jouer son tour}
 		\vspace{10mm}
-		\begin{figure}[!h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.3]{images/DSSGameplay.png}
 			\caption{Jouer son tour}
