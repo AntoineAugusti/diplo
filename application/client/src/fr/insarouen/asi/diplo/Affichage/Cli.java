@@ -19,6 +19,7 @@ public class Cli {
 	private String ordre;
 	private Jeu partie;
 	private Moteur moteur;
+	private Joueur joueur;
 	public static final char ESC = 27;
 
 	// constructeur
@@ -30,6 +31,7 @@ public class Cli {
 		this.ordre = null;
 		this.partie = null;
 		this.moteur = new Moteur();
+		this.joueur = new Moteur();
 	}
 
 	// methodes
@@ -37,7 +39,7 @@ public class Cli {
 		this.ordre = ordre;
 	}
 
-	public void commandeCreerPartie(int nbMinJoueurs) {
+	public void commandeCreerPartie(String nbMinJoueurs) {
 		try {
 			// appeler méthode pour créer une partie qui affiche l'id de la partie crée
 		} catch (Exception e) {
@@ -46,11 +48,28 @@ public class Cli {
 		}
 	}
 
-	public void commandeRejoindre(int idPartie) {
+	public void commandeIdentifiants(String nbMinJoueurs) {
 		try {
-			partie = moteur.rejoindrePartie(idPartie);
+			String pseudo, pays;
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Veuillez entrer votre pseudo :");
+			pseudo = sc.nextLine();
+			System.out.println("Veuillez entrer votre nationalité (ex : FRA) :");
+			pays = sc.nextLine();
+
+			this.joueur = new Joueur(pseudo, pays);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return;
+		}
+	}
+
+	public void commandeRejoindre(String idPartie) {
+		try {
+			partie = moteur.rejoindrePartie(Integer.parseInt(idPartie));
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -88,7 +107,10 @@ public class Cli {
 
 	public void commandeAfficherCarte() {
 		try {
-			moteur.recupererInfosCarte(partie.getID());
+			String info = moteur.recupererInfosPartie(
+				partie.getID());
+			System.out.println(info.toString());
+			System.out.println("Blah");
 		} catch (Exception e) {
 			return;
 		}
@@ -193,13 +215,13 @@ public class Cli {
 			if (parametres.length == 2) {
 				method = this.getClass().getMethod("commande" +
 					commande.substring(0, 1).toUpperCase() +
-					commande.substring(1), int.class);
+					commande.substring(1), String.class);
 			}
 			if (parametres.length >= 3) {
 				method = this.getClass().getMethod("commande" +
 					commande.substring(0, 1).toUpperCase() +
 					commande.substring(1), String.class,
-					String.class, String.class);
+					String.class);
 			}
 		} catch (NoSuchMethodException e) {
 			System.out.println(
