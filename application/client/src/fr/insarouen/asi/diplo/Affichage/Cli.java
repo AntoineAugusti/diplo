@@ -128,17 +128,17 @@ public class Cli {
 	public void commandeEnvoyerMessage(String message, String listePseudos) {
 		try {
 			int partieID = partie.getID();
-			ArrayList<int> destinataires = new ArrayList<int>();
+			ArrayList<Integer> destinataires = new ArrayList<Integer>();
 
 			if (moteur.recupererInfosPhase(partieID).getStatutPhaseCourante() == Phase.Statut.NEGOCIATION) {
-				String[] pseudos = this.listePseudos.split(",");
+				String[] pseudos = listePseudos.split(",");
 
-				for (int i = 0, i < pseudos.length(), i++) {
-					destinataires.add(partie.getJoueurByPseudo(pseudos[i]));
+				for (int i = 0; i < pseudos.length; i++) {
+					destinataires.add(partie.getJoueurByPseudo(pseudos[i]).getId());
 				}
 
 				Conversation conversation = moteur.creerConversation(destinataires);
-				moteur.posterMessage(conversation.getID(), , message);
+				moteur.posterMessage(conversation.getID(), this.joueur.getId(), message);
 			} else {
 				System.out.println("Vous n'êtes pas en phase de négociation.");
 			}
@@ -223,7 +223,7 @@ public class Cli {
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
 		System.out.println("numéro de case  La case que l'on veut attaquer");
 		System.out.println("numéro de l'armée  L'armée que l'on veut contrôler");
-		System.out.println("")
+		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
 		System.out.println("soutienDefensif");
@@ -232,7 +232,7 @@ public class Cli {
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
 		System.out.println("numéro de case  La case que l'on veut soutenir");
 		System.out.println("numéro de l'armée  L'armée que l'on veut contrôler");
-		System.out.println("")
+		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
 		System.out.println("soutienOffensif");
@@ -241,7 +241,7 @@ public class Cli {
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
 		System.out.println("numéro de case  La case que l'on veut soutenir");
 		System.out.println("numéro de l'armée  L'armée que l'on veut contrôler");
-		System.out.println("")
+		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
 		System.out.println("tenir");
