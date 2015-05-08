@@ -394,6 +394,21 @@ public class Cli {
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
+		System.out.println("infosConversations");
+		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
+		System.out.println("Récupère les ids des conversations");
+		System.out.println(setBoldText + "OPTIONS" + setPlainText);
+		System.out.println("");
+
+		System.out.println(setBoldText + "NOM" + setPlainText);
+		System.out.println("historiqueConversation");
+		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
+		System.out.println("Affiche l'historique d'une conversation");
+		System.out.println(setBoldText + "OPTIONS" + setPlainText);
+		System.out.println("idConversation L'id de la conversation à afficher");
+		System.out.println("");
+
+		System.out.println(setBoldText + "NOM" + setPlainText);
 		System.out.println("listerUnites");
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
 		System.out.println("Lister les unités possédées");
