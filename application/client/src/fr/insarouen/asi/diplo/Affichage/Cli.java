@@ -80,6 +80,48 @@ public class Cli {
 		}
 	}
 
+	public void commandeSoutienDefensif(String numeroCase, String numeroArmee) {
+		try {
+			int partieID = partie.getID();
+			if (moteur.recupererInfosPhase(partieID).getStatutPhaseCourante() == Phase.Statut.COMBAT) {
+				SoutienDefensif ordre = new SoutienDefensif(Integer.parseInt(numeroCase), Integer.parseInt(numeroArmee));
+				moteur.posterOrdre(partieID, ordre);
+			} else {
+				System.out.println("Vous n'êtes pas en phase de combat.");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void commandeSoutienOffensif(String numeroCase, String numeroArmee) {
+		try {
+			int partieID = partie.getID();
+			if (moteur.recupererInfosPhase(partieID).getStatutPhaseCourante() == Phase.Statut.COMBAT) {
+				SoutienOffensif ordre = new SoutienOffensif(Integer.parseInt(numeroCase), Integer.parseInt(numeroArmee));
+				moteur.posterOrdre(partieID, ordre);
+			} else {
+				System.out.println("Vous n'êtes pas en phase de combat.");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void commandeTenir(String numeroArmee) {
+		try {
+			int partieID = partie.getID();
+			if (moteur.recupererInfosPhase(partieID).getStatutPhaseCourante() == Phase.Statut.COMBAT) {
+				Tenir ordre = new Tenir(Integer.parseInt(numeroArmee));
+				moteur.posterOrdre(partieID, ordre);
+			} else {
+				System.out.println("Vous n'êtes pas en phase de combat.");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
 	public void commandeEnvoyerMessage(String message, String pseudos) {
 		try {
 			// appeler méthode envoyer messages qui va aller chercher l'id associé au pseudo
