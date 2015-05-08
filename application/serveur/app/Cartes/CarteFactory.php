@@ -3,6 +3,7 @@
 namespace Diplo\Cartes;
 
 use Diplo\Armees\Armee;
+use Diplo\Armees\ArmeeRepository;
 use Diplo\Joueurs\Joueur;
 use Diplo\Parties\Partie;
 
@@ -34,6 +35,19 @@ class CarteFactory
         [[13,1], [13,3], [15,1], [15,3]],
         [[13,13], [13,15], [15,13], [15,15]],
     ];
+
+    /**
+     * @var ArmeeRepository
+     */
+    private $armeeRepository;
+
+    /**
+     * @param ArmeeRepository $armeeRepository
+     */
+    public function __construct(ArmeeRepository $armeeRepository)
+    {
+        $this->armeeRepository = $armeeRepository;
+    }
 
     /**
      * Crée une partie.
@@ -99,7 +113,11 @@ class CarteFactory
         foreach ($this->positions[$id] as $positions) {
             $armee = new Armee();
             $armee = $joueur->armees()->save($armee);
-            $this->getCase($positions[0], $positions[1])->setArmee($armee);
+
+            $this->armeeRepository->deplacerArmee(
+                $armee,
+                $this->getCase($positions[0], $positions[1])
+            );
         }
     }
 

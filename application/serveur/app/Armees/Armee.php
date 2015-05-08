@@ -3,6 +3,7 @@
 namespace Diplo\Armees;
 
 use Diplo\Cartes\CaseClass;
+use Diplo\Cartes\CaseInterface;
 use Diplo\Joueurs\Joueur;
 use Diplo\Ordres\Ordre;
 use Diplo\Ordres\OrdreModel;
@@ -87,6 +88,16 @@ class Armee extends Model
     public function caseOccupee()
     {
         return $this->hasOne(CaseClass::class, 'id_case', 'id');
+    }
+
+    /**
+     * Définit la case sur laquelle se trouve une armée.
+     *
+     * @param CaseInterface $case
+     */
+    public function setCase(CaseInterface $case)
+    {
+        $this->id_case = $case->getId();
     }
 
     /**

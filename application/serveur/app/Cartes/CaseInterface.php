@@ -22,13 +22,6 @@ interface CaseInterface
     public function getArmee();
 
     /**
-     * Pose une armée sur une case.
-     *
-     * @param Armee $armee
-     */
-    public function setArmee(Armee $armee);
-
-    /**
      * Récupère les cases voisines.
      *
      * @return CaseInterface[]
@@ -50,7 +43,14 @@ interface CaseInterface
     public function setCasesVoisinesIds(array $ids);
 
     /**
-     * Récupère le joueur sur la case.
+     * Définit le joueur possèdant la case.
+     *
+     * @param Joueur $joueur
+     */
+    public function setJoueur(Joueur $joueur);
+
+    /**
+     * Récupère le joueur possèdant la case.
      *
      * @return Joueur | null
      */

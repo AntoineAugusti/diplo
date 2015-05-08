@@ -29,7 +29,13 @@ class EloquentArmeeRepository implements ArmeeRepository
      */
     public function deplacerArmee(Armee $armee, CaseInterface $case)
     {
-        $case->setArmee($case);
+        // Déplace l'armée.
+        $armee->setCase($case);
+        $armee->save();
+
+        // Donne la propriété de la case au joueur possèdant l'armée.
+        $case->setJoueur($armee->getJoueur());
+        $case->save();
     }
 
     /**
