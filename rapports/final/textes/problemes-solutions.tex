@@ -1,7 +1,12 @@
 \section{Partie Serveur}
+	\subsection{Difficulté de tests}
+		Nous n'avons pas pris le temps d'écrire des tests automatisés pour vérifier la cohérence de notre code produit. Ceci s'explique par le fait que ce projet ne dure pas assez longtemps dans le temps et n'a pas vocation à être utilisé de manière intensive pour justifier l'écriture de tests complets.\\
+
+		Nous avons donc effectué des tests manuellement, en simulant des requêtes HTTP et en regardant le contenu de notre base de données relationnelle au fur et à mesure, ce qui n'est clairement pas la meilleure façon de faire.
+
 \section{Partie Client}
-	\subsubsection{Affichage Carte}
-	\subsubsection{HTTPS}
+	\subsection{Affichage Carte}
+	\subsection{HTTPS}
 		Lors du développement des fonctions de requêtage HTTP nous avons été confronté à des erreurs 403 de la part du serveur web Nginx distant. Le serveur refusait la connexion en raison d'une requête HTTPS invalide selon lui. En effet, il lui manquait le User-Agent, nous avons donc rajouté la ligne visible dans le listing~\ref{code:user-agent} dans nos méthodes.
 
 		\begin{code}
