@@ -75,17 +75,18 @@ public class AffichageCarte {
 			"\\e[0m");
 			if (c.getId() < 10) {
 				l2.append("\\e[" + couleur + "m" +
-				limiteGauche + "  " + " " + c.getId() + " " +
-				limiteDroite + "\\e[0m");
+				limiteGauche + "  " + " " + c.getId() +
+				" " + limiteDroite + "\\e[0m");
 			} else {
 				if ((c.getId() >= 10) && (c.getId() < 100)) {
 					l2.append("\\e[" + couleur + "m" +
-					limiteGauche + " " + " " + c.getId() +
-					" " + limiteDroite + "\\e[0m");
+					limiteGauche + " " + " " +
+					c.getId() + " " + limiteDroite +
+					"\\e[0m");
 				} else {
 					l2.append("\\e[" + couleur + "m" +
-					limiteGauche + " " + c.getId() + " " +
-					limiteDroite + "\\e[0m");
+					limiteGauche + " " + c.getId() +
+					" " + limiteDroite + "\\e[0m");
 				}
 			}
 
