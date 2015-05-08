@@ -13,9 +13,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import fr.insarouen.asi.diplo.MoteurJeu.*;
 
 public class Cli {
 	private String ordre;
+	private Jeu partie;
+	private Moteur moteur;
 	public static final char ESC = 27;
 
 	// constructeur
@@ -25,6 +28,8 @@ public class Cli {
 	 */
 	public Cli() {
 		this.ordre = null;
+		this.partie = null;
+		this.moteur = new Moteur();
 	}
 
 	// methodes
@@ -43,7 +48,7 @@ public class Cli {
 
 	public void commandeRejoindre(int idPartie) {
 		try {
-			// appeler méthode permettant de rejoindre une partie
+			partie = moteur.rejoindrePartie(idPartie);
 		} catch (Exception e) {
 			return;
 		}
@@ -83,7 +88,7 @@ public class Cli {
 
 	public void commandeAfficherCarte() {
 		try {
-			// appeler méthode afficher carte
+			moteur.recupererInfosCarte(partie.getID());
 		} catch (Exception e) {
 			return;
 		}

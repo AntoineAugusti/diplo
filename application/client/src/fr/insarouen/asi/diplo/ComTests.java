@@ -32,24 +32,24 @@ public class ComTests {
 
 		Joueur local = (Joueur)jeu.getJoueurs().values().toArray()[0];
 
-		assert local.pseudo != null : "Le nom est non null";
-		assert local.id > 0 : "L'id est non null";
-		assert local.pays != null : "Le pays est non null";
-		assert local.armees_restantes ==
+		assert local.getPseudo() != null : "Le nom est non null";
+		assert local.getId() > 0 : "L'id est non null";
+		assert local.getPays() != null : "Le pays est non null";
+		assert local.getArmeesRestantes() ==
 		0 : "Les armees_restantes est non null";
-		assert local.cases_controlees ==
+		assert local.getCasesControlees() ==
 		0 : "Le joueur n'a pas de cases";
 
 		ArrayList<Joueur> joueurs = current.recupererInfosJoueurs(1);
 		assert joueurs.size() >= 3 : "Il y a au moins 3 joueurs";
 		for (int i = 0; i < joueurs.size(); i++) {
 			local = joueurs.get(i);
-			assert local.pseudo != null : "Le nom est non null";
-			assert local.id > 0 : "L'id est non null";
-			assert local.pays != null : "Le pays est non null";
-			assert local.armees_restantes ==
+			assert local.getPseudo() != null : "Le nom est non null";
+			assert local.getId() > 0 : "L'id est non null";
+			assert local.getPays() != null : "Le pays est non null";
+			assert local.getArmeesRestantes() ==
 			0 : "Les armees_restantes est non null";
-			assert local.cases_controlees ==
+			assert local.getCasesControlees() ==
 			0 : "Le joueur n'a pas de cases";
 		}
 

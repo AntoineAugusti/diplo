@@ -39,7 +39,7 @@ public class Jeu {
 	}
 
 	public boolean miseAJourJoueur(Joueur nouveau) {
-		listeDesJoueurs.put(nouveau.pseudo, nouveau);
+		listeDesJoueurs.put(nouveau.getPseudo(), nouveau);
 		return true;
 	}
 
@@ -47,7 +47,7 @@ public class Jeu {
 		Joueur resultat = null;
 
 		for (Joueur joueur : getJoueurs().values()) {
-			if (joueur.id == idJoueur)
+			if (joueur.getId() == idJoueur)
 				resultat = joueur;
 		}
 		return resultat;

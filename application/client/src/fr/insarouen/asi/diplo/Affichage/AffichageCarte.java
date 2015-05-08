@@ -59,32 +59,32 @@ public class AffichageCarte {
 
 		Collections.sort(listeDeCases, comparator);
 		for (Case c : listeDeCases) {
-			int idJoueur = c.id_joueur;
-			int idArmee = c.id_armee;
+			int idJoueur = c.getIdJoueur();
+			int idArmee = c.getIdArmee();
 			int couleur = 42;
 
 			if (idJoueur != 0) {
 				Joueur joueur = jeu.getJoueur(idJoueur);
 
-				couleur = joueur.couleur_joueur;
+				couleur = joueur.getCouleurJoueur();
 			}
 
 			l1.append("\\e[" + couleur + "m" + limiteGauche +
 			limiteHaute + limiteHaute + limiteHaute +
 			limiteHaute + limiteHaute + limiteDroite +
 			"\\e[0m");
-			if (c.id < 10) {
+			if (c.getId() < 10) {
 				l2.append("\\e[" + couleur + "m" +
-				limiteGauche + "  " + " " + c.id + " " +
+				limiteGauche + "  " + " " + c.getId() + " " +
 				limiteDroite + "\\e[0m");
 			} else {
-				if ((c.id >= 10) && (c.id < 100)) {
+				if ((c.getId() >= 10) && (c.getId() < 100)) {
 					l2.append("\\e[" + couleur + "m" +
-					limiteGauche + " " + " " + c.id +
+					limiteGauche + " " + " " + c.getId() +
 					" " + limiteDroite + "\\e[0m");
 				} else {
 					l2.append("\\e[" + couleur + "m" +
-					limiteGauche + " " + c.id + " " +
+					limiteGauche + " " + c.getId() + " " +
 					limiteDroite + "\\e[0m");
 				}
 			}
@@ -111,7 +111,7 @@ public class AffichageCarte {
 		return partitions;
 	}
 
-	public void saveToMap(int nbColonnes) {
+	public void enregistrerCarte(int nbColonnes) {
 		String fileName = "carte.sh";
 		String ligneHaute = "";
 		String ligneDuMilieu1 = "";
@@ -163,7 +163,7 @@ public class AffichageCarte {
 		}
 	}
 
-	public void readMap(String fileName) {
+	public void lireCarte(String fileName) {
 		System.out.print(executerCommande("chmod +x " + fileName));
 		System.out.print(executerCommande("./" + fileName));
 	}

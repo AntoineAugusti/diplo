@@ -2,12 +2,12 @@ package fr.insarouen.asi.diplo.MoteurJeu;
 
 
 public class Joueur {
-	public int id;
-	public String pseudo;
-	public String pays;
-	public int armees_restantes;
-	public int cases_controlees;
-	public int couleur_joueur;
+	private int id;
+	private String pseudo;
+	private String pays;
+	private int armees_restantes;
+	private int cases_controlees;
+	private int couleur_joueur;
 
 	public Joueur(int id, String pseudo, String pays, int armees, int
 	cases) {
@@ -20,5 +20,29 @@ public class Joueur {
 
 	public void setCouleur(int couleur) {
 		this.couleur_joueur = couleur;
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public String getPseudo() {
+		return this.pseudo;
+	}
+
+	public String getPays() {
+		return this.pays;
+	}
+
+	public int getArmeesRestantes() {
+		return this.armees_restantes;
+	}
+
+	public int getCasesControlees() {
+		return this.cases_controlees;
+	}
+
+	public int getCouleurJoueur() {
+		return this.couleur_joueur;
 	}
 }

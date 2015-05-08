@@ -3,12 +3,12 @@ package fr.insarouen.asi.diplo.MoteurJeu;
 import java.util.*;
 
 public class Case {
-	public int id;
-	public boolean est_libre;
-	public int id_joueur;
-	public boolean est_occupee;
-	public int id_armee;
-	public ArrayList<Integer> cases_voisines;
+	private int id;
+	private boolean est_libre;
+	private int id_joueur;
+	private boolean est_occupee;
+	private int id_armee;
+	private ArrayList<Integer> cases_voisines;
 
 	public Case(int id, boolean est_libre, int id_joueur, boolean
 	est_occupee, int id_armee, ArrayList<Integer> voisines) {
@@ -18,5 +18,29 @@ public class Case {
 		this.est_occupee = est_occupee;
 		this.id_armee = id_armee;
 		this.cases_voisines = voisines;
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public int getIdJoueur() {
+		return this.id_joueur;
+	}
+
+	public int getIdArmee() {
+		return this.id_armee;
+	}
+
+	public ArrayList<Integer> getCasesVoisines() {
+		return this.cases_voisines;
+	}
+
+	public boolean getEstLibre() {
+		return this.est_libre;
+	}
+
+	public boolean getEstOccupee() {
+		return this.est_occupee;
 	}
 }
