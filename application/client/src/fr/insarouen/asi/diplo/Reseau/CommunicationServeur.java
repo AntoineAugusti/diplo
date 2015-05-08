@@ -106,7 +106,6 @@ public class CommunicationServeur {
 			postOut.close();
 
 			int responseCode = httpsConnection.getResponseCode();
-
 			if ((responseCode != 200) && (responseCode != 201) &&
 			(responseCode != 202) || (responseCode == 500)) {
 				BufferedReader br0 = new BufferedReader(

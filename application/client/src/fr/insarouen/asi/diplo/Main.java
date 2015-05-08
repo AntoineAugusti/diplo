@@ -1,12 +1,15 @@
 package fr.insarouen.asi.diplo;
 
 import fr.insarouen.asi.diplo.Affichage.Cli;
+import fr.insarouen.asi.diplo.MoteurJeu.*;
+import org.json.*;
 import java.lang.*;
 import java.util.*;
 
 
 public class Main {
 	public static Cli cli = new Cli();
+
 	public static void main(String[] args) throws Throwable {
 		System.out.println("");
 		System.out.println(
@@ -29,7 +32,6 @@ public class Main {
 		System.out.println("");
 		System.out.println(
 		"Si c'est votre première visite, n'hésitez pas à jetter un coup d'oeil à l'Aide (aide).");
-
 		cli.executer();
 	}
 }
