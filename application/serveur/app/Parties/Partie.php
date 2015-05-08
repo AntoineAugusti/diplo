@@ -165,16 +165,6 @@ class Partie extends Model implements PhaseInterface
     }
 
     /**
-     * Indique s'il manque un joueur pour démarrer une partie.
-     *
-     * @return bool
-     */
-    public function manqueUnJoueur()
-    {
-        return $this->nb_joueurs_inscrits == ($this->nb_joueurs_requis - 1);
-    }
-
-    /**
      * Retourne les phases possibles.
      *
      * @return array Tableau de chaînes de caractères

@@ -13,14 +13,14 @@ class ExecuterOrdres
     /**
      * @var OrdreExecuteur[] Les exécuteurs pour chaque type d'ordre
      */
-    protected $executeurs = [];
+    private $executeurs = [];
 
     /**
      * Application Laravel.
      *
      * @var Application
      */
-    protected $application;
+    private $application;
 
     /**
      * @var OrdreRepository

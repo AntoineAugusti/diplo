@@ -90,7 +90,6 @@ class Diplo.Parties.Partie {
     +getId() : int
     +getJoueurs() : Joueur[]
     +joueurs() : Illuminate.Database.Eloquent.Relations.Relation
-    +manqueUnJoueur() : bool
     +{static}phasesPossibles() : array
     +setPhaseAttribute(value : string)
     +{static}statutsPossibles() : array
