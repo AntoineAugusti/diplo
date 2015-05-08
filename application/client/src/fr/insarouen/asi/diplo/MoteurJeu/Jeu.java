@@ -53,6 +53,16 @@ public class Jeu {
 		return resultat;
 	}
 
+	public Joueur getJoueurByPseudo(String pseudo) {
+		Joueur resultat = null;
+
+		for (Joueur joueur : getJoueurs().values()) {
+			if (joueur.getPseudo() == pseudo)
+				resultat = joueur;
+		}
+		return resultat;
+	}
+
 	public Carte getCarte() {
 		return carte;
 	}
