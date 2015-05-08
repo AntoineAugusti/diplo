@@ -164,6 +164,16 @@ class CaseClass extends Model implements CaseInterface
     }
 
     /**
+     * Définit les identifiants des cases voisines.
+     *
+     * @param int[] $ids
+     */
+    public function setCasesVoisinesIds(array $ids)
+    {
+        $this->casesVoisines()->sync($ids);
+    }
+
+    /**
      * Définit la relation avec les cases voisines.
      *
      * @return BelongsToMany

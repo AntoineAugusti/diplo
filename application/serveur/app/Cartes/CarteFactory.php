@@ -76,7 +76,7 @@ class CarteFactory
                     $ids[] = $this->cases[$i][$j + 1]->id;
                 }
 
-                $this->getCase($i, $j)->casesVoisines()->sync($ids);
+                $this->getCase($i, $j)->setCasesVoisinesIds($ids);
             }
         }
 
