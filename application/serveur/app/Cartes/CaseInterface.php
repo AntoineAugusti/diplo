@@ -43,6 +43,13 @@ interface CaseInterface
     public function getCasesVoisinesIds();
 
     /**
+     * Définit les identifiants des cases voisines.
+     *
+     * @param int[] $ids
+     */
+    public function setCasesVoisinesIds(array $ids);
+
+    /**
      * Récupère le joueur sur la case.
      *
      * @return Joueur | null
