@@ -91,17 +91,20 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
     /**
      * Détermine la date du changement de la prochaine phase.
      *
-     * @param string $phase Le nom de la prochaine phase
+     * @param string $prochainePhase Le nom de la prochaine phase
      *
      * @return Carbon
      */
-    private function datePourPhase($phase)
+    private function datePourPhase($prochainePhase)
     {
-        if ($phase == Partie::NEGOCIATION) {
-            return Carbon::now()->addMinutes(2);
+        // La prochaine phase sera de négociation
+        // On définit donc le temps d'un phase de combat
+        if ($prochainePhase == Partie::NEGOCIATION) {
+            return Carbon::now()->addMinutes(1);
         }
 
-        return Carbon::now()->addMinutes(1);
+        // Le temps d'une phase de négociation
+        return Carbon::now()->addMinutes(2);
     }
 
     /**
