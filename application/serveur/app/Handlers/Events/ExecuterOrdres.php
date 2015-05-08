@@ -50,12 +50,17 @@ class ExecuterOrdres
 
         $ordres = [];
         foreach ($armees as $armee) {
-            // Récupère le modèle d'ordre puis l'objet métier ordre.
-            $ordre = $armee->getOrdre()->getOrdre();
+            // Récupère le modèle d'ordre.
+            $ordreModel = $armee->getOrdre();
 
-            // On vérifie que l'ordre donné est valide
-            if ($this->verifierOrdre($ordre)) {
-                $ordres[] = $ordre;
+            // Si le modèle ordre existe, on récupère l'ordre métier et on vérifie que cet ordre est valide.
+            if (!is_null($ordreModel)) {
+                $ordre = $ordreModel->getOrdre();
+
+                // On vérifie que l'ordre donné est valide
+                if ($this->verifierOrdre($ordre)) {
+                    $ordres[] = $ordre;
+                }
             }
         }
 
