@@ -15,13 +15,14 @@ import java.util.Set;
 
 import fr.insarouen.asi.diplo.MoteurJeu.*;
 import fr.insarouen.asi.diplo.Reseau.*;
+import fr.insarouen.asi.diplo.Exception.ReseauException.*;
+import fr.insarouen.asi.diplo.Exception.OrdresException.*;
 import fr.insarouen.asi.diplo.MoteurJeu.Negociation.*;
 import fr.insarouen.asi.diplo.MoteurJeu.Ordres.*;
 
 public class Cli {
 	private String ordre;
 	private Jeu partie;
-	private CommunicationServeur current;
 	private Moteur moteur;
 	private Joueur joueur;
 	public static final char ESC = 27;
@@ -35,7 +36,6 @@ public class Cli {
 		this.ordre = null;
 		this.partie = null;
 		this.moteur = new Moteur();
-		this.current = new CommunicationServeur("https://api.diplo-lejeu.fr/");
 	}
 
 	// methodes
@@ -43,29 +43,23 @@ public class Cli {
 		this.ordre = ordre;
 	}
 
-	public void commandeCreerPartie(String nbMinJoueurs) {
-		try {
-			// appeler méthode pour créer une partie qui affiche l'id de la partie crée
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-		}
-	}
-
 	public void commandeRejoindre(String idPartie) {
 		try {
-			this.partie = current.rejoindrePartie(Integer.parseInt(
+			this.partie = moteur.rejoindrePartie(Integer.parseInt(
 				idPartie));
 			System.out.println(this.partie);
-			// HashMap<String, Joueur> listeJoueurs =
-			// partie.getJoueurs();
-			// System.out.println(listeJoueurs.size());
-			// for (Joueur j : listeJoueurs.values()) {
-			// 	this.joueur = j;				
-			// 	System.out.println("Votre pseudo : "+this.joueur.getPseudo());
-			// 	System.out.println("Votre pays : "+this.joueur.getPays());
-			// }
-		} catch (Exception e) {
+			HashMap<String, Joueur> listeJoueurs =
+			partie.getJoueurs();
+			System.out.println(listeJoueurs.size());
+			for (Joueur j : listeJoueurs.values()) {
+				this.joueur = j;				
+				System.out.println("Votre pseudo : "+this.joueur.getPseudo());
+				System.out.println("Votre pays : "+this.joueur.getPays());
+			}
+		} catch (PartieIntrouvableException e) {
+			System.out.println(e.getMessage());
+		}
+		catch (PartiePleineException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -247,16 +241,6 @@ public class Cli {
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
-		System.out.println("creerPartie");
-		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
-		System.out.println(
-		"Permet de créer une partie en spécifiant le nombre minimum de joueurs");
-		System.out.println(setBoldText + "OPTIONS" + setPlainText);
-		System.out.println(
-		"nbMinJoueurs  Le nombre minimum de joueurs acceptés dans la partie");
-		System.out.println("");
-
-		System.out.println(setBoldText + "NOM" + setPlainText);
 		System.out.println("rejoindre");
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
 		System.out.println("Rejoindre une partie à partir de son id");
@@ -429,9 +413,6 @@ public class Cli {
 				System.out.println(
 				"Veuillez entrer une commande.\n");
 			}
-			// catch (Exception e) {
-			// System.out.println("Erreur");
-			// }
 		}
 	}
 }
