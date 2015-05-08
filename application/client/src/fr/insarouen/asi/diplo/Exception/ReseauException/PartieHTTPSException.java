@@ -5,6 +5,7 @@ public class PartieHTTPSException extends Exception {
 	public String mess;
 
 	public PartieHTTPSException(int responseCode, String serveurMessage) {
+		super(serveurMessage);
 		this.error = responseCode;
 		this.mess = serveurMessage;
 	}
