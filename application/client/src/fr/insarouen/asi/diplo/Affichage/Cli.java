@@ -188,9 +188,35 @@ public class Cli {
 		}
 	}
 
-	public void commandeListerUnites() {
+	public void commandeListerArmees() {
 		try {
-			// appeler méthode lister unités
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void commandeAfficherParticipants() {
+		try {
+			if (moteur.recupererInfosPhase(
+			partieID).getStatutPhaseCourante() !=
+			Phase.Statut.INACTIF) {		
+				ArrayList<Joueur> participants = moteur.recupererInfosJoueurs(partie.getID());
+				for (Joueur j : participants) {
+					System.out.println("Pseudo : "+j.getPseudo()+", Couleur : "+j.getCouleurJoueur());
+				}
+			} else {
+				System.out.println("La partie n'a pas encore commencée.")
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void commandePhaseCourante() {
+		try {	
+			Phase phase = moteur.recupererInfosJoueurs(partie.getID());
+			System.out.println("Phase : "+phase.getStatutPhaseCourante()+", Temps : "+phase.getChrono());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -319,6 +345,12 @@ public class Cli {
 		System.out.println("listerCasesControlees");
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
 		System.out.println("Lister les cases contrôlées");
+		System.out.println("");
+
+		System.out.println(setBoldText + "NOM" + setPlainText);
+		System.out.println("afficherParticipants");
+		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
+		System.out.println("Liste les participants de la partie");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
