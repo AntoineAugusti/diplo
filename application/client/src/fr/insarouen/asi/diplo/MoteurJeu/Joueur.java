@@ -34,6 +34,14 @@ public class Joueur {
 		return this.pays;
 	}
 
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+	}
+
+	public void setPays(String pays) {
+		this.pays = pays;
+	}
+
 	public int getArmeesRestantes() {
 		return this.armees_restantes;
 	}
