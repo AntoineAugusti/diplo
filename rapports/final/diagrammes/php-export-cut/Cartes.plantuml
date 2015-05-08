@@ -86,6 +86,7 @@ class Diplo.Cartes.CaseClass {
     +getIdCasesVoisinesAttribute() : int[]
     +getIdJoueurAttribute() : int
     +getJoueur() : Diplo.Joueurs.Joueur
+    +setCasesVoisinesIds(ids : int[])
     +joueur() : Diplo.Joueurs.Joueur
     +setArmee(armee : Diplo.Armees.Armee)
 }
@@ -114,6 +115,7 @@ interface Diplo.Cartes.CaseInterface {
     +getArmee() : Diplo.Armees.Armee
     +getCasesVoisines() : CaseInterface[]
     +getCasesVoisinesIds() : int[]
+    +setCasesVoisinesIds(ids : int[])
     +getId() : int
     +getJoueur() : Diplo.Joueurs.Joueur
     +setArmee(armee : Diplo.Armees.Armee)
