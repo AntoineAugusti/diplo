@@ -30,7 +30,7 @@ class CaseClass extends Model implements CaseInterface
      *
      * @var array
      */
-    protected $appends = ['est_libre', 'id_joueur', 'est_occupee', 'id_armee', 'id_cases_voisines'];
+    protected $appends = ['est_libre', 'est_occupee', 'id_armee', 'id_cases_voisines'];
 
     /**
      * Les attributs cachés lors de la conversion en array ou JSON.
@@ -46,6 +46,7 @@ class CaseClass extends Model implements CaseInterface
      */
     protected $casts = [
         'id' => 'integer',
+        'id_joueur' => 'integer',
     ];
 
     /**
@@ -86,21 +87,6 @@ class CaseClass extends Model implements CaseInterface
     public function getEstLibreAttribute()
     {
         return is_null($this->getJoueur());
-    }
-
-    /**
-     * Retourne l'identifiant du joueur possédant la case ou null si elle n'est pas possédée.
-     *
-     * @return int | null
-     */
-    public function getIdJoueurAttribute()
-    {
-        $joueur = $this->getJoueur();
-        if (is_null($joueur)) {
-            return null;
-        }
-
-        return $joueur->getId();
     }
 
     /**
@@ -236,10 +222,6 @@ class CaseClass extends Model implements CaseInterface
      */
     public function joueur()
     {
-        if (is_null($this->id_joueur)) {
-            return null;
-        }
-
         return $this->belongsTo(Joueur::class, 'id_joueur', 'id');
     }
 
