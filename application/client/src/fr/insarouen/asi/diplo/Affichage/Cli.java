@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Set;
 
 import fr.insarouen.asi.diplo.MoteurJeu.*;
-import fr.insarouen.asi.diplo.MoteurJeu.Ordres.*;
 import fr.insarouen.asi.diplo.MoteurJeu.Negociation.*;
+import fr.insarouen.asi.diplo.MoteurJeu.Ordres.*;
 
 public class Cli {
 	private String ordre;
@@ -51,18 +51,20 @@ public class Cli {
 	}
 
 	// public void setIdentifiants() {
-	// 	Scanner sc = new Scanner(System.in);
-	// 	System.out.println("Veuillez entrer votre pseudo :");
-	// 	pseudo = sc.nextLine();
-	// 	System.out.println("Veuillez entrer votre nationalité (ex : FRA) :");
-	// 	pays = sc.nextLine();
+	// Scanner sc = new Scanner(System.in);
+	// System.out.println("Veuillez entrer votre pseudo :");
+	// pseudo = sc.nextLine();
+	// System.out.println("Veuillez entrer votre nationalité (ex : FRA) :");
+	// pays = sc.nextLine();
 	// }
 
 	public void commandeRejoindre(String idPartie) {
 		try {
-			this.partie = moteur.rejoindrePartie(Integer.parseInt(idPartie));
+			this.partie = moteur.rejoindrePartie(Integer.parseInt(
+				idPartie));
 			System.out.println(partie.toString());
-			HashMap<String, Joueur> listeJoueurs = partie.getJoueurs();
+			HashMap<String, Joueur> listeJoueurs =
+			partie.getJoueurs();
 			this.joueur = listeJoueurs.get(0);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -72,39 +74,56 @@ public class Cli {
 	public void commandeAttaquer(String numeroCase, String numeroArmee) {
 		try {
 			int partieID = partie.getID();
-			if (moteur.recupererInfosPhase(partieID).getStatutPhaseCourante() == Phase.Statut.COMBAT) {
-				Attaquer ordre = new Attaquer(Integer.parseInt(numeroCase), Integer.parseInt(numeroArmee));
+			if (moteur.recupererInfosPhase(
+			partieID).getStatutPhaseCourante() ==
+			Phase.Statut.COMBAT) {
+				Attaquer ordre = new Attaquer(Integer.parseInt(
+					numeroCase), Integer.parseInt(
+					numeroArmee));
 				moteur.posterOrdre(partieID, ordre);
 			} else {
-				System.out.println("Vous n'êtes pas en phase de combat.");
+				System.out.println(
+				"Vous n'êtes pas en phase de combat.");
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
-	public void commandeSoutienDefensif(String numeroCase, String numeroArmee) {
+	public void commandeSoutienDefensif(String numeroCase, String
+	numeroArmee) {
 		try {
 			int partieID = partie.getID();
-			if (moteur.recupererInfosPhase(partieID).getStatutPhaseCourante() == Phase.Statut.COMBAT) {
-				SoutienDefensif ordre = new SoutienDefensif(Integer.parseInt(numeroCase), Integer.parseInt(numeroArmee));
+			if (moteur.recupererInfosPhase(
+			partieID).getStatutPhaseCourante() ==
+			Phase.Statut.COMBAT) {
+				SoutienDefensif ordre = new SoutienDefensif(
+					Integer.parseInt(numeroCase),
+					Integer.parseInt(numeroArmee));
 				moteur.posterOrdre(partieID, ordre);
 			} else {
-				System.out.println("Vous n'êtes pas en phase de combat.");
+				System.out.println(
+				"Vous n'êtes pas en phase de combat.");
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
-	public void commandeSoutienOffensif(String numeroCase, String numeroArmee) {
+	public void commandeSoutienOffensif(String numeroCase, String
+	numeroArmee) {
 		try {
 			int partieID = partie.getID();
-			if (moteur.recupererInfosPhase(partieID).getStatutPhaseCourante() == Phase.Statut.COMBAT) {
-				SoutienOffensif ordre = new SoutienOffensif(Integer.parseInt(numeroCase), Integer.parseInt(numeroArmee));
+			if (moteur.recupererInfosPhase(
+			partieID).getStatutPhaseCourante() ==
+			Phase.Statut.COMBAT) {
+				SoutienOffensif ordre = new SoutienOffensif(
+					Integer.parseInt(numeroCase),
+					Integer.parseInt(numeroArmee));
 				moteur.posterOrdre(partieID, ordre);
 			} else {
-				System.out.println("Vous n'êtes pas en phase de combat.");
+				System.out.println(
+				"Vous n'êtes pas en phase de combat.");
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -114,33 +133,42 @@ public class Cli {
 	public void commandeTenir(String numeroArmee) {
 		try {
 			int partieID = partie.getID();
-			if (moteur.recupererInfosPhase(partieID).getStatutPhaseCourante() == Phase.Statut.COMBAT) {
-				Tenir ordre = new Tenir(Integer.parseInt(numeroArmee));
+			if (moteur.recupererInfosPhase(
+			partieID).getStatutPhaseCourante() ==
+			Phase.Statut.COMBAT) {
+				Tenir ordre = new Tenir(Integer.parseInt(
+					numeroArmee));
 				moteur.posterOrdre(partieID, ordre);
 			} else {
-				System.out.println("Vous n'êtes pas en phase de combat.");
+				System.out.println(
+				"Vous n'êtes pas en phase de combat.");
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
-	public void commandeEnvoyerMessage(String message, String listePseudos) {
+	public void commandeEnvoyerMessage(String message, String
+	listePseudos) {
 		try {
 			int partieID = partie.getID();
-			ArrayList<Integer> destinataires = new ArrayList<Integer>();
-
-			if (moteur.recupererInfosPhase(partieID).getStatutPhaseCourante() == Phase.Statut.NEGOCIATION) {
+			ArrayList<Integer> destinataires =
+			new ArrayList<Integer>();
+			if (moteur.recupererInfosPhase(
+			partieID).getStatutPhaseCourante() ==
+			Phase.Statut.NEGOCIATION) {
 				String[] pseudos = listePseudos.split(",");
-
-				for (int i = 0; i < pseudos.length; i++) {
-					destinataires.add(partie.getJoueurByPseudo(pseudos[i]).getId());
-				}
-
-				Conversation conversation = moteur.creerConversation(destinataires);
-				moteur.posterMessage(conversation.getID(), this.joueur.getId(), message);
+				for (int i = 0; i < pseudos.length; i++)
+					destinataires.add(
+					partie.getJoueurByPseudo(
+					pseudos[i]).getId());
+				Conversation conversation =
+				moteur.creerConversation(destinataires);
+				moteur.posterMessage(conversation.getID(),
+				this.joueur.getId(), message);
 			} else {
-				System.out.println("Vous n'êtes pas en phase de négociation.");
+				System.out.println(
+				"Vous n'êtes pas en phase de négociation.");
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -165,7 +193,8 @@ public class Cli {
 
 	public void commandeAfficherCarte() {
 		try {
-			AffichageCarte afficheCarte = new AffichageCarte(partie);
+			AffichageCarte afficheCarte = new AffichageCarte(
+				partie);
 			afficheCarte.enregistrerCarte(10);
 			afficheCarte.lireCarte("carte.sh");
 		} catch (Exception e) {
@@ -221,8 +250,10 @@ public class Cli {
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
 		System.out.println("Lancer une attaque");
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
-		System.out.println("numéro de case  La case que l'on veut attaquer");
-		System.out.println("numéro de l'armée  L'armée que l'on veut contrôler");
+		System.out.println(
+		"numéro de case  La case que l'on veut attaquer");
+		System.out.println(
+		"numéro de l'armée  L'armée que l'on veut contrôler");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
@@ -230,8 +261,10 @@ public class Cli {
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
 		System.out.println("Lancer un soutien défensif");
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
-		System.out.println("numéro de case  La case que l'on veut soutenir");
-		System.out.println("numéro de l'armée  L'armée que l'on veut contrôler");
+		System.out.println(
+		"numéro de case  La case que l'on veut soutenir");
+		System.out.println(
+		"numéro de l'armée  L'armée que l'on veut contrôler");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
@@ -239,8 +272,10 @@ public class Cli {
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
 		System.out.println("Lancer un soutien offensif");
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
-		System.out.println("numéro de case  La case que l'on veut soutenir");
-		System.out.println("numéro de l'armée  L'armée que l'on veut contrôler");
+		System.out.println(
+		"numéro de case  La case que l'on veut soutenir");
+		System.out.println(
+		"numéro de l'armée  L'armée que l'on veut contrôler");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
@@ -248,7 +283,8 @@ public class Cli {
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
 		System.out.println("Tenir la case courante");
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
-		System.out.println("numéro de l'armée  L'armée que l'on veut faire tenir");
+		System.out.println(
+		"numéro de l'armée  L'armée que l'on veut faire tenir");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
