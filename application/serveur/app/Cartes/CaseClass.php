@@ -232,10 +232,14 @@ class CaseClass extends Model implements CaseInterface
     /**
      * Définit la relation avec le joueur sur la case.
      *
-     * @return Joueur
+     * @return Joueur|null
      */
     public function joueur()
     {
+        if (is_null($this->id_joueur)) {
+            return null;
+        }
+
         return $this->belongsTo(Joueur::class, 'id_joueur', 'id');
     }
 
