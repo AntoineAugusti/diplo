@@ -111,7 +111,7 @@ class ExecuterOrdres
 
         // Si l'exécuteur n'a pas déjà été instancié, on demande à Laravel
         // de le créer à l'aide de l'IoC container
-        if (is_null($this->executeurs[$nomExecuteur])) {
+        if (!array_key_exists($nomExecuteur, $this->executeurs)) {
             $this->executeurs[$nomExecuteur] = $this->application->make($nomExecuteur);
         }
 
