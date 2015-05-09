@@ -4,6 +4,7 @@ namespace Diplo\Messages;
 
 use Diplo\Joueurs\Joueur;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Conversation extends Model
 {
@@ -17,9 +18,19 @@ class Conversation extends Model
     ];
 
     /**
-     * Récupère les joueurs dans une conversation.
+     * Récupère l'ID de la conversation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Définit la relation avec les joueurs dans une conversation.
+     *
+     * @return Relation
      */
     public function joueurs()
     {
@@ -27,13 +38,23 @@ class Conversation extends Model
     }
 
     /**
+     * Récupère les joueurs dans une conversation.
+     *
+     * @return Joueur[]
+     */
+    public function getJoueurs()
+    {
+        return $this->joueurs;
+    }
+
+    /**
      * Les identifiants des joueurs présents dans la conversation, triés dans l'ordre croissant.
      *
-     * @return array
+     * @return int[]
      */
-    public function joueursIds()
+    public function getJoueursIds()
     {
-        $ids = $this->joueurs->lists('id');
+        $ids = $this->getJoueurs()->lists('id');
         // Tri dans l'ordre croissant
         sort($ids);
         // Conversion en entiers
@@ -43,12 +64,22 @@ class Conversation extends Model
     }
 
     /**
-     * Récupère les messages d'une conversation.
+     * Définit la relation avec les messages d'une conversation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * @return Relation
      */
     public function messages()
     {
         return $this->hasMany(Message::class, 'id_conversation', 'id');
+    }
+
+    /**
+     * Récupère les messages d'une conversation.
+     *
+     * @return Message[]
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }

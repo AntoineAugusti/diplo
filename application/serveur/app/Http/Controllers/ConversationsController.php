@@ -2,22 +2,38 @@
 
 namespace Diplo\Http\Controllers;
 
+use Diplo\Exceptions\ConversationExistanteException;
+use Diplo\Exceptions\JoueurAbsentConversationException;
+use Diplo\Exceptions\JoueurDupliqueException;
+use Diplo\Exceptions\JoueurInexistantConversationException;
+use Diplo\Exceptions\PasAssezDeJoueursException;
 use Diplo\Joueurs\Joueur;
 use Diplo\Messages\Conversation;
 use Diplo\Messages\ConversationsRepository;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
-use Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class ConversationsController extends Controller
 {
     /**
      * @var ConversationsRepository
      */
-    private $conversationsRepo;
+    protected $conversationsRepo;
 
-    public function __construct(ConversationsRepository $conversationsRepo)
+    /**
+     * @var ResponseFactory
+     */
+    protected $responseFactory;
+
+    /**
+     * @param ConversationsRepository $conversationsRepo
+     * @param ResponseFactory $responseFactory
+     */
+    public function __construct(ConversationsRepository $conversationsRepo, ResponseFactory $responseFactory)
     {
         $this->conversationsRepo = $conversationsRepo;
+        $this->responseFactory = $responseFactory;
     }
 
     /**
@@ -25,10 +41,10 @@ class ConversationsController extends Controller
      *
      * @param Request $request La requête HTTP
      *
-     * @throws \Diplo\Exceptions\PasAssezDeJoueursException            Une conversation doit être créée au moins entre 2 joueurs
-     * @throws \Diplo\Exceptions\JoueurInexistantConversationException Un des joueurs n'existe pas
-     * @throws \Diplo\Exceptions\ConversationExistanteException        Une conversation entre ces joueurs existait déjà
-     * @throws \Diplo\Exceptions\JoueurDupliqueException               Un joueur ne peut être plus d'une fois dans la même conversation
+     * @throws PasAssezDeJoueursException            Une conversation doit être créée au moins entre 2 joueurs
+     * @throws JoueurInexistantConversationException Un des joueurs n'existe pas
+     * @throws ConversationExistanteException        Une conversation entre ces joueurs existait déjà
+     * @throws JoueurDupliqueException               Un joueur ne peut être plus d'une fois dans la même conversation
      *
      * @return Response
      */
@@ -45,11 +61,11 @@ class ConversationsController extends Controller
         $conversation = $this->conversationsRepo->creerConversation($joueurs);
 
         // Préparation des valeurs de retour
-        $id = $conversation->id;
+        $id = $conversation->getId();
         $messages = [];
-        $joueurs = $conversation->joueursIds();
+        $joueurs = $conversation->getJoueursIds();
 
-        return Response::json(compact('id', 'joueurs', 'messages'), 201);
+        return $this->responseFactory->json(compact('id', 'joueurs', 'messages'), 201);
     }
 
     /**
@@ -61,11 +77,11 @@ class ConversationsController extends Controller
      */
     public function getConversation(Conversation $conversation)
     {
-        $id = $conversation->id;
-        $joueurs = $conversation->joueursIds();
-        $messages = $conversation->messages;
+        $id = $conversation->getId();
+        $joueurs = $conversation->getJoueursIds();
+        $messages = $conversation->getMessages();
 
-        return Response::json(compact('id', 'joueurs', 'messages'), 200);
+        return $this->responseFactory->json(compact('id', 'joueurs', 'messages'), 200);
     }
 
     /**
@@ -78,13 +94,13 @@ class ConversationsController extends Controller
     public function getConversationJoueur(Joueur $joueur)
     {
         $conversations = [];
-        foreach ($joueur->conversations as $conversation) {
-            $id = $conversation->id;
-            $joueurs = $conversation->joueursIds();
+        foreach ($joueur->getConversations() as $conversation) {
+            $id = $conversation->getId();
+            $joueurs = $conversation->getJoueursIds();
             $conversations[] = compact('id', 'joueurs');
         }
 
-        return Response::json(compact('conversations'), 200);
+        return $this->responseFactory->json(compact('conversations'), 200);
     }
 
     /**
@@ -95,7 +111,7 @@ class ConversationsController extends Controller
      *
      * @return Response
      *
-     * @throws \Diplo\Exceptions\JoueurAbsentConversationException L'auteur du message n'est pas présent dans la conversation
+     * @throws JoueurAbsentConversationException L'auteur du message n'est pas présent dans la conversation
      */
     public function postConversationMessages(Conversation $conversation, Request $request)
     {
@@ -104,6 +120,6 @@ class ConversationsController extends Controller
 
         $message = $this->conversationsRepo->posterMessage($conversation, $idJoueur, $texte);
 
-        return Response::json($message, 201);
+        return $this->responseFactory->json($message, 201);
     }
 }
