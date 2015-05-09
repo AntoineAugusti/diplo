@@ -59,7 +59,7 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
         }
         $phase = $this->phase;
 
-        $log->info(sprintf("Changement de phase - %s tour %d date %s", $phase, $partie->tour_courant, Carbon::now()->format('H:i:s Y-m-d')));
+        $log->info(sprintf('Changement de phase - %s tour %d date %s', $phase, $partie->tour_courant, Carbon::now()->format('H:i:s Y-m-d')));
 
         // Si on a demandé à terminer la partie, on lève l'événement
         if ($phase == 'FIN') {
@@ -88,7 +88,7 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
             $partie->save();
 
             // On queue le prochain changement de phase
-            $log->info(sprintf("Queue - %s tour %d pour date %s", $prochainePhase, $partie->tour_courant, $date->format('H:i:s Y-m-d')));
+            $log->info(sprintf('Queue - %s tour %d pour date %s', $prochainePhase, $partie->tour_courant, $date->format('H:i:s Y-m-d')));
             $queue->later($date, new self($partie, $prochainePhase));
         }
     }

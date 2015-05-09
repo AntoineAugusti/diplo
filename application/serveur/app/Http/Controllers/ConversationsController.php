@@ -28,7 +28,7 @@ class ConversationsController extends Controller
 
     /**
      * @param ConversationsRepository $conversationsRepo
-     * @param ResponseFactory $responseFactory
+     * @param ResponseFactory         $responseFactory
      */
     public function __construct(ConversationsRepository $conversationsRepo, ResponseFactory $responseFactory)
     {
