@@ -90,18 +90,19 @@ public class Cli {
 			int i = 0;
 			Phase phaseCourante = new Phase(Phase.Statut.INACTIF,
 				0);
+			int partieID = this.partie.getID();
 			System.out.println(
 			"En attente du statut de la partie : ");
 			while (phaseCourante.getStatutPhaseCourante() ==
 			Phase.Statut.INACTIF) {
 				phaseCourante = moteur.recupererInfosPhase(
-					partie.getID());
-				System.out.println("Phase : " +
-				phaseCourante.getStatutPhaseCourante());
+					partieID);
+				System.out.println("Statut : " +
+				moteur.recupererInfosPartie(partieID));
 				Thread.sleep(2000);
 			}
 			this.participants = moteur.recupererInfosJoueurs(
-				partie.getID());
+				partieID);
 			for (Joueur j : this.participants) {
 				j.setCouleur(couleurs[i]);
 				j.setPion(pionArmee(j.getID()));
@@ -621,7 +622,7 @@ public class Cli {
 		try {
 			Method method = getMethodesOrdre(parametres);
 
-			method.invoke(this, (Object[])getParametresOrdre(
+			method.invoke(this, (Object)getParametresOrdre(
 			parametres));
 		}
 		// catch(InvocationTargetException e){
