@@ -56,36 +56,35 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
         // Si on a demandé à terminer la partie, on lève l'événement
         if ($phase == 'FIN') {
             $event->fire(new PartieEstTerminee($partie));
-
-            return null;
-        }
-
-        if ($partie->estPremierTour() and $phase == 'DEBUT') {
-            $prochainePhase = Partie::COMBAT;
         } else {
-            // On met à jour la nouvelle phase
-            $partie->phase = $phase;
-            $event->fire(new PartieChangeDePhase($partie, $phase));
 
-            // On incrémente le numéro de tour si on retourne sur une phase de combat
-            // Sauf dans le cas particulier du premier tour
-            if ($partie->estNegociation() and $phase != 'DEBUT') {
-                $nouveauTour = $partie->tour_courant + 1;
-                $partie->tour_courant = $nouveauTour;
+            // Si la nouvelle phase est NEGOCIATION ou COMBAT...
+            if ($phase == Partie::NEGOCIATION or $phase == Partie::COMBAT) {
+                // On met à jour la nouvelle phase
+                $partie->phase = $phase;
+
+                $event->fire(new PartieChangeDePhase($partie, $phase));
+            }
+
+            // Si on change de phase pour une phase de négociation...
+            // ... changement de tour et incrémentation du tour courant.s
+            if ($phase == Partie::NEGOCIATION) {
+                $nouveauTour = $partie->incrementerTourCourant();
                 $event->fire(new PartieChangeDeTour($partie, $nouveauTour));
             }
 
             $prochainePhase = $this->prochainePhase($partie);
+
+            // On détermine la date du prochain changement de phase
+            $date = $this->datePourPhase($prochainePhase);
+
+            // On se souvient de la date du prochain changement
+            $partie->setDateProchainePhase($date);
+            $partie->save();
+
+            // On queue le prochain changement de phase
+            $queue->later($date, new self($partie, $prochainePhase));
         }
-
-        // On détermine la date du prochain changement de phase
-        $date = $this->datePourPhase($prochainePhase);
-        // On se souvient de la date du prochain changement
-        $partie->date_prochaine_phase = $date;
-        $partie->save();
-
-        // On queue le prochain changement de phase
-        $queue->later($date, new self($partie, $prochainePhase));
     }
 
     /**
@@ -97,14 +96,13 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
      */
     private function datePourPhase($prochainePhase)
     {
-        // La prochaine phase sera de négociation
-        // On définit donc le temps d'un phase de combat
-        if ($prochainePhase == Partie::NEGOCIATION) {
+        if ($prochainePhase == Partie::COMBAT) {
+            // Temps d'une phase de négociation
+            return Carbon::now()->addMinutes(2);
+        } else {
+            // Temps d'une phase de combat
             return Carbon::now()->addMinutes(1);
         }
-
-        // Le temps d'une phase de négociation
-        return Carbon::now()->addMinutes(2);
     }
 
     /**
@@ -121,10 +119,15 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
             return 'FIN';
         }
 
-        if ($partie->estCombat()) {
+        // Le premier tour est une phase de négociation
+        if ($partie->estPremierTour()) {
             return PARTIE::NEGOCIATION;
         }
 
-        return PARTIE::COMBAT;
+        if ($partie->estCombat()) {
+            return PARTIE::NEGOCIATION;
+        } else {
+            return PARTIE::COMBAT;
+        }
     }
 }
