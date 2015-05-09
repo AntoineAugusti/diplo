@@ -93,19 +93,19 @@ public class Cli {
 			int i = 0;
 			Phase phaseCourante = new Phase(Phase.Statut.INACTIF,
 				0);
+			int partieID = this.partie.getID();
 			System.out.println(
 			"En attente du statut de la partie : ");
 			while (phaseCourante.getStatutPhaseCourante() ==
 			Phase.Statut.INACTIF) {
 				phaseCourante = moteur.recupererInfosPhase(
-					partie.getID());
-				System.out.println("Phase : " +
-				phaseCourante.getStatutPhaseCourante());
+					partieID);
+				System.out.println("Statut : " +
+				moteur.recupererInfosPartie(partieID));
 				Thread.sleep(2000);
 			}
 			this.participants = moteur.recupererInfosJoueurs(
-				partie.getID());
-			System.out.println(participants.size());
+				partieID);
 			for (Joueur j : this.participants) {
 				j.setCouleur(couleurs[i]);
 				j.setPion(pionArmee(j.getID()));
@@ -229,24 +229,27 @@ public class Cli {
 		}
 	}
 
-	public void commandeEnvoyerMessage(String idConversation, String
-	message) {
+	public void commandeEnvoyerMessage(String idConversation, String...	message) {
 		try {
 			int partieID = partie.getID();
-			ArrayList<Integer> destinataires =
-			new ArrayList<Integer>();
+			String messageConcat = "";
+			for (int i = 0; i < message.length; i++) {
+				messageConcat = messageConcat + " " + message[i];
+			}
+			System.out.println(messageConcat);
 			if (moteur.recupererInfosPhase(
 			partieID).getStatutPhaseCourante() ==
 			Phase.Statut.NEGOCIATION) {
 				moteur.posterMessage(Integer.parseInt(
 				idConversation), this.joueur.getID(),
-				message);
+				messageConcat);
 			} else {
 				System.out.println(
 				"Vous n'êtes pas en phase de négociation.");
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			// System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -322,11 +325,10 @@ public class Cli {
 		try {
 			ArrayList<Armee> listeArmees =
 			moteur.recupererInfosArmees(partie.getID());
-			System.out.println(listeArmees.size());
 			System.out.println("Armées restantes personnelles:");
 			for (Armee a : listeArmees) {
 				if (a.getJoueur() == this.joueur.getID()) {
-					System.out.println("Pion : " +
+					System.out.println("ID : "+a.getID()+", Pion : " +
 					this.joueur.getPion() +
 					", Position : " +
 					a.getIdCaseCourante());
@@ -576,11 +578,17 @@ public class Cli {
 					commande.substring(0, 1).toUpperCase() +
 					commande.substring(1), String.class);
 			}
-			if (parametres.length >= 3) {
+			if (parametres.length == 3) {
 				method = this.getClass().getMethod("commande" +
 					commande.substring(0, 1).toUpperCase() +
 					commande.substring(1), String.class,
 					String.class);
+			}
+			if (parametres.length >= 4) {
+				method = this.getClass().getMethod("commande" +
+					commande.substring(0, 1).toUpperCase() +
+					commande.substring(1), String.class,
+					String[].class);
 			}
 		} catch (NoSuchMethodException e) {
 			System.out.println(
@@ -595,11 +603,17 @@ public class Cli {
 			param = new String[1];
 			param[0] = parametres[1];
 		}
-		if (parametres.length == 4) {
-			param = new String[3];
+		if (parametres.length == 3) {
+			param = new String[2];
 			param[0] = parametres[1];
 			param[1] = parametres[2];
-			param[2] = parametres[3];
+			// param[2] = parametres[3];
+		}
+		if(parametres.length > 3) {
+			param = new String[parametres.length - 1];
+			for (int i = 0; i < param.length; i++) {
+				param[i] = parametres[i+1];
+			}
 		}
 
 		return param;
@@ -611,7 +625,7 @@ public class Cli {
 		try {
 			Method method = getMethodesOrdre(parametres);
 
-			method.invoke(this, (Object[])getParametresOrdre(
+			method.invoke(this, (Object)getParametresOrdre(
 			parametres));
 		}
 		// catch(InvocationTargetException e){
