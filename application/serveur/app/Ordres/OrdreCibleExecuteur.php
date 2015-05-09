@@ -15,6 +15,6 @@ abstract class OrdreCibleExecuteur extends OrdreExecuteur
     {
         $casesVoisinesDeLArmee = $ordre->getArmee()->getCase()->getCasesVoisinesIds();
 
-        return in_array($ordre->getCase(), $casesVoisinesDeLArmee);
+        return in_array($ordre->getCase()->getId(), $casesVoisinesDeLArmee);
     }
 }

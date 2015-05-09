@@ -107,7 +107,7 @@ class EloquentConversationsRepository implements ConversationsRepository
      */
     private function joueurAbsentConversation(Conversation $c, $idJoueur)
     {
-        return !in_array($idJoueur, $c->joueursIds());
+        return !in_array($idJoueur, $c->getJoueursIds());
     }
 
     /**
@@ -221,7 +221,7 @@ class EloquentConversationsRepository implements ConversationsRepository
         sort($idsJoueurs);
 
         foreach (Conversation::all() as $conversation) {
-            if ($conversation->joueursIds() == $idsJoueurs) {
+            if ($conversation->getJoueursIds() == $idsJoueurs) {
                 return true;
             }
         }
