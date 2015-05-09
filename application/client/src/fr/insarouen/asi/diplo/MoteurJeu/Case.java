@@ -20,7 +20,7 @@ public class Case {
 		this.cases_voisines = voisines;
 	}
 
-	public int getId() {
+	public int getID() {
 		return this.id;
 	}
 

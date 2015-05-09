@@ -11,8 +11,8 @@ public class Carte {
 	public boolean ajouterCase(Case nouvelle) {
 		boolean ajoute = false;
 
-		if (!plan.containsKey(nouvelle.getId())) {
-			plan.put(nouvelle.getId(), nouvelle);
+		if (!plan.containsKey(nouvelle.getID())) {
+			plan.put(nouvelle.getID(), nouvelle);
 			ajoute = true;
 		}
 
@@ -20,7 +20,7 @@ public class Carte {
 	}
 
 	public boolean majCase(Case nouvelle) {
-		plan.put(nouvelle.getId(), nouvelle);
+		plan.put(nouvelle.getID(), nouvelle);
 		return true;
 	}
 

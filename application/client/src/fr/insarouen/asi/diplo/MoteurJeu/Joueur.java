@@ -8,6 +8,7 @@ public class Joueur {
 	private int armees_restantes;
 	private int cases_controlees;
 	private int couleur_joueur;
+	private String pion_armee;
 
 	public Joueur(int id, String pseudo, String pays, int armees, int
 	cases) {
@@ -44,5 +45,13 @@ public class Joueur {
 
 	public int getCouleurJoueur() {
 		return this.couleur_joueur;
+	}
+
+	public void setPion(String pion) {
+		this.pion_armee = pion;
+	}
+
+	public String getPion() {
+		return this.pion_armee;
 	}
 }

@@ -47,7 +47,7 @@ public class Jeu {
 		Joueur resultat = null;
 
 		for (Joueur joueur : getJoueurs().values()) {
-			if (joueur.getId() == idJoueur)
+			if (joueur.getID() == idJoueur)
 				resultat = joueur;
 		}
 		return resultat;

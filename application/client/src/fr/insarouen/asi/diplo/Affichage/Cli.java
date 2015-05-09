@@ -12,6 +12,7 @@ import java.util.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+// import java.io.Thread;
 
 import fr.insarouen.asi.diplo.Exception.OrdresException.*;
 import fr.insarouen.asi.diplo.Exception.ReseauException.*;
@@ -43,14 +44,38 @@ public class Cli {
 		this.ordre = ordre;
 	}
 
+	private String pionArmee(int idJoueur) {
+		String pion = " ";
+
+		switch (idJoueur) {
+			case 0:
+				pion = " ";
+				break;
+			case 1:
+				pion = "*";
+				break;
+			case 2:
+				pion = "#";
+				break;
+			case 3:
+				pion = "$";
+				break;
+			case 4:
+				pion = "%";
+				break;
+			case 5:
+				pion = "@";
+				break;
+		}
+		return pion;
+	}
+
 	public void commandeRejoindre(String idPartie) {
 		try {
 			this.partie = moteur.rejoindrePartie(Integer.parseInt(
 				idPartie));
-			System.out.println(this.partie);
 			HashMap<String, Joueur> listeJoueurs =
 			partie.getJoueurs();
-			System.out.println(listeJoueurs.size());
 			for (Joueur j : listeJoueurs.values()) {
 				this.joueur = j;
 				System.out.println("Votre pseudo : " +
@@ -58,9 +83,22 @@ public class Cli {
 				System.out.println("Votre pays : " +
 				this.joueur.getPays());
 			}
-		} catch (PartieIntrouvableException e) {
-			System.out.println(e.getMessage());
-		} catch (PartiePleineException e) {
+			while (moteur.recupererInfosPhase(
+				partie.getID()).getStatutPhaseCourante() == Phase.Statut.INACTIF) {
+				commandePhaseCourante();
+				Thread.sleep(1000);
+			}
+			ArrayList<Joueur> participants = moteur.recupererInfosJoueurs(partie.getID());
+			Couleur couleur = new Couleur();
+			int[]   couleurs = couleur.genererPiscineDeCouleur();
+			int i = 0;
+			for (Joueur j : participants) {
+				j.setCouleur(couleurs[i]);
+				j.setPion(pionArmee(j.getID()));
+				i++;
+			}
+
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -155,7 +193,7 @@ public class Cli {
 				for (int i = 0; i < pseudos.length; i++)
 					destinataires.add(
 					partie.getJoueurByPseudo(
-					pseudos[i]).getId());
+					pseudos[i]).getID());
 				Conversation conversation =
 				moteur.creerConversation(destinataires);
 				System.out.println(
@@ -181,7 +219,7 @@ public class Cli {
 			partieID).getStatutPhaseCourante() ==
 			Phase.Statut.NEGOCIATION) {
 				moteur.posterMessage(Integer.parseInt(
-				idConversation), this.joueur.getId(),
+				idConversation), this.joueur.getID(),
 				message);
 			} else {
 				System.out.println(
@@ -204,7 +242,7 @@ public class Cli {
 			Phase.Statut.NEGOCIATION) {
 				conversations =
 				moteur.recupererInfosConversationSelonJoueur(
-					this.joueur.getId());
+					this.joueur.getID());
 				System.out.println("Conversations : ");
 				for (Conversation c : conversations) {
 					joueurs = c.getIdJoueurs();
@@ -262,15 +300,13 @@ public class Cli {
 
 	public void commandeListerArmees() {
 		try {
-			ArrayList<Armee> listeArmees = moteur.recupererInfosArmmes(partie.getID());
+			ArrayList<Armee> listeArmees = moteur.recupererInfosArmees(partie.getID());
+			System.out.println(listeArmees.size());
+			System.out.println("Armées restantes :");
 			for (Armee a : listeArmees) {
-				if (a.getIdJoueur() != this.joueur.getID()) {
-					listeArmees.remove(a);
+				if (a.getJoueur() == this.joueur.getID()) {
+					System.out.println("Pion : "+this.joueur.getPion()+", Position : "+a.getIdCaseCourante());
 				}
-			}
-			System.out.println("Armées restantes :")
-			for (Armee a : listeArmees) {
-				System.out.println("Pion : "+a.getPion()+", Position : "+a.getIdCaseCourante());
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

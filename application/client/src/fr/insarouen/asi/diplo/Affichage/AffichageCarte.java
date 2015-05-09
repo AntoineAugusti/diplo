@@ -20,32 +20,6 @@ public class AffichageCarte {
 		this.carte = jeu.getCarte();
 	}
 
-	private String pionArmee(int idArmee) {
-		String pion = " ";
-
-		switch (idArmee) {
-			case 0:
-				pion = " ";
-				break;
-			case 1:
-				pion = "*";
-				break;
-			case 2:
-				pion = "#";
-				break;
-			case 3:
-				pion = "$";
-				break;
-			case 4:
-				pion = "%";
-				break;
-			case 5:
-				pion = "@";
-				break;
-		}
-		return pion;
-	}
-
 	private void construireCases(StringBuilder l1, StringBuilder l2,
 	StringBuilder l3, StringBuilder l4) {
 		String limiteGauche = "\u258F";
@@ -62,36 +36,38 @@ public class AffichageCarte {
 			int idJoueur = c.getIdJoueur();
 			int idArmee = c.getIdArmee();
 			int couleur = 42;
+			String pion = " ";
 
 			if (idJoueur != 0) {
 				Joueur joueur = jeu.getJoueur(idJoueur);
 
 				couleur = joueur.getCouleurJoueur();
+				pion = joueur.getPion();
 			}
 
 			l1.append("\\e[" + couleur + "m" + limiteGauche +
 			limiteHaute + limiteHaute + limiteHaute +
 			limiteHaute + limiteHaute + limiteDroite +
 			"\\e[0m");
-			if (c.getId() < 10) {
+			if (c.getID() < 10) {
 				l2.append("\\e[" + couleur + "m" +
-				limiteGauche + "  " + " " + c.getId() +
+				limiteGauche + "  " + " " + c.getID() +
 				" " + limiteDroite + "\\e[0m");
 			} else {
-				if ((c.getId() >= 10) && (c.getId() < 100)) {
+				if ((c.getID() >= 10) && (c.getID() < 100)) {
 					l2.append("\\e[" + couleur + "m" +
 					limiteGauche + " " + " " +
-					c.getId() + " " + limiteDroite +
+					c.getID() + " " + limiteDroite +
 					"\\e[0m");
 				} else {
 					l2.append("\\e[" + couleur + "m" +
-					limiteGauche + " " + c.getId() +
+					limiteGauche + " " + c.getID() +
 					" " + limiteDroite + "\\e[0m");
 				}
 			}
 
 			l3.append("\\e[" + couleur + "m" + limiteGauche + " " +
-			" " + " " + pionArmee(idArmee) + " " +
+			" " + " " + pion + " " +
 			limiteDroite + "\\e[0m");
 			l4.append("\\e[" + couleur + "m" + limiteGauche +
 			limiteHBasse + limiteHBasse + limiteHBasse +
