@@ -13,6 +13,8 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.security.cert.Certificate;
 import java.util.*;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLPeerUnverifiedException;
 import org.json.*;
@@ -278,18 +280,25 @@ public class CommunicationServeur {
 
 		JSONArray joueursJSON = conv.getJSONArray("joueurs");
 
-		for (int i = 0; i < joueursJSON.length(); i++)
-			joueurs.add(joueursJSON.getInt(i));
+		try {
+			for (int i = 0; i < joueursJSON.length(); i++)
+				joueurs.add(joueursJSON.getInt(i));
 
-		JSONArray messagesJSON = conv.getJSONArray("messages");
+			JSONArray messagesJSON = conv.getJSONArray("messages");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.FRENCH);
+			sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-		for (int i = 0; i < messagesJSON.length(); i++)
-			messages.add(new Message(messagesJSON.getJSONObject(
-			i).getInt("id"), messagesJSON.getJSONObject(
-			i).getInt("joueur"), messagesJSON.getJSONObject(
-			i).getString("texte"), new Date(
-			messagesJSON.getJSONObject(i).getString(
-			"created_at"))));
+			for (int i = 0; i < messagesJSON.length(); i++){
+				messages.add(new Message(messagesJSON.getJSONObject(
+				i).getInt("id"), messagesJSON.getJSONObject(
+				i).getInt("id_joueur"), messagesJSON.getJSONObject(
+				i).getString("texte"), sdf.parse(
+				messagesJSON.getJSONObject(i).getString(
+				"created_at"))));
+			}
+		} catch (ParseException e){
+			System.out.println(e.getMessage());
+		}
 		return new Conversation(conv.getInt("id"), joueurs, messages);
 	}
 
@@ -346,10 +355,17 @@ public class CommunicationServeur {
 
 	private Message parserJSONsms(String fichier) {
 		JSONObject sms = new JSONObject(fichier);
-
-		return new Message(sms.getInt("id"), sms.getInt("id_joueur"),
-			sms.getString("texte"), new Date(sms.getString(
-			"created_at")));
+		Message message = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.FRENCH);
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		try {
+			message =  new Message(sms.getInt("id"), sms.getInt("id_joueur"),
+				sms.getString("texte"), sdf.parse(sms.getString(
+				"created_at")));
+		} catch(ParseException e) {
+			System.out.println(e.getMessage());
+		}
+		return message;
 	}
 
 	private ArrayList<Armee> parserJSONInfosArmee(String fichier) {
@@ -486,15 +502,12 @@ public class CommunicationServeur {
 			reponse = postRequete("ordres", ordreToJSON(
 				ordre).toString());
 			if (reponse.equals(""));
-
 			execution = true;
 		} catch (PartieHTTPSException e) {
-			if (e.error == 400) {
 				JSONObject erreur = new JSONObject(e.mess);
 				String message = erreur.getString("erreur");
 
 				throw new OrdreInvalideException(message);
-			}
 		}
 		return execution;
 	}
