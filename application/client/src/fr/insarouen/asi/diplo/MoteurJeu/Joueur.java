@@ -22,7 +22,7 @@ public class Joueur {
 		this.couleur_joueur = couleur;
 	}
 
-	public int getId() {
+	public int getID() {
 		return this.id;
 	}
 

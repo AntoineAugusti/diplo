@@ -261,7 +261,18 @@ public class Cli {
 	}
 
 	public void commandeListerArmees() {
-		try {} catch (Exception e) {
+		try {
+			ArrayList<Armee> listeArmees = moteur.recupererInfosArmmes(partie.getID());
+			for (Armee a : listeArmees) {
+				if (a.getIdJoueur() != this.joueur.getID()) {
+					listeArmees.remove(a);
+				}
+			}
+			System.out.println("Armées restantes :")
+			for (Armee a : listeArmees) {
+				System.out.println("Pion : "+a.getPion()+", Position : "+a.getIdCaseCourante());
+			}
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -300,13 +311,13 @@ public class Cli {
 		}
 	}
 
-	public void commandeListerCasesControlees() {
-		try {
-			// appeler méthode lister cases contrôlées
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
+	// public void commandeListerCasesControlees() {
+	// 	try {
+	// 		// appeler méthode lister cases contrôlées
+	// 	} catch (Exception e) {
+	// 		System.out.println(e.getMessage());
+	// 	}
+	// }
 
 	public void commandeAfficherCarte() {
 		try {
