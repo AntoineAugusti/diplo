@@ -88,7 +88,7 @@ class Diplo.Cartes.CaseClass {
     +getJoueur() : Diplo.Joueurs.Joueur
     +setCasesVoisinesIds(ids : int[])
     +joueur() : Diplo.Joueurs.Joueur
-    +setArmee(armee : Diplo.Armees.Armee)
+    +setJoueur(joueur : Diplo.Joueurs.Joueur)
 }
 class Diplo.Cartes.CaseClass extends Illuminate.Database.Eloquent.Model
 class Diplo.Cartes.CaseClass implements Diplo.Cartes.CaseInterface
@@ -118,7 +118,7 @@ interface Diplo.Cartes.CaseInterface {
     +setCasesVoisinesIds(ids : int[])
     +getId() : int
     +getJoueur() : Diplo.Joueurs.Joueur
-    +setArmee(armee : Diplo.Armees.Armee)
+    +setJoueur(joueur : Diplo.Joueurs.Joueur)
 }
 class Diplo.Cartes.CarteFactory {
     #cases : array = []
