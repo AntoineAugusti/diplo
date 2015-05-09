@@ -200,7 +200,7 @@ public class CommunicationServeur {
 	}
 
 	private Carte parserJSONInfosCarte(String fichier) {
-		Carte carteCourante = null;
+		Carte carteCourante = new Carte();
 		JSONObject obj = new JSONObject(fichier);
 		JSONArray listeCase = obj.getJSONArray("cases");
 
@@ -224,15 +224,16 @@ public class CommunicationServeur {
 
 			ArrayList<Integer> cases_voisines =
 			new ArrayList<Integer>();
-			for (int j = 0; j < voisines.length(); j++)
-				cases_voisines.add(voisines.getInt(i));
+			for (int j = 0; j < voisines.length(); j++){
+				cases_voisines.add(voisines.getInt(j));
+			}
 			carteCourante.ajouterCase(new Case(
 			listeCase.getJSONObject(i).getInt("id"),
 			listeCase.getJSONObject(i).getBoolean("est_libre"),
 			joueur_val, listeCase.getJSONObject(i).getBoolean(
 			"est_occupee"), armee_val, cases_voisines));
 		}
-		return carteCourante;
+			return carteCourante;
 	}
 
 	private JSONObject ordreToJSON(Ordre ordre) {
