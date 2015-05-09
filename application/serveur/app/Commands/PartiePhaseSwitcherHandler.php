@@ -43,7 +43,7 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
      * Exécute la commande.
      *
      * @param Queue $queue
-     * @param Log $log
+     * @param Log   $log
      * @param Event $event
      *
      * @event PartieChangeDePhase Quand la partie change de phase
@@ -53,6 +53,10 @@ class PartiePhaseSwitcherHandler extends Command implements SelfHandling
     public function handle(Queue $queue, Log $log, Event $event)
     {
         $partie = $this->partie;
+        // Sanity check
+        if (!$partie->estEnJeu()) {
+            return null;
+        }
         $phase = $this->phase;
 
         $log->info(sprintf("Changement de phase - %s tour %d date %s", $phase, $partie->tour_courant, Carbon::now()->format('H:i:s Y-m-d')));
