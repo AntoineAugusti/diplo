@@ -588,12 +588,12 @@ public class CommunicationServeur {
 				texte).toString());
 			sms = parserJSONsms(reponse);
 		} catch (PartieHTTPSException e) {
-			if (e.error == 404) {
+			// if (e.error == 404) {
 				JSONObject erreur = new JSONObject(e.mess);
 				String message = erreur.getString("erreur");
 
 				throw new PartieInvalideException(message);
-			}
+			// }
 		}
 		return sms;
 	}
