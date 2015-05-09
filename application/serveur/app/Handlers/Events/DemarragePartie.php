@@ -35,7 +35,7 @@ class DemarragePartie implements ShouldBeQueued
         $partie->statut = Partie::EN_JEU;
 
         $dateProchainePhase = Carbon::now()->addMinutes(2);
-        $partie->setDateProchainePhase($date);
+        $partie->setDateProchainePhase($dateProchainePhase);
 
         $partie->save();
 
