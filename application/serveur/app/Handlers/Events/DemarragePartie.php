@@ -2,6 +2,7 @@
 
 namespace Diplo\Handlers\Events;
 
+use Carbon\Carbon;
 use Diplo\Commands\PartiePhaseSwitcherHandler;
 use Diplo\Events\CarteAEteCreee;
 use Diplo\Parties\Partie;
@@ -35,6 +36,6 @@ class DemarragePartie implements ShouldBeQueued
         $partie->save();
 
         // On initialise les changements de phases
-        $this->queue->push(new PartiePhaseSwitcherHandler($partie, 'DEBUT'));
+        $this->queue->later(Carbon::now()->addMinutes(2), new PartiePhaseSwitcherHandler($partie, Partie::COMBAT));
     }
 }
