@@ -83,11 +83,11 @@ class Armee extends Model
     /**
      * Définit la relation avec la case qu'occupe l'armée.
      *
-     * @return HasOne
+     * @return BelongsTo
      */
     public function caseOccupee()
     {
-        return $this->hasOne(CaseClass::class, 'id_case', 'id');
+        return $this->belongsTo(CaseClass::class, 'id_case', 'id');
     }
 
     /**
