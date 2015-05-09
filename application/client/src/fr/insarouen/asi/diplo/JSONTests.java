@@ -2,6 +2,7 @@ package fr.insarouen.asi.diplo;
 
 import fr.insarouen.asi.diplo.Affichage.Cli;
 import fr.insarouen.asi.diplo.MoteurJeu.*;
+import fr.insarouen.asi.diplo.Reseau.*;
 import java.lang.*;
 import java.util.*;
 import java.util.*;
@@ -100,113 +101,116 @@ public class JSONTests {
 	}
 
 	public static void main(String[] args) throws Throwable {
+		CommunicationServeur current = new CommunicationServeur("https://api.diplo-lejeu.fr");
 		ArrayList<Joueur> infosJoueurs = parsageJSONInfosJoueurs();
-		assert infosJoueurs.get(0).getID() ==
-		1 : "L'id du premier joueur vaut " + infosJoueurs.get(
-		0).getID();
-		assert infosJoueurs.get(0).getPseudo().equals(
-		"Fake"): "Le pseudo du premier joueur vaut " +
-			 infosJoueurs.get(0).getPseudo();
-		assert infosJoueurs.get(0).getPays().equals(
-		"FRA"): "Le pays du premier joueur vaut " +
-			infosJoueurs.get(0).getPays();
-		assert infosJoueurs.get(0).getArmeesRestantes() ==
-		10 : "Le nombre d'armees_restantes du premier joueur vaut "
-		+ infosJoueurs.get(0).getArmeesRestantes();
-		assert infosJoueurs.get(0).getCasesControlees() ==
-		3   : "Le nombre de cases_controlees du premier joueur vaut "
-		+ infosJoueurs.get(0).getCasesControlees();
-		assert infosJoueurs.get(1).getID() ==
-		2 : "L'id du second joueur vaut " + infosJoueurs.get(
-		1).getID();
-		assert infosJoueurs.get(1).getPseudo().equals(
-		"Dummy"): "Le pseudo du second joueur vaut " +
-			  infosJoueurs.get(1).getPseudo();
-		assert infosJoueurs.get(1).getPays().equals(
-		"GBR"): "Le pays du second joueur vaut GBR" +
-			infosJoueurs.get(1).getPays();
-		assert infosJoueurs.get(1).getArmeesRestantes() ==
-		5 : "Le nombre d'armees_restantes du second joueur vaut " +
-		infosJoueurs.get(1).getArmeesRestantes();
-		assert infosJoueurs.get(1).getCasesControlees() ==
-		2   : "Le nombre de cases_controlees du second joueur vaut "
-		+ infosJoueurs.get(1).getCasesControlees();
+		String carte = "{\"cases\":[{\"id\":1,\"id_joueur\":1,\"est_libre\":false,\"est_occupee\":true,\"id_armee\":1,\"id_cases_voisines\":[11,2]},{\"id\":2,\"id_joueur\":1,\"est_libre\":false,\"est_occupee\":true,\"id_armee\":2,\"id_cases_voisines\":[12,1,3]},{\"id\":3,\"id_joueur\":null,\"est_libre\":true,\"est_occupee\":false,\"id_armee\":null,\"id_cases_voisines\":[13,2,4]},{\"id\":4,\"id_joueur\":null,\"est_libre\":true,\"est_occupee\":false,\"id_armee\":null,\"id_cases_voisines\":[14,3,5]}],\"nb_cases\":100}";
+		// Carte map = current.parserJSONInfosCarte(carte);
+		// assert infosJoueurs.get(0).getID() ==
+		// 1 : "L'id du premier joueur vaut " + infosJoueurs.get(
+		// 0).getID();
+		// assert infosJoueurs.get(0).getPseudo().equals(
+		// "Fake"): "Le pseudo du premier joueur vaut " +
+		// 	 infosJoueurs.get(0).getPseudo();
+		// assert infosJoueurs.get(0).getPays().equals(
+		// "FRA"): "Le pays du premier joueur vaut " +
+		// 	infosJoueurs.get(0).getPays();
+		// assert infosJoueurs.get(0).getArmeesRestantes() ==
+		// 10 : "Le nombre d'armees_restantes du premier joueur vaut "
+		// + infosJoueurs.get(0).getArmeesRestantes();
+		// assert infosJoueurs.get(0).getCasesControlees() ==
+		// 3   : "Le nombre de cases_controlees du premier joueur vaut "
+		// + infosJoueurs.get(0).getCasesControlees();
+		// assert infosJoueurs.get(1).getID() ==
+		// 2 : "L'id du second joueur vaut " + infosJoueurs.get(
+		// 1).getID();
+		// assert infosJoueurs.get(1).getPseudo().equals(
+		// "Dummy"): "Le pseudo du second joueur vaut " +
+		// 	  infosJoueurs.get(1).getPseudo();
+		// assert infosJoueurs.get(1).getPays().equals(
+		// "GBR"): "Le pays du second joueur vaut GBR" +
+		// 	infosJoueurs.get(1).getPays();
+		// assert infosJoueurs.get(1).getArmeesRestantes() ==
+		// 5 : "Le nombre d'armees_restantes du second joueur vaut " +
+		// infosJoueurs.get(1).getArmeesRestantes();
+		// assert infosJoueurs.get(1).getCasesControlees() ==
+		// 2   : "Le nombre de cases_controlees du second joueur vaut "
+		// + infosJoueurs.get(1).getCasesControlees();
 
-		Jeu partieRejointe = parsageJSONRejoindrePartie();
+		// Jeu partieRejointe = parsageJSONRejoindrePartie();
 
-		assert partieRejointe.getID() == 1 : "Le jeu a un ID de " +
-		partieRejointe.getID();
-		assert partieRejointe.getRequis() ==
-		5 : "Le jeu a un requis de " + partieRejointe.getRequis();
-		assert partieRejointe.getInscrits() ==
-		3 : "Le jeu a un inscrits de 3" +
-		partieRejointe.getInscrits();
-		HashMap<String, Joueur> joueurs = partieRejointe.getJoueurs();
-		assert joueurs.containsKey(
-		"Blah"): "Le joueur est dans la hashmap ?";
-		assert joueurs.get("Blah").getID() ==
-		2 : "Le joueur Blah a un id de " + joueurs.get(
-		"Blah").getID();
-		assert joueurs.get("Blah").getPays().equals(
-		"FRA"): "Le joueur Blah a FRA en pays " + joueurs.get(
-			"Blah").getPays();
-		assert joueurs.get("Blah").getPseudo().equals(
-		"Blah"): "Le joueur Blah a en pseudo " + joueurs.get(
-			 "Blah").getPseudo();
-		assert joueurs.get("Blah").getArmeesRestantes() ==
-		0 : "Le joueur Blah a 0 armees_restantes " + joueurs.get(
-		"Blah").getArmeesRestantes();
-		assert joueurs.get("Blah").getCasesControlees() ==
-		0 : "Le joueur Blah a 0 cases_controlees " + joueurs.get(
-		"Blah").getCasesControlees();
+		// assert partieRejointe.getID() == 1 : "Le jeu a un ID de " +
+		// partieRejointe.getID();
+		// assert partieRejointe.getRequis() ==
+		// 5 : "Le jeu a un requis de " + partieRejointe.getRequis();
+		// assert partieRejointe.getInscrits() ==
+		// 3 : "Le jeu a un inscrits de 3" +
+		// partieRejointe.getInscrits();
+		// HashMap<String, Joueur> joueurs = partieRejointe.getJoueurs();
+		// assert joueurs.containsKey(
+		// "Blah"): "Le joueur est dans la hashmap ?";
+		// assert joueurs.get("Blah").getID() ==
+		// 2 : "Le joueur Blah a un id de " + joueurs.get(
+		// "Blah").getID();
+		// assert joueurs.get("Blah").getPays().equals(
+		// "FRA"): "Le joueur Blah a FRA en pays " + joueurs.get(
+		// 	"Blah").getPays();
+		// assert joueurs.get("Blah").getPseudo().equals(
+		// "Blah"): "Le joueur Blah a en pseudo " + joueurs.get(
+		// 	 "Blah").getPseudo();
+		// assert joueurs.get("Blah").getArmeesRestantes() ==
+		// 0 : "Le joueur Blah a 0 armees_restantes " + joueurs.get(
+		// "Blah").getArmeesRestantes();
+		// assert joueurs.get("Blah").getCasesControlees() ==
+		// 0 : "Le joueur Blah a 0 cases_controlees " + joueurs.get(
+		// "Blah").getCasesControlees();
 
-		Carte carte = parsageJSONInfosCarte();
+		// Carte carte = parsageJSONInfosCarte();
 
-		assert carte.getCase(1).getID() == 1 : "La case 1 a pour id " +
-		carte.getCase(1).getID();
-		assert carte.getCase(1).getEstLibre() ==
-	    false: "La case 1 a pour est_libre " + carte.getCase(
-		1).getEstLibre();
-		assert carte.getCase(1).getIdJoueur() ==
-		1 : "La case 1 a pour id_joueur " + carte.getCase(
-		1).getIdJoueur();
-		assert carte.getCase(1).getEstOccupee() ==
-	    false: "La case 1 a pour est_occupee " + carte.getCase(
-		1).getEstOccupee();
-		assert carte.getCase(1).getIdArmee() ==
-		0 : "La case 1 a pour id_armee " + carte.getCase(
-		1).getIdArmee();
-		assert carte.getCase(2).getID() == 2 : "La case 2 a pour id " +
-		carte.getCase(2).getID();
-		assert carte.getCase(2).getEstLibre() ==
-	    true: "La case 2 a pour est_libre " + carte.getCase(
-		2).getEstLibre();
-		assert carte.getCase(2).getIdJoueur() ==
-		0 : "La case 2 a pour id_joueur " + carte.getCase(
-		2).getIdJoueur();
-		assert carte.getCase(2).getEstOccupee() ==
-	    true: "La case 2 a pour est_occupee " + carte.getCase(
-		2).getEstOccupee();
-		assert carte.getCase(2).getIdArmee() ==
-		1 : "La case 2 a pour id_armee " + carte.getCase(
-		2).getIdArmee();
+		// assert carte.getCase(1).getID() == 1 : "La case 1 a pour id " +
+		// carte.getCase(1).getID();
+		// assert carte.getCase(1).getEstLibre() ==
+	 //    false: "La case 1 a pour est_libre " + carte.getCase(
+		// 1).getEstLibre();
+		// assert carte.getCase(1).getIdJoueur() ==
+		// 1 : "La case 1 a pour id_joueur " + carte.getCase(
+		// 1).getIdJoueur();
+		// assert carte.getCase(1).getEstOccupee() ==
+	 //    false: "La case 1 a pour est_occupee " + carte.getCase(
+		// 1).getEstOccupee();
+		// assert carte.getCase(1).getIdArmee() ==
+		// 0 : "La case 1 a pour id_armee " + carte.getCase(
+		// 1).getIdArmee();
+		// assert carte.getCase(2).getID() == 2 : "La case 2 a pour id " +
+		// carte.getCase(2).getID();
+		// assert carte.getCase(2).getEstLibre() ==
+	 //    true: "La case 2 a pour est_libre " + carte.getCase(
+		// 2).getEstLibre();
+		// assert carte.getCase(2).getIdJoueur() ==
+		// 0 : "La case 2 a pour id_joueur " + carte.getCase(
+		// 2).getIdJoueur();
+		// assert carte.getCase(2).getEstOccupee() ==
+	 //    true: "La case 2 a pour est_occupee " + carte.getCase(
+		// 2).getEstOccupee();
+		// assert carte.getCase(2).getIdArmee() ==
+		// 1 : "La case 2 a pour id_armee " + carte.getCase(
+		// 2).getIdArmee();
 
-		Phase phase = parsageJSONInfosPhase();
+		// Phase phase = parsageJSONInfosPhase();
 
-		assert phase.getChrono() == 42 : "Le chrono vaut " +
-		phase.getChrono();
-		assert phase.getStatutPhaseCourante().equals(
-		Phase.Statut.NEGOCIATION): "Le statut de la phase est " +
-					   phase.getStatutPhaseCourante();
+		// assert phase.getChrono() == 42 : "Le chrono vaut " +
+		// phase.getChrono();
+		// assert phase.getStatutPhaseCourante().equals(
+		// Phase.Statut.NEGOCIATION): "Le statut de la phase est " +
+		// 			   phase.getStatutPhaseCourante();
 
-		StatutDuJeu statut = parsageJSONInfosStatut();
+		// StatutDuJeu statut = parsageJSONInfosStatut();
 
-		assert statut.getStatutDuJeu().equals(
-		"attente_joueurs"): "Le statut de la partie courante est " +
-				    statut.getStatutDuJeu();
-		assert statut.getMessage().equals(
-		"Il n'y a pas assez de joueurs pour démarrer la partie"):
-			"Le message associé au statut est : " +
-			statut.getMessage();
+		// assert statut.getStatutDuJeu().equals(
+		// "attente_joueurs"): "Le statut de la partie courante est " +
+		// 		    statut.getStatutDuJeu();
+		// assert statut.getMessage().equals(
+		// "Il n'y a pas assez de joueurs pour démarrer la partie"):
+		// 	"Le message associé au statut est : " +
+		// 	statut.getMessage();
 	}
 }
