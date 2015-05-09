@@ -2,6 +2,10 @@
 
 namespace Diplo\Parties;
 
+use Diplo\Exceptions\PartiePleineException;
+use Diplo\Joueurs\Joueur;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 interface PartiesRepository
 {
     /**
@@ -11,7 +15,7 @@ interface PartiesRepository
      *
      * @return Partie
      *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException La partie n'a pas été trouvée
+     * @throws ModelNotFoundException La partie n'a pas été trouvée
      */
     public function trouverParId($id);
 
@@ -20,10 +24,10 @@ interface PartiesRepository
      *
      * @param int $id L'identifiant de la partie
      *
-     * @return Diplo\Joueurs\Joueur
+     * @return Joueur
      *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException La partie n'a pas été trouvée
-     * @throws \Diplo\Exceptions\PartiePleineException              La partie est pleine
+     * @throws ModelNotFoundException La partie n'a pas été trouvée
+     * @throws PartiePleineException  La partie est pleine
      *
      * @event PartiePreteACommencer La partie est prête à commencer
      */

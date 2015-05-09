@@ -2,6 +2,7 @@
 
 namespace Diplo\Parties;
 
+use Carbon\Carbon;
 use Diplo\Armees\Armee;
 use Diplo\Cartes\Carte;
 use Diplo\Exceptions\PartieNonEnJeuException;
@@ -242,5 +243,48 @@ class Partie extends Model implements PhaseInterface
     public function getJoueurs()
     {
         return $this->joueurs;
+    }
+
+    /**
+     * Récupère le numéro du tour courant.
+     *
+     * @return int
+     */
+    public function getTourCourant()
+    {
+        return $this->tour_courant;
+    }
+
+    /**
+     * Définit le numéro du tour courant.
+     *
+     * @param int $tourCourant
+     */
+    protected function setTourCourant($tourCourant)
+    {
+        $this->tour_courant = $tourCourant;
+    }
+
+    /**
+     * Incrémente le numéro du tour courant.
+     *
+     * @return int
+     */
+    public function incrementerTourCourant()
+    {
+        $nouveauTourCourant = $this->getTourCourant() + 1;
+        $this->setTourCourant($nouveauTourCourant);
+
+        return $nouveauTourCourant;
+    }
+
+    /**
+     * Définit la date où aura lieu le prochain changement de phase.
+     *
+     * @param Carbon $dateProchainePhase
+     */
+    public function setDateProchainePhase(Carbon $dateProchainePhase)
+    {
+        $this->date_prochaine_phase = $dateProchainePhase;
     }
 }
