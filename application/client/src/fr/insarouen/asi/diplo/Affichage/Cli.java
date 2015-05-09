@@ -625,7 +625,7 @@ public class Cli {
 		try {
 			Method method = getMethodesOrdre(parametres);
 
-			method.invoke(this, (Object)getParametresOrdre(
+			method.invoke(this, (Object[])getParametresOrdre(
 			parametres));
 		}
 		// catch(InvocationTargetException e){
