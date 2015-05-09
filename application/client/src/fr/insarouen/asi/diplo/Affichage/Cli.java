@@ -115,9 +115,6 @@ public class Cli {
 				this.partie.miseAJourJoueur(j);
 				i++;
 			}
-			for (Joueur j : this.partie.getJoueurs().values()){
-				System.out.println(j.getPion());
-			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -397,20 +394,15 @@ public class Cli {
 
 	public void commandeAfficherCarte() {
 		try {
-			System.out.println("1");
 			Carte carte = moteur.recupererInfosCarte(
 				this.partie.getID());
-			System.out.println("2");
 			this.partie.setCarte(carte);
-			System.out.println("3");
 			AffichageCarte afficheCarte = new AffichageCarte(
 				this.partie);
-			System.out.println("4");
 			afficheCarte.enregistrerCarte(10);
-			System.out.println("5");
 			afficheCarte.lireCarte("carte.sh");
-			System.out.println("6");
-		} catch (Exception e) {
+			} 
+			catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
