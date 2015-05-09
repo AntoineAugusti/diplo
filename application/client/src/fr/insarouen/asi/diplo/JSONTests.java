@@ -101,9 +101,9 @@ public class JSONTests {
 
 	public static void main(String[] args) throws Throwable {
 		ArrayList<Joueur> infosJoueurs = parsageJSONInfosJoueurs();
-		assert infosJoueurs.get(0).getId() ==
+		assert infosJoueurs.get(0).getID() ==
 		1 : "L'id du premier joueur vaut " + infosJoueurs.get(
-		0).getId();
+		0).getID();
 		assert infosJoueurs.get(0).getPseudo().equals(
 		"Fake"): "Le pseudo du premier joueur vaut " +
 			 infosJoueurs.get(0).getPseudo();
@@ -116,9 +116,9 @@ public class JSONTests {
 		assert infosJoueurs.get(0).getCasesControlees() ==
 		3   : "Le nombre de cases_controlees du premier joueur vaut "
 		+ infosJoueurs.get(0).getCasesControlees();
-		assert infosJoueurs.get(1).getId() ==
+		assert infosJoueurs.get(1).getID() ==
 		2 : "L'id du second joueur vaut " + infosJoueurs.get(
-		1).getId();
+		1).getID();
 		assert infosJoueurs.get(1).getPseudo().equals(
 		"Dummy"): "Le pseudo du second joueur vaut " +
 			  infosJoueurs.get(1).getPseudo();
@@ -144,9 +144,9 @@ public class JSONTests {
 		HashMap<String, Joueur> joueurs = partieRejointe.getJoueurs();
 		assert joueurs.containsKey(
 		"Blah"): "Le joueur est dans la hashmap ?";
-		assert joueurs.get("Blah").getId() ==
+		assert joueurs.get("Blah").getID() ==
 		2 : "Le joueur Blah a un id de " + joueurs.get(
-		"Blah").getId();
+		"Blah").getID();
 		assert joueurs.get("Blah").getPays().equals(
 		"FRA"): "Le joueur Blah a FRA en pays " + joueurs.get(
 			"Blah").getPays();
@@ -162,8 +162,8 @@ public class JSONTests {
 
 		Carte carte = parsageJSONInfosCarte();
 
-		assert carte.getCase(1).getId() == 1 : "La case 1 a pour id " +
-		carte.getCase(1).getId();
+		assert carte.getCase(1).getID() == 1 : "La case 1 a pour id " +
+		carte.getCase(1).getID();
 		assert carte.getCase(1).getEstLibre() ==
 	    false: "La case 1 a pour est_libre " + carte.getCase(
 		1).getEstLibre();
@@ -176,8 +176,8 @@ public class JSONTests {
 		assert carte.getCase(1).getIdArmee() ==
 		0 : "La case 1 a pour id_armee " + carte.getCase(
 		1).getIdArmee();
-		assert carte.getCase(2).getId() == 2 : "La case 2 a pour id " +
-		carte.getCase(2).getId();
+		assert carte.getCase(2).getID() == 2 : "La case 2 a pour id " +
+		carte.getCase(2).getID();
 		assert carte.getCase(2).getEstLibre() ==
 	    true: "La case 2 a pour est_libre " + carte.getCase(
 		2).getEstLibre();

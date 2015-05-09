@@ -33,7 +33,7 @@ public class ComTests {
 		Joueur local = (Joueur)jeu.getJoueurs().values().toArray()[0];
 
 		assert local.getPseudo() != null : "Le nom est non null";
-		assert local.getId() > 0 : "L'id est non null";
+		assert local.getID() > 0 : "L'id est non null";
 		assert local.getPays() != null : "Le pays est non null";
 		assert local.getArmeesRestantes() ==
 		0 : "Les armees_restantes est non null";
@@ -46,7 +46,7 @@ public class ComTests {
 			local = joueurs.get(i);
 			assert local.getPseudo() !=
 			null : "Le nom est non null";
-			assert local.getId() > 0 : "L'id est non null";
+			assert local.getID() > 0 : "L'id est non null";
 			assert local.getPays() != null : "Le pays est non null";
 			assert local.getArmeesRestantes() ==
 			0 : "Les armees_restantes est non null";
