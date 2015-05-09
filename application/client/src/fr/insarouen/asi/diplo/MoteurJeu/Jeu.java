@@ -57,7 +57,7 @@ public class Jeu {
 		Joueur resultat = null;
 
 		for (Joueur joueur : getJoueurs().values()) {
-			if (joueur.getPseudo() == pseudo)
+			if (joueur.getPseudo().equals(pseudo))
 				resultat = joueur;
 		}
 		return resultat;

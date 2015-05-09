@@ -199,18 +199,18 @@ public class Cli {
 
 	public void commandeCreerConversation(String listePseudos) {
 		try {
-			// int partieID = partie.getID();
-			int partieID = 1;
+			int partieID = this.partie.getID();
 			ArrayList<Integer> destinataires =
 			new ArrayList<Integer>();
 			if (moteur.recupererInfosPhase(
 			partieID).getStatutPhaseCourante() ==
 			Phase.Statut.NEGOCIATION) {
 				String[] pseudos = listePseudos.split(",");
-				for (int i = 0; i < pseudos.length; i++)
+				for (int i = 0; i < pseudos.length; i++){
 					destinataires.add(
 					partie.getJoueurByPseudo(
 					pseudos[i]).getID());
+				}
 				Conversation conversation =
 				moteur.creerConversation(destinataires);
 				System.out.println(
