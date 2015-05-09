@@ -17,6 +17,8 @@ public class Joueur {
 		this.pays = pays;
 		this.armees_restantes = armees;
 		this.cases_controlees = cases;
+		this.couleur_joueur = 0;
+		this.pion_armee = " ";
 	}
 
 	public void setCouleur(int couleur) {

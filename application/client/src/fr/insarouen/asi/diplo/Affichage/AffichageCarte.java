@@ -33,15 +33,20 @@ public class AffichageCarte {
 
 		Collections.sort(listeDeCases, comparator);
 		for (Case c : listeDeCases) {
-			int idJoueur = c.getIdJoueur();
-			int idArmee = c.getIdArmee();
+			int idJoueur = 0;
+			int idArmee = 0;
 			int couleur = 42;
 			String pion = " ";
 
-			if (idJoueur != 0) {
+			if (!c.getEstLibre()) {
+				idJoueur = c.getIdJoueur();
 				Joueur joueur = jeu.getJoueur(idJoueur);
-
 				couleur = joueur.getCouleurJoueur();
+			}
+
+			if(c.getEstOccupee()){
+				idJoueur = c.getIdJoueur();
+				Joueur joueur = jeu.getJoueur(idJoueur);
 				pion = joueur.getPion();
 			}
 
