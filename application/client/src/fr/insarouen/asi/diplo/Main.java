@@ -31,7 +31,7 @@ public class Main {
 
 		System.out.println("");
 		System.out.println(
-		"Si c'est votre première visite, n'hésitez pas à jetter un coup d'oeil à l'Aide (aide).");
+		"Si c'est votre première visite, n'hésitez pas à jeter un coup d'oeil à l'Aide (aide).");
 		cli.executer();
 	}
 }
