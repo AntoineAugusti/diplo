@@ -229,20 +229,20 @@ public class Cli {
 		}
 	}
 
-	public void commandeEnvoyerMessage(String idConversation, String...	message) {
+	public void commandeEnvoyerMessage(String idConversation) {
 		try {
 			int partieID = partie.getID();
-			String messageConcat = "";
-			for (int i = 0; i < message.length; i++) {
-				messageConcat = messageConcat + " " + message[i];
-			}
-			System.out.println(messageConcat);
+			String message = "";
+			Scanner sc = new Scanner(System.in);
+
 			if (moteur.recupererInfosPhase(
 			partieID).getStatutPhaseCourante() ==
 			Phase.Statut.NEGOCIATION) {
+				System.out.println("Veuillez entrer votre message :");
+				message = sc.nextLine();
 				moteur.posterMessage(Integer.parseInt(
 				idConversation), this.joueur.getID(),
-				messageConcat);
+				message);
 			} else {
 				System.out.println(
 				"Vous n'êtes pas en phase de négociation.");
@@ -260,6 +260,7 @@ public class Cli {
 			new ArrayList<Conversation>();
 			String listeJoueurs = "";
 			ArrayList<Integer> joueurs = new ArrayList<Integer>();
+
 			if (moteur.recupererInfosPhase(
 			partieID).getStatutPhaseCourante() ==
 			Phase.Statut.NEGOCIATION) {
@@ -387,11 +388,15 @@ public class Cli {
 
 	public void commandePhaseCourante() {
 		try {
+			int partieID = this.partie.getID();
 			Phase phase = moteur.recupererInfosPhase(
-				partie.getID());
+				partieID);
 			System.out.println("Phase : " +
 			phase.getStatutPhaseCourante() + ", Temps : " +
 			phase.getChrono());
+			System.out.println("Statut : " +
+			moteur.recupererInfosPartie(partieID));
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -406,8 +411,7 @@ public class Cli {
 				this.partie);
 			afficheCarte.enregistrerCarte(10);
 			afficheCarte.lireCarte("carte.sh");
-			} 
-			catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -505,8 +509,6 @@ public class Cli {
 		System.out.println(setBoldText + "OPTIONS" + setPlainText);
 		System.out.println(
 		"idConversation L'id de la conversation où l'on veut poster le message");
-		System.out.println(
-		"pseudos  La liste de pseudos des joueurs à qui envoyer le message");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
@@ -526,15 +528,9 @@ public class Cli {
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
-		System.out.println("listerUnites");
+		System.out.println("listerArmees");
 		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
-		System.out.println("Lister les unités possédées");
-		System.out.println("");
-
-		System.out.println(setBoldText + "NOM" + setPlainText);
-		System.out.println("listerCasesControlees");
-		System.out.println(setBoldText + "DESCRIPTION" + setPlainText);
-		System.out.println("Lister les cases contrôlées");
+		System.out.println("Lister les armées possédées");
 		System.out.println("");
 
 		System.out.println(setBoldText + "NOM" + setPlainText);
@@ -566,6 +562,34 @@ public class Cli {
 		Method method = null;
 		String commande = parametres[0];
 
+		switch (commande) {
+			case "rj" : commande = "rejoindre";
+			break;
+			case "at" : commande = "attaquer";
+			break;
+			case "sd" : commande = "soutienDefensif";
+			break;
+			case "so" : commande = "soutienOffensif";
+			break;
+			case "te" : commande = "tenir";
+			break;
+			case "cc" : commande = "creerConversation";
+			break;
+			case "em" : commande = "envoyerMessage";
+			break;
+			case "ic" : commande = "infosConversations";
+			break;
+			case "hc" : commande = "historiqueConversation";
+			break;
+			case "la" : commande = "listerArmees";
+			break;
+			case "ap" : commande = "afficherParticipants";
+			break;
+			case "pc" : commande = "phaseCourante";
+			break;
+			case "ac" : commande = "afficherCarte";
+			break;
+		}
 		// À modifier selon le nombre de paramètres en entrées
 		try {
 			if (parametres.length == 1) {
@@ -584,12 +608,6 @@ public class Cli {
 					commande.substring(1), String.class,
 					String.class);
 			}
-			if (parametres.length >= 4) {
-				method = this.getClass().getMethod("commande" +
-					commande.substring(0, 1).toUpperCase() +
-					commande.substring(1), String.class,
-					String[].class);
-			}
 		} catch (NoSuchMethodException e) {
 			System.out.println(
 			"Commande non reconnue. Veuillez entrer une commande valide.");
@@ -607,15 +625,7 @@ public class Cli {
 			param = new String[2];
 			param[0] = parametres[1];
 			param[1] = parametres[2];
-			// param[2] = parametres[3];
 		}
-		if(parametres.length > 3) {
-			param = new String[parametres.length - 1];
-			for (int i = 0; i < param.length; i++) {
-				param[i] = parametres[i+1];
-			}
-		}
-
 		return param;
 	}
 

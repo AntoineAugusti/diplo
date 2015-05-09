@@ -5,6 +5,7 @@ namespace Diplo\Ordres;
 use Closure;
 use Diplo\Armees\Armee;
 use Diplo\Armees\ArmeeRepository;
+use Diplo\Cartes\CaseRepository;
 
 class AttaquerExecuteur extends OrdreCibleExecuteur
 {
@@ -14,11 +15,17 @@ class AttaquerExecuteur extends OrdreCibleExecuteur
     protected $armeeRepository;
 
     /**
+     * @var CaseRepository
+     */
+    protected  $caseRepository;
+
+    /**
      * @param ArmeeRepository $armeeRepository
      */
-    public function __construct(ArmeeRepository $armeeRepository)
+    public function __construct(ArmeeRepository $armeeRepository, CaseRepository $caseRepository)
     {
         $this->armeeRepository = $armeeRepository;
+        $this->caseRepository = $caseRepository;
     }
 
     /**
@@ -32,10 +39,11 @@ class AttaquerExecuteur extends OrdreCibleExecuteur
         // Nécessaire pour avoir l'autocompletion de l'IDE.
         if ($ordre instanceof Attaquer) {
             $caseId = $ordre->getCase()->getId();
+            $case = $this->caseRepository->trouverParId($caseId);
 
             // La case n'est occupée par personne, on peut se déplacer immédiatement
             if (!$ordre->getCase()->estOccupee()) {
-                $this->armeeRepository->deplacerArmee($ordre->getArmee(), $caseId);
+                $this->armeeRepository->deplacerArmee($ordre->getArmee(), $case);
                 // Regardons si on peut se déplacer sur la case qui est occupée
             } else {
                 // On compte le nombre de soutiens offensifs et défensifs
@@ -45,7 +53,7 @@ class AttaquerExecuteur extends OrdreCibleExecuteur
                 // Si il y a eu plus de soutiens offensifs, on peut exécuter l'ordre
                 if ($nbSoutiensOffensifs > $nbSoutiensDefensifs) {
                     $this->deplacerArmeeAleatoirementOuDetruire($ordre->getCase()->getArmee());
-                    $this->armeeRepository->deplacerArmee($ordre->getArmee(), $caseId);
+                    $this->armeeRepository->deplacerArmee($ordre->getArmee(), $case);
                 }
             }
         }
