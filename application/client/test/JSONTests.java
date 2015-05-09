@@ -3,6 +3,7 @@ package fr.insarouen.asi.diplo;
 import fr.insarouen.asi.diplo.Affichage.Cli;
 import fr.insarouen.asi.diplo.MoteurJeu.*;
 import fr.insarouen.asi.diplo.Reseau.*;
+import java.text.SimpleDateFormat;
 import java.lang.*;
 import java.util.*;
 import java.util.*;
@@ -104,6 +105,10 @@ public class JSONTests {
 		CommunicationServeur current = new CommunicationServeur("https://api.diplo-lejeu.fr");
 		ArrayList<Joueur> infosJoueurs = parsageJSONInfosJoueurs();
 		String carte = "{\"cases\":[{\"id\":1,\"id_joueur\":1,\"est_libre\":false,\"est_occupee\":true,\"id_armee\":1,\"id_cases_voisines\":[11,2]},{\"id\":2,\"id_joueur\":1,\"est_libre\":false,\"est_occupee\":true,\"id_armee\":2,\"id_cases_voisines\":[12,1,3]},{\"id\":3,\"id_joueur\":null,\"est_libre\":true,\"est_occupee\":false,\"id_armee\":null,\"id_cases_voisines\":[13,2,4]},{\"id\":4,\"id_joueur\":null,\"est_libre\":true,\"est_occupee\":false,\"id_armee\":null,\"id_cases_voisines\":[14,3,5]}],\"nb_cases\":100}";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.FRENCH);
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Date date = sdf.parse("2015-05-09 13:31:38");
+		System.out.println(date.toString());
 		// Carte map = current.parserJSONInfosCarte(carte);
 		// assert infosJoueurs.get(0).getID() ==
 		// 1 : "L'id du premier joueur vaut " + infosJoueurs.get(

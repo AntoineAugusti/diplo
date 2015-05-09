@@ -14,6 +14,8 @@ echo 'Compilation du Moteur de jeu';
 javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/MoteurJeu/*.java
 echo 'Compilation du main';
 javac -sourcepath src -d classes -cp lib/json-20140107.jar src/fr/insarouen/asi/diplo/*.java
+echo 'Compilation des tests'
+#javac -sourcepath test -d classes -cp lib/json-20140107.jar test/*.java
 
 # Exemple de compilation de TU
 # echo '----- Compilation des TU -----';
