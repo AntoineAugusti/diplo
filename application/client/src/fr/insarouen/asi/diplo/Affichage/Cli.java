@@ -20,7 +20,10 @@ import fr.insarouen.asi.diplo.MoteurJeu.*;
 import fr.insarouen.asi.diplo.MoteurJeu.Negociation.*;
 import fr.insarouen.asi.diplo.MoteurJeu.Ordres.*;
 import fr.insarouen.asi.diplo.Reseau.*;
-
+/**
+ * @assoc - - - Couleur
+ * @assoc - - - Armee
+ */
 public class Cli {
 	private String ordre;
 	private Jeu partie;

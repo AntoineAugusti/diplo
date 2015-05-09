@@ -1,6 +1,6 @@
 package fr.insarouen.asi.diplo.Exception.ReseauException;
 
-public class PartieHTTPSException extends Exception {
+public class PartieHTTPSException extends ReseauException {
 	public int error;
 	public String mess;
 

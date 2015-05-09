@@ -1,6 +1,8 @@
 package fr.insarouen.asi.diplo.MoteurJeu;
 import java.util.*;
-
+/**
+ * @navassoc - - 1..* Case
+ */
 public class Carte {
 	private HashMap<Integer, Case> plan;
 

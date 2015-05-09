@@ -16,7 +16,9 @@ import java.util.*;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLPeerUnverifiedException;
 import org.json.*;
-
+/**
+ * @assoc - - - StatutDuJeu
+ */
 public class CommunicationServeur {
 	// Doit être de type http://example.com/, afin que les autres méthodes n'aient plus qu'à ajouter l'URI à la fin.
 	private String serveurURL;

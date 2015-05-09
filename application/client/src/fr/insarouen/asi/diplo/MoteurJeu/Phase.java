@@ -1,5 +1,6 @@
 package fr.insarouen.asi.diplo.MoteurJeu;
 
+
 public class Phase {
 	public enum Statut {
 		NEGOCIATION, COMBAT, INACTIF
