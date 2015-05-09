@@ -167,10 +167,10 @@
 			\item simplicité de mise en oeuvre ;
 			\item documentation intégrée à l'interface (RTFM) ;
 		\end{itemize}\bigskip
-		Nous avons cependant rencontré des difficultés quant à l'affichage de la carte, que nous abordons plus en détails dans la partie~\ref{pb}.
+		Nous avons cependant rencontré des difficultés quant à l'affichage de la carte, que nous abordons plus en détails dans la partie~\ref{pb}. L'utilisateur rentre des commandes, le cli les comprend et fait appel au moteur du jeu afin de procéder à l'exécution de celles-ci
 
 	\subsection{Moteur de Jeu}
-		Afin de pouvoir exécuter le moteur de jeu, qui s'occupe de la bonne coordination du jeu côté client, nous avons créé des classes annexes permettant de manipuler les objets du jeu tels qu'une case, une carte, un joueur etc. Nous avons ensuite créé la classe \texttt{Moteur} qui utilise ces classes annexes et qui gère le déroulement du jeu côté client.
+		Afin de pouvoir exécuter le moteur de jeu, qui s'occupe de coordonner les éléments côté client, nous avons créé des classes annexes permettant de manipuler les objets du jeu tels qu'une case, une carte, un joueur etc. Nous avons ensuite créé la classe \texttt{Moteur} qui utilise ces classes annexes.
 
 	\subsection{Communication Réseau}
 		Le serveur étant en HTTPS, nous avons donc utilisé la classe \texttt{HTTPSURLConnection} que propose Java 7. Nous utilisons deux types de requêtes HTTP : \texttt{GET} et \texttt{POST}. Ainsi nous avons généralisé ces deux fonctions de requêtage HTTP pour l'ensemble des fonctionnalités, en visibilité privée. Nous avons également produit des fonctions privées permettant de parser le JSON reçu ou de produire du JSON selon l'objet passé en paramètre.\\
