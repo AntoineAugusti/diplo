@@ -19,6 +19,11 @@ public class Moteur {
 		return current.recupererInfosJoueurs(partieID);
 	}
 
+	public ArrayList<Armee> recupererInfosArmees(int partieID) throws
+	PartieIntrouvableException, RuntimeException {
+		return current.recupererInfosArmees(partieID);
+	}
+
 	public String recupererInfosPartie(int partieID) throws
 	PartieIntrouvableException, RuntimeException {
 		return current.recupererInfosPartie(partieID);
