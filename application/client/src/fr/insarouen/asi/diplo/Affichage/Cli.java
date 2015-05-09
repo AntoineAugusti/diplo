@@ -39,7 +39,6 @@ public class Cli {
 		this.partie = null;
 		this.moteur = new Moteur();
 		this.participants = new ArrayList<Joueur>();
-
 	}
 
 	// methodes
@@ -66,7 +65,7 @@ public class Cli {
 			case 5:
 				pion = "@";
 				break;
-			default :
+			default:
 				pion = " ";
 				break;
 		}
@@ -89,22 +88,31 @@ public class Cli {
 			Couleur couleur = new Couleur();
 			int[]   couleurs = couleur.genererPiscineDeCouleur();
 			int i = 0;
-			Phase phaseCourante = new Phase(Phase.Statut.INACTIF, 0);
-			System.out.println("En attente du statut de la partie : ");	
-			while (phaseCourante.getStatutPhaseCourante() == Phase.Statut.INACTIF) {
-				phaseCourante = moteur.recupererInfosPhase(partie.getID());
-				System.out.println("Phase : " + phaseCourante.getStatutPhaseCourante());	
+			Phase phaseCourante = new Phase(Phase.Statut.INACTIF,
+				0);
+			System.out.println(
+			"En attente du statut de la partie : ");
+			while (phaseCourante.getStatutPhaseCourante() ==
+			Phase.Statut.INACTIF) {
+				phaseCourante = moteur.recupererInfosPhase(
+					partie.getID());
+				System.out.println("Phase : " +
+				phaseCourante.getStatutPhaseCourante());
 				Thread.sleep(2000);
 			}
-			this.participants = moteur.recupererInfosJoueurs(partie.getID());
+			this.participants = moteur.recupererInfosJoueurs(
+				partie.getID());
 			System.out.println(participants.size());
 			for (Joueur j : this.participants) {
 				j.setCouleur(couleurs[i]);
 				j.setPion(pionArmee(j.getID()));
 				if (j.getID() == this.joueur.getID()) {
 					this.joueur.setCouleur(couleurs[i]);
-					this.joueur.setPion(pionArmee(this.joueur.getID()));
+					this.joueur.setPion(pionArmee(
+					this.joueur.getID()));
 				}
+
+				this.partie.miseAJourJoueur(j);
 				i++;
 			}
 		} catch (Exception e) {
@@ -309,17 +317,47 @@ public class Cli {
 
 	public void commandeListerArmees() {
 		try {
-			ArrayList<Armee> listeArmees = moteur.recupererInfosArmees(partie.getID());
+			ArrayList<Armee> listeArmees =
+			moteur.recupererInfosArmees(partie.getID());
 			System.out.println(listeArmees.size());
 			System.out.println("Armées restantes personnelles:");
 			for (Armee a : listeArmees) {
 				if (a.getJoueur() == this.joueur.getID()) {
-					System.out.println("Pion : "+this.joueur.getPion()+", Position : "+a.getIdCaseCourante());
+					System.out.println("Pion : " +
+					this.joueur.getPion() +
+					", Position : " +
+					a.getIdCaseCourante());
 				}
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+	private String couleurToString(int couleur) {
+		String retour = " ";
+
+		switch (couleur) {
+			case 41:
+				retour = "Rouge";
+				break;
+			case 42:
+				retour = "Vert";
+				break;
+			case 43:
+				retour = "Jaune";
+				break;
+			case 44:
+				retour = "Bleu";
+				break;
+			case 45:
+				retour = "Magenta";
+				break;
+			case 46:
+				retour = "Cyan";
+				break;
+		}
+		return retour;
 	}
 
 	public void commandeAfficherParticipants() {
@@ -328,13 +366,11 @@ public class Cli {
 			if (moteur.recupererInfosPhase(
 			partieID).getStatutPhaseCourante() !=
 			Phase.Statut.INACTIF) {
-				ArrayList<Joueur> participants =
-				moteur.recupererInfosJoueurs(
-					partie.getID());
-				for (Joueur j : participants)
+				for (Joueur j : this.participants)
 					System.out.println("Pseudo : " +
 					j.getPseudo() + ", Couleur : " +
-					j.getCouleurJoueur());
+					couleurToString(
+					j.getCouleurJoueur()));
 			} else {
 				System.out.println(
 				"La partie n'a pas encore commencée.");
@@ -357,15 +393,18 @@ public class Cli {
 	}
 
 	// public void commandeListerCasesControlees() {
-	// 	try {
-	// 		// appeler méthode lister cases contrôlées
-	// 	} catch (Exception e) {
-	// 		System.out.println(e.getMessage());
-	// 	}
+	// try {
+	//// appeler méthode lister cases contrôlées
+	// } catch (Exception e) {
+	// System.out.println(e.getMessage());
+	// }
 	// }
 
 	public void commandeAfficherCarte() {
 		try {
+			Carte carte = moteur.recupererInfosCarte(
+				this.partie.getID());
+			this.partie.setCarte(carte);
 			AffichageCarte afficheCarte = new AffichageCarte(
 				this.partie);
 			afficheCarte.enregistrerCarte(10);

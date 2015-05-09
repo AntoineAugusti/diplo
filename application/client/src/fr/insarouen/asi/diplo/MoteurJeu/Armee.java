@@ -24,5 +24,4 @@ public class Armee {
 	public int getIdCaseCourante() {
 		return this.id_case_courante;
 	}
-
 }

@@ -445,12 +445,13 @@ public class CommunicationServeur {
 				String message = erreur.getString("erreur");
 
 				throw new PartieIntrouvableException(message);
-			} 
-			// else {
-			// 	JSONObject erreur = new JSONObject(e.mess);
-			// 	String message = erreur.getString("erreur");
+			}
 
-			// 	throw new PartieInvalideException(message);
+			// else {
+			// JSONObject erreur = new JSONObject(e.mess);
+			// String message = erreur.getString("erreur");
+
+			// throw new PartieInvalideException(message);
 			// }
 		}
 		return phaseCourante;

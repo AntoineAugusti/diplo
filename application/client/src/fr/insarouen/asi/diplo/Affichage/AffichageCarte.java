@@ -67,8 +67,7 @@ public class AffichageCarte {
 			}
 
 			l3.append("\\e[" + couleur + "m" + limiteGauche + " " +
-			" " + " " + pion + " " +
-			limiteDroite + "\\e[0m");
+			" " + " " + pion + " " + limiteDroite + "\\e[0m");
 			l4.append("\\e[" + couleur + "m" + limiteGauche +
 			limiteHBasse + limiteHBasse + limiteHBasse +
 			limiteHBasse + limiteHBasse + limiteDroite +
