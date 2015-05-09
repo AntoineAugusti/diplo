@@ -4,6 +4,7 @@ namespace Diplo\Messages;
 
 use Diplo\Joueurs\Joueur;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Message extends Model
 {
@@ -33,9 +34,9 @@ class Message extends Model
     ];
 
     /**
-     * Récupère l'auteur d'un message.
+     * Définit la relation de l'auteur d'un message.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * @return Relation
      */
     public function joueur()
     {
@@ -43,12 +44,32 @@ class Message extends Model
     }
 
     /**
-     * Récupère la conversation associée à un message.
+     * Récupère l'auteur du message.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * @return Joueur
+     */
+    public function getJoueur()
+    {
+        return $this->joueur;
+    }
+
+    /**
+     * Définit la relation avec les conversations.
+     *
+     * @return Relation
      */
     public function conversation()
     {
         return $this->belongsTo(Conversation::class, 'id_conversation', 'id');
+    }
+
+    /**
+     * Récupère la conversation du message.
+     *
+     * @return Conversation
+     */
+    public function getConversation()
+    {
+        return $this->conversation;
     }
 }
