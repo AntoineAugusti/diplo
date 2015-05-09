@@ -2,6 +2,9 @@ package fr.insarouen.asi.diplo.MoteurJeu.Negociation;
 
 import java.util.ArrayList;
 
+/**
+ * @navassoc - - 1..* Message
+ */
 public class Conversation {
 	public int id_conversation;
 	public ArrayList<Integer> id_joueurs;
