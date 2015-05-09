@@ -4,7 +4,9 @@ import fr.insarouen.asi.diplo.MoteurJeu.*;
 import java.io.*;
 import java.util.*;
 
-
+/**
+ * @assoc - - - CaseComparator
+ */
 public class AffichageCarte {
 	private Carte carte;
 	private static final int LARGEUR_CASE = 18;
