@@ -433,7 +433,7 @@ public class CommunicationServeur {
 	public Phase recupererInfosPhase(int partieID) throws
 	PartieIntrouvableException, PartieInvalideException,
 	RuntimeException {
-		Phase phaseCourante = null;
+		Phase phaseCourante = new Phase(Phase.Statut.INACTIF, 0);
 		String reponse = "";
 
 		try {
@@ -445,12 +445,13 @@ public class CommunicationServeur {
 				String message = erreur.getString("erreur");
 
 				throw new PartieIntrouvableException(message);
-			} else {
-				JSONObject erreur = new JSONObject(e.mess);
-				String message = erreur.getString("erreur");
+			} 
+			// else {
+			// 	JSONObject erreur = new JSONObject(e.mess);
+			// 	String message = erreur.getString("erreur");
 
-				throw new PartieInvalideException(message);
-			}
+			// 	throw new PartieInvalideException(message);
+			// }
 		}
 		return phaseCourante;
 	}
