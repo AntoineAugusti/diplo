@@ -33,9 +33,13 @@ class DemarragePartie implements ShouldBeQueued
     {
         $partie = $event->partie;
         $partie->statut = Partie::EN_JEU;
+
+        $dateProchainePhase = Carbon::now()->addMinutes(2);
+        $partie->setDateProchainePhase($date);
+
         $partie->save();
 
         // On initialise les changements de phases
-        $this->queue->later(Carbon::now()->addMinutes(2), new PartiePhaseSwitcherHandler($partie, Partie::COMBAT));
+        $this->queue->later($dateProchainePhase, new PartiePhaseSwitcherHandler($partie, Partie::COMBAT));
     }
 }
