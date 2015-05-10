@@ -91,15 +91,21 @@
 
 	 \subsection{Interface utilisateur} % (fold)
 	 \label{sub:interface_utilisateur}
-	 
+	 	L'interface utilisateur du client est pour l'instant très basique, puisque celle-ci est un CLI. Cette interface pourrait donc être améliorée, en proposant un environnement graphique, qui serait plus agréable à utiliser pour un utilisateur sans connaissances en informatique. On pourrait utiliser des librairies proposant des environnement graphiques, comme par exemple Swing.\\
+
+	 	Par ailleurs, la carte pourrait être adaptée pour pouvoir supporter des formes plus complexes de cases, des relations plus complexes entre cases voisines ainsi que des types différents de case (faire une distinction entre cases maritimes et terrestre par exemple).
 	 % subsection interface_utilisateur (end)
 
 	 \subsection{Génération automatique des modèles} % (fold)
 	 \label{sub:g_n_ration_automatique_des_mod_les}
-	 
+	 	Actuellement les modèles sont recrées à partir du JSON \enquote{à la main}, suite à une requête auprès de l'API. Ce processus pourrait être automatisé, offrant ainsi une sorte de sérialisation / désérialisation depuis du JSON, pour pouvoir créer et exporter facilement des entités.\\
+
+	 	Il serait envisageable d'utiliser une librairie comme FlexJSON par exemple. Cette librairie est disponible à l'adresse suivante: \url{http://flexjson.sourceforge.net}.
+
 	 % subsection g_n_ration_automatique_des_mod_les (end)
 
 	 \subsection{Refactor de la communication serveur} % (fold)
 	 \label{sub:refactor_de_la_communication_serveur}
-	 
+	 	Les requêtes vers le serveur ont été abstraites dans des méthodes, pour ne pas devoir créer des requêtes HTTPS à chaque fois que l'on souhaite appeler un endpoint de l'API (ce qui est long et fastidieux). Ce travail d'abstraction pourrait être poussé encore un petit peu plus. On pourrait également s'orienter vers une librairie Java permettant de développer facilement des clients REST.
+
 	 % subsection refactor_de_la_communication_serveur (end)
