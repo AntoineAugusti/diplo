@@ -1,0 +1,349 @@
+@startuml
+
+skinparam shadowing false
+skinparam stereotypeCBackgroundColor #5B9BD5
+' skinparam backgroundColor transparent
+
+skinparam note {
+  BackgroundColor #73AE42
+  BorderColor #6CA43E
+  FontColor white
+}
+
+skinparam class {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #FFFFFF
+}
+
+skinparam sequence {
+  ArrowColor #6CA43E
+
+  LifeLineBorderColor #6CA43E
+  LifeLineBackgroundColor #73AE42
+
+  ParticipantBorderColor #2E75B5
+  ParticipantBackgroundColor #5B9BD5
+
+  ActorBorderColor #2E75B5
+  ActorBackgroundColor #5B9BD5
+
+  BoxLineColor #A5A5A5
+}
+
+skinparam state {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam usecase {
+  BackgroundColor #EEEEEE
+  BorderColor #9E9E9E
+
+  ArrowColor #6CA43E
+  ActorBorderColor #6CA43E
+}
+
+skinparam component {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam node {
+  BackgroundColor #FFFFFF
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam database {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+ 
+' definitions
+' -----------
+
+' package "fr.insarouen.asi.diplo.Exception.OrdresException"
+class ArmeeInvalideException
+class OrdreInvalideException
+class OrdreException
+' end package
+
+' package "fr.insarouen.asi.diplo.Affichage"
+class Cli
+class AffichageCarte
+' end package
+
+' package "fr.insarouen.asi.diplo.Reseau"
+class CommunicationServeur
+' end package
+
+' package "fr.insarouen.asi.diplo.Exception.ReseauException"
+class MessageNonDelivreException
+class PartieHTTPSException
+class PartieIntrouvableException
+class ReseauException
+class PartiePleineException
+class PartieInvalideException
+' end package
+
+' package "fr.insarouen.asi.diplo.MoteurJeu.Negociation"
+class Conversation
+class Message
+' end package
+
+' package "fr.insarouen.asi.diplo.MoteurJeu.Ordres"
+abstract Ordre
+abstract OrdreCible
+class SoutienDefensif
+class Attaquer
+class SoutienOffensif
+class Tenir
+' end package
+
+' package "fr.insarouen.asi.diplo"
+class Main
+' end package
+
+' package "fr.insarouen.asi.diplo.MoteurJeu"
+class Carte
+class StatutDuJeu
+class Couleur
+class Case
+class Phase
+enum Statut
+class Moteur
+class Joueur
+class CaseComparator
+class Jeu
+class Armee
+' end package
+
+Cli  --  Couleur
+Cli  --  Armee
+AffichageCarte  --  CaseComparator
+CommunicationServeur  --  StatutDuJeu
+Conversation  --> "1..*" Message
+Carte  --> "1..*" Case
+' content
+' -------
+
+' OrdreCible:
+Ordre <|-- OrdreCible
+OrdreCible : int id_case
+OrdreCible : int id_armee
+OrdreCible : int getCaseCible()
+OrdreCible : void setCaseCible(int)
+OrdreCible : boolean estOrdreCible()
+
+' PartiePleineException:
+ReseauException <|-- PartiePleineException
+
+' Armee:
+Armee : int getID()
+Armee : int getJoueur()
+Armee : int getIdCaseCourante()
+
+' Carte:
+Carte : boolean ajouterCase(Case)
+Carte : boolean majCase(Case)
+Carte : Case getCase(int)
+Carte : Collection getCases()
+
+' Statut:
+Statut : Phase.Statut NEGOCIATION
+Statut : Phase.Statut COMBAT
+Statut : Phase.Statut INACTIF
+Statut : Phase.Statut values()
+Statut : Phase.Statut valueOf(String)
+
+' Joueur:
+Joueur : void setCouleur(int)
+Joueur : int getID()
+Joueur : String getPseudo()
+Joueur : String getPays()
+Joueur : int getArmeesRestantes()
+Joueur : int getCasesControlees()
+Joueur : int getCouleurJoueur()
+Joueur : void setPion(String)
+Joueur : String getPion()
+
+' Moteur:
+Moteur : CommunicationServeur current
+Moteur --> "1" CommunicationServeur
+Moteur : Jeu rejoindrePartie(int)
+Moteur : ArrayList recupererInfosJoueurs(int)
+Moteur : ArrayList recupererInfosArmees(int)
+Moteur : String recupererInfosPartie(int)
+Moteur : Phase recupererInfosPhase(int)
+Moteur : Carte recupererInfosCarte(int)
+Moteur : Boolean posterOrdre(int, Ordre)
+Moteur : Conversation recupererInfosConversation(int)
+Moteur : ArrayList recupererInfosConversationSelonJoueur(int)
+Moteur : Conversation creerConversation(ArrayList)
+Moteur : Message posterMessage(int, int, String)
+
+' Ordre:
+Ordre : String ordre
+Ordre : String getOrdre()
+Ordre : boolean estOrdreCible()
+
+' CaseComparator:
+CaseComparator : int compare(Case, Case)
+
+' Phase:
+Phase --> "1" Statut
+Phase : int getChrono()
+Phase : boolean setChrono(int)
+Phase : Phase.Statut getStatutPhaseCourante()
+Phase : boolean setStatutPhaseCourante(Phase.Statut)
+
+' Case:
+Case : int getID()
+Case : int getIdJoueur()
+Case : int getIdArmee()
+Case : ArrayList getCasesVoisines()
+Case : boolean getEstLibre()
+Case : boolean getEstOccupee()
+
+' OrdreInvalideException:
+OrdreException <|-- OrdreInvalideException
+
+' SoutienDefensif:
+OrdreCible <|-- SoutienDefensif
+SoutienDefensif : String ordre
+
+' Conversation:
+Conversation : int id_conversation
+Conversation : ArrayList id_joueurs
+Conversation : ArrayList messages
+Conversation : int getID()
+Conversation : ArrayList getIdJoueurs()
+Conversation : ArrayList getMessages()
+Conversation : void setMessages(ArrayList)
+Conversation : void addMessage(Message)
+Conversation : String toString()
+
+' MessageNonDelivreException:
+ReseauException <|-- MessageNonDelivreException
+
+' StatutDuJeu:
+StatutDuJeu : String getMessage()
+StatutDuJeu : boolean setMessage(String)
+StatutDuJeu : String getStatutDuJeu()
+StatutDuJeu : boolean setStatutDuJeu(String)
+
+' PartieIntrouvableException:
+ReseauException <|-- PartieIntrouvableException
+
+' ArmeeInvalideException:
+OrdreException <|-- ArmeeInvalideException
+
+' Cli:
+Cli --> "1" Jeu
+Cli --> "1" Moteur
+Cli --> "1" Joueur
+Cli : char ESC
+Cli : void setOrdre(String)
+Cli : void commandeRejoindre(String)
+Cli : void commandeAttaquer(String, String)
+Cli : void commandeSoutienDefensif(String, String)
+Cli : void commandeSoutienOffensif(String, String)
+Cli : void commandeTenir(String)
+Cli : void commandeCreerConversation(String)
+Cli : void commandeEnvoyerMessage(String, String)
+Cli : void commandeInfosConversations()
+Cli : void commandeHistoriqueConversation(String)
+Cli : void commandeListerArmees()
+Cli : void commandeAfficherParticipants()
+Cli : void commandePhaseCourante()
+Cli : void commandeAfficherCarte()
+Cli : void commandeClear()
+Cli : void commandeQuitter()
+Cli : void commandeAide()
+Cli : Method getMethodesOrdre(String)
+Cli : String getParametresOrdre(String)
+Cli : void invocation()
+Cli : void executer()
+
+' Message:
+Message : int id
+Message : int id_joueur
+Message : String texte
+Message : Date date_creation
+Message : int getID()
+Message : int getIdJoueur()
+Message : String getTexte()
+Message : Date getDateCreation()
+Message : String toString()
+
+' Tenir:
+Ordre <|-- Tenir
+Tenir : String ordre
+Tenir : int id_armee
+
+' Jeu:
+Jeu --> "1" Phase
+Jeu --> "1" Carte
+Jeu : int getID()
+Jeu : int getRequis()
+Jeu : int getInscrits()
+Jeu : HashMap getJoueurs()
+Jeu : boolean miseAJourJoueur(Joueur)
+Jeu : Joueur getJoueur(int)
+Jeu : Joueur getJoueurByPseudo(String)
+Jeu : Carte getCarte()
+Jeu : boolean setCarte(Carte)
+
+' Attaquer:
+OrdreCible <|-- Attaquer
+Attaquer : String ordre
+
+' Couleur:
+Couleur : int genererPiscineDeCouleur()
+
+' CommunicationServeur:
+CommunicationServeur : Jeu rejoindrePartie(int)
+CommunicationServeur : ArrayList recupererInfosJoueurs(int)
+CommunicationServeur : String recupererInfosPartie(int)
+CommunicationServeur : Phase recupererInfosPhase(int)
+CommunicationServeur : Carte recupererInfosCarte(int)
+CommunicationServeur : Boolean posterOrdre(int, Ordre)
+CommunicationServeur : Conversation recupererInfosConversation(int)
+CommunicationServeur : ArrayList recupererInfosConversationSelonJoueur(int)
+CommunicationServeur : Conversation creerConversation(ArrayList)
+CommunicationServeur : Message posterMessage(int, int, String)
+CommunicationServeur : ArrayList recupererInfosArmees(int)
+
+' PartieInvalideException:
+ReseauException <|-- PartieInvalideException
+
+' SoutienOffensif:
+OrdreCible <|-- SoutienOffensif
+SoutienOffensif : String ordre
+
+' OrdreException:
+
+' PartieHTTPSException:
+ReseauException <|-- PartieHTTPSException
+PartieHTTPSException : int error
+PartieHTTPSException : String mess
+
+' ReseauException:
+
+' AffichageCarte:
+AffichageCarte --> "1" Carte
+AffichageCarte : Jeu jeu
+AffichageCarte --> "1" Jeu
+AffichageCarte : void enregistrerCarte(int)
+AffichageCarte : void lireCarte(String)
+
+' Main:
+Main : Cli cli
+Main --> "1" Cli
+Main : void main(String)
+
+@enduml

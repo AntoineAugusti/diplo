@@ -3,6 +3,7 @@ all: rapport
 rapport:
 	plantuml diagrammes/php-export-cut/*.plantuml
 	plantuml diagrammes/*.plantuml
+	plantuml diagrammes/*.txt
 	pdflatex -shell-escape rapport.tex
 	pdflatex -shell-escape rapport.tex
 	pdflatex -shell-escape rapport.tex

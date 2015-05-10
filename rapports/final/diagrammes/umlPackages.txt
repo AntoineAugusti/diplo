@@ -1,0 +1,218 @@
+@startuml
+skinparam shadowing false
+skinparam stereotypeCBackgroundColor #5B9BD5
+' skinparam backgroundColor transparent
+
+skinparam note {
+  BackgroundColor #73AE42
+  BorderColor #6CA43E
+  FontColor white
+}
+
+skinparam class {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #FFFFFF
+}
+
+skinparam sequence {
+  ArrowColor #6CA43E
+
+  LifeLineBorderColor #6CA43E
+  LifeLineBackgroundColor #73AE42
+
+  ParticipantBorderColor #2E75B5
+  ParticipantBackgroundColor #5B9BD5
+
+  ActorBorderColor #2E75B5
+  ActorBackgroundColor #5B9BD5
+
+  BoxLineColor #A5A5A5
+}
+
+skinparam state {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam usecase {
+  BackgroundColor #EEEEEE
+  BorderColor #9E9E9E
+
+  ArrowColor #6CA43E
+  ActorBorderColor #6CA43E
+}
+
+skinparam component {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam node {
+  BackgroundColor #FFFFFF
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+
+skinparam database {
+  BackgroundColor #EEEEEE
+  ArrowColor #758A9F
+  BorderColor #9E9E9E
+}
+' definitions
+' -----------
+
+package "fr.insarouen.asi.diplo.Exception.OrdresException" {
+class ArmeeInvalideException
+class OrdreInvalideException
+class OrdreException
+}
+
+package "fr.insarouen.asi.diplo.MoteurJeu" {
+class Carte
+class StatutDuJeu
+class Couleur
+class Case
+class Phase
+enum Statut
+class Moteur
+class Joueur
+class CaseComparator
+class Jeu
+class Armee
+}
+
+package "fr.insarouen.asi.diplo.Exception.ReseauException" {
+class MessageNonDelivreException
+class PartieHTTPSException
+class PartieIntrouvableException
+class ReseauException
+class PartiePleineException
+class PartieInvalideException
+}
+
+package "fr.insarouen.asi.diplo"{
+class Main
+}
+
+package "fr.insarouen.asi.diplo.Reseau" {
+class CommunicationServeur
+}
+
+package "fr.insarouen.asi.diplo.MoteurJeu.Ordres"{
+abstract Ordre
+abstract OrdreCible
+class SoutienDefensif
+class Attaquer
+class SoutienOffensif
+class Tenir
+}
+
+package "fr.insarouen.asi.diplo.MoteurJeu.Negociation"{
+class Conversation
+class Message
+}
+
+package "fr.insarouen.asi.diplo.Affichage"{
+class Cli
+class AffichageCarte
+}
+
+Carte  --> "1..*" Case
+CommunicationServeur  --  StatutDuJeu
+Conversation  --> "1..*" Message
+Cli  --  Couleur
+Cli  --  Armee
+AffichageCarte  --  CaseComparator
+' content
+' -------
+
+' SoutienOffensif:
+OrdreCible <|-- SoutienOffensif
+
+' Message:
+
+' Couleur:
+
+' CaseComparator:
+
+' Armee:
+
+' Jeu:
+Jeu --> "1" Phase
+Jeu --> "1" Carte
+
+' SoutienDefensif:
+OrdreCible <|-- SoutienDefensif
+
+' Conversation:
+
+' Joueur:
+
+' Moteur:
+Moteur --> "1" CommunicationServeur
+
+' Main:
+Main --> "1" Cli
+
+' Tenir:
+Ordre <|-- Tenir
+
+' Attaquer:
+OrdreCible <|-- Attaquer
+
+' Ordre:
+
+' PartieIntrouvableException:
+ReseauException <|-- PartieIntrouvableException
+
+' Phase:
+Phase --> "1" Statut
+
+' Case:
+
+' PartieInvalideException:
+ReseauException <|-- PartieInvalideException
+
+' OrdreException:
+
+' ArmeeInvalideException:
+OrdreException <|-- ArmeeInvalideException
+
+' MessageNonDelivreException:
+ReseauException <|-- MessageNonDelivreException
+
+' OrdreCible:
+Ordre <|-- OrdreCible
+
+' CommunicationServeur:
+
+' Statut:
+
+' StatutDuJeu:
+
+' ReseauException:
+
+' PartieHTTPSException:
+ReseauException <|-- PartieHTTPSException
+
+' PartiePleineException:
+ReseauException <|-- PartiePleineException
+
+' AffichageCarte:
+AffichageCarte --> "1" Carte
+AffichageCarte --> "1" Jeu
+
+' Cli:
+Cli --> "1" Jeu
+Cli --> "1" Moteur
+Cli --> "1" Joueur
+
+' Carte:
+
+' OrdreInvalideException:
+OrdreException <|-- OrdreInvalideException
+
+@enduml
