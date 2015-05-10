@@ -161,13 +161,13 @@
 	Tous nos noms de classes et de méthodes sont en français.
 
 	\subsection{Interface utilisateur}
-		Nous avons décidé d'utiliser une interface utilisateur de type Command Line Interface car celle-ci présente les avantages suivants:
+		Nous avons décidé d'utiliser une interface utilisateur de type CLI\footnote{CLI : \textit{Command Line Interface}} car celle-ci présente les avantages suivants:
 		\begin{itemize}
 			\item facilité d'utilisation ;
-			\item simplicité de mise en oeuvre ;
-			\item documentation intégrée à l'interface (RTFM) ;
+			\item simplicité de mise en œuvre ;
+			\item documentation intégrée à l'interface (RTFM).
 		\end{itemize}\bigskip
-		Nous avons cependant rencontré des difficultés quant à l'affichage de la carte, que nous abordons plus en détails dans la partie~\ref{pb}. L'utilisateur rentre des commandes, le cli les comprend et fait appel au moteur du jeu afin de procéder à l'exécution de celles-ci
+		Nous avons cependant rencontré des difficultés quant à l'affichage de la carte, que nous abordons plus en détails dans la partie~\ref{pb}. L'utilisateur rentre des commandes, le CLI les comprend et fait appel au moteur du jeu afin de procéder à l'exécution de celles-ci
 
 	\subsection{Moteur de Jeu}
 		Afin de pouvoir exécuter le moteur de jeu, qui s'occupe de coordonner les éléments côté client, nous avons créé des classes annexes permettant de manipuler les objets du jeu tels qu'une case, une carte, un joueur etc. Nous avons ensuite créé la classe \texttt{Moteur} qui utilise ces classes annexes.
