@@ -561,10 +561,8 @@ public class CommunicationServeur {
 		String reponse = "";
 
 		try {
-			System.out.println(conversationToJSON(destinataires));
 			reponse = postRequete("conversations",
 				conversationToJSON(destinataires).toString());
-			System.out.println(reponse);
 			conv = parserJSONCreerConversation(reponse);
 		} catch (PartieHTTPSException e) {
 			if ((e.error == 400) || (e.error == 403)) {
