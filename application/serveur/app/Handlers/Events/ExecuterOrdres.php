@@ -3,6 +3,7 @@
 namespace Diplo\Handlers\Events;
 
 use Diplo\Events\PartieChangeDeTour;
+use Diplo\Ordres\Attaquer;
 use Diplo\Ordres\Ordre;
 use Diplo\Ordres\OrdreExecuteur;
 use Diplo\Ordres\OrdreRepository;
@@ -49,6 +50,7 @@ class ExecuterOrdres
         $armees = $partie->getArmees();
 
         $ordres = [];
+        $casesAttaques = [];
         foreach ($armees as $armee) {
             // Récupère le modèle d'ordre.
             $ordreModel = $armee->getOrdre();
@@ -57,12 +59,21 @@ class ExecuterOrdres
             if (!is_null($ordreModel)) {
                 $ordre = $ordreModel->getOrdre();
 
+                if ($ordre instanceof Attaquer) {
+                    $casesAttaques[] = $ordre->getCase()->getId();
+                }
+
                 // On vérifie que l'ordre donné est valide
                 if ($this->verifierOrdre($ordre)) {
                     $ordres[] = $ordre;
                 }
             }
         }
+
+        // Suppression des ordres passés depuis des cases attaquées.
+        $ordres = array_filter($ordres, function(Ordre $ordre) use ($casesAttaques) {
+            return !in_array($ordre->getArmee()->getCase()->getId(), $casesAttaques);
+        });
 
         foreach ($ordres as $ordre) {
             $this->executer($ordre, $ordres);
