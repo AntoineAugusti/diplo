@@ -151,7 +151,7 @@ class AttaquerExecuteur extends OrdreCibleExecuteur
         } else {
             $this->armeeRepository->deplacerArmee(
                 $armee,
-                array_rand($idCasesVoisinesNonOccupees)
+                $idCasesVoisinesNonOccupees[array_rand($idCasesVoisinesNonOccupees)]
             );
         }
     }

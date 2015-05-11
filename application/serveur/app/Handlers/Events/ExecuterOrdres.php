@@ -59,12 +59,12 @@ class ExecuterOrdres
             if (!is_null($ordreModel)) {
                 $ordre = $ordreModel->getOrdre();
 
-                if ($ordre instanceof Attaquer) {
-                    $casesAttaques[] = $ordre->getCase()->getId();
-                }
-
                 // On vérifie que l'ordre donné est valide
                 if ($this->verifierOrdre($ordre)) {
+                    if ($ordre instanceof Attaquer) {
+                        $casesAttaques[] = $ordre->getCase()->getId();
+                    }
+
                     $ordres[] = $ordre;
                 }
             }
